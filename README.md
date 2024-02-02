@@ -19,3 +19,8 @@ All of that can be done by executing the script:
 ```
 ./script.sh
 ```
+And after that whenever you want to use the project just do:
+```
+source myenv/bin/activate 
+deactivate #to stop the env
+```
