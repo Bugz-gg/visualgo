@@ -1,0 +1,14 @@
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+src/visualgo/__init__.py
+src/visualgo/main.py
+src/visualgo/py.typed
+src/visualgo.egg-info/PKG-INFO
+src/visualgo.egg-info/SOURCES.txt
+src/visualgo.egg-info/dependency_links.txt
+src/visualgo.egg-info/not-zip-safe
+src/visualgo.egg-info/requires.txt
+src/visualgo.egg-info/top_level.txt
+tests/test_main.py
