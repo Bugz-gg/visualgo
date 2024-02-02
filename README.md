@@ -15,3 +15,12 @@ For testing however It will be with CI but you can do it locally with:
 ```bash
 pip install -r ./requirements_dev.txt
 ```
+All of that can be done by executing the script:
+```
+./script.sh
+```
+And after that whenever you want to use the project just do:
+```
+source myenv/bin/activate 
+deactivate #to stop the env
+```
