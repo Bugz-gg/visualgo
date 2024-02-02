@@ -15,3 +15,7 @@ For testing however It will be with CI but you can do it locally with:
 ```bash
 pip install -r ./requirements_dev.txt
 ```
+All of that can be done by executing the script:
+```
+./script.sh
+```
