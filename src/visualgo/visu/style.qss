@@ -1,0 +1,10 @@
+QTextEdit {
+        background-color: #333;
+        color: #fff;
+        border: 2px solid #555;
+        font-size: 16px;
+    }
+    
+ArrayCellWidget {
+            border: 1px solid black;
+        }
