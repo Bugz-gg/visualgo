@@ -1,29 +1,33 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout 
+from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt, QRect 
-from PyQt5.QtGui import QPainter
+from PyQt5.QtGui import QPainter, QPen
+
 class ArrayCellWidget(QWidget):
     def __init__(self, value):
         super().__init__()
+        # set value
         self._value = value
-    
+        self.setObjectName("ArrayCellWidget")  # Set object name for styling
+
     def paintEvent(self, event):
         painter = QPainter(self)
+        
+        # Draw the rectangle with the cell value in it
         painter.drawText(QRect(0, 0, self.width(), self.height()), Qt.AlignCenter, str(self._value))
-
+    
 class ArrayWidget(QWidget):
     def __init__(self, array):
         super().__init__()
         self.array = array
+        self.setObjectName("ArrayCellWidget")  # Set object name for styling
 
-        # Create a grid layout
-        layout = QGridLayout()
+        # Create a horizontal layout for the ArrayWidget
+        layout = QHBoxLayout()
 
         # Create an ArrayCellWidget for each array value and add it to the layout
-        self.cellWidgets = []
         for  value in array:
             cellWidget = ArrayCellWidget(value)
-            layout.addWidget(cellWidget)  # Change this line to match your desired grid size
-            self.cellWidgets.append(cellWidget)
+            layout.addWidget(cellWidget)  
 
         # Set the layout on the ArrayWidget
         self.setLayout(layout)

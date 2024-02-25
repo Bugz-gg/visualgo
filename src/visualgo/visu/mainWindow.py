@@ -10,19 +10,17 @@ class MainWindow(QMainWindow):
         # Create a QTextEdit widget
         self.textEdit = QTextEdit()
 
-        # Create a canvas widget and layout in order to adopt the ArrayWidget
-        self.canvas =QGroupBox()
-        canvasLayout = QHBoxLayout(self.canvas)
+        # Create an ArrayWidget
+        self.ArrayWidget = ArrayWidget([1,2,3,4,5])
 
-        # Add ArrayWidget as a child of the canvas
-        self.ArrayWidget = ArrayWidget()
-        canvasLayout.addWidget(self.ArrayWidget) # must be added to the layout
-
+        # Create a horizontal layout for the main window with code left and array right
         layout = QHBoxLayout()
 
+        # Add the widgets to the layout
         layout.addWidget(self.textEdit)
-        layout.addWidget(self.canvas)
+        layout.addWidget(self.ArrayWidget)
 
+        # Make the array takes 3/4 of the window and the code takes 1/4
         layout.setStretch(0, 1)
         layout.setStretch(1, 3)
         # Create a central widget for the QMainWindow and set the layout
