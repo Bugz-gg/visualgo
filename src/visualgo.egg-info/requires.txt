@@ -3,6 +3,5 @@ numpy>=1.25
 [testing]
 pytest>=6.0
 pytest-cov>=2.0
-mypy>=0.910
+mypy>=1.8
 flake8>=3.9
-tox>=3.24
