@@ -1,19 +1,32 @@
-import random
+from enum import Enum
+
 
 from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QVBoxLayout, QHBoxLayout, QPushButton
 from PyQt5.QtCore import Qt, QRect
 from PyQt5.QtGui import QPainter, QPen, QColor
 
 
+class DataState(Enum):
+    NORMAL = (1, QColor("white"))
+    CREATED = (2, QColor("lime green"))
+    ACCESSED = (3, QColor("light blue"))
+    COMPARED = (4, QColor("light red"))
+
+    def __new__(cls, nb, color):
+        entry = object.__new__(cls)
+        entry.nb = entry._value_ = nb
+        entry.color = color
+        return entry
+
+
 class ArrayCellWidget(QWidget):
-    def __init__(self, value):
+    def __init__(self, value, default_state=DataState.NORMAL):
         super().__init__()
         self._value = value
-        self.is_selected = False
+        self.state = default_state
 
-    def toggle_selection(self):
-        self.is_selected = not self.is_selected
-        self.update()
+    def set_state(self, state: DataState):
+        self.state = state
 
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -21,28 +34,28 @@ class ArrayCellWidget(QWidget):
         font.setPointSize(20)
         painter.setFont(font)
 
-        if self.is_selected:
-            painter.fillRect(self.rect(), QColor("lightblue"))
+        # Set correct background color
+        painter.fillRect(self.rect(), self.state.color)
         painter.drawText(self.rect(), Qt.AlignCenter, str(self._value))
 
 
 class ArrayWidget(QWidget):
-    def __init__(self, array):
+    def __init__(self, array, states: list[DataState] = None):
         super().__init__()
         self.cell_array = [ArrayCellWidget(value) for value in array]
         self.setObjectName("ArrayWidget")  # Set object name for styling
+
+        # set proper state if states are given
+        if states is not None:
+            for i, state in enumerate(states):
+                self.cell_array[i].set_state(state)
 
         # Create a horizontal layout for the ArrayWidget
         layout = QHBoxLayout()
 
         # Create an ArrayCellWidget for each array value and add it to the layout
         for cell in self.cell_array:
-            cellLayout = QVBoxLayout()
-            cellLayout.addWidget(cell)
-            selection_button = QPushButton("Select me!")
-            selection_button.clicked.connect(cell.toggle_selection)
-            cellLayout.addWidget(selection_button)
-            layout.addLayout(cellLayout)
+            layout.addWidget(cell)
 
             # Set the layout on the ArrayWidget
         self.setLayout(layout)
