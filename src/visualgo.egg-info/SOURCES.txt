@@ -11,4 +11,5 @@ src/visualgo.egg-info/dependency_links.txt
 src/visualgo.egg-info/not-zip-safe
 src/visualgo.egg-info/requires.txt
 src/visualgo.egg-info/top_level.txt
+tests/test_flow_control.py
 tests/test_main.py

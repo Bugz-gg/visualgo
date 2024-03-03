@@ -1,28 +1,8 @@
 from re import *
 from typing import Any
 
-
 class program:
     pass
-
-print("PROGRAM TEST :\n")
-
-slt = program()
-
-slt.k = 2
-print(slt.k)
-
-slt.f = 1
-
-slt.f += slt.k
-
-print(slt.f)
-slt.l = [8, 5, 6]
-
-slt.l *= slt.f 
-print(slt.l)
-
-print("#=======================================================================================================#")
 
 class program2:
     def __init__(self, program):
@@ -41,30 +21,6 @@ class program2:
 
     def run(self):
         self.execute()
-
-
-print("PROGRAM2 TEST :\n")
-
-prog = """
-k = 1
-j = 2
-n = j + k
-print(n)
-def f(x):
-    print(x + 1000)
-f(n)
-"""
-
-test = program2(prog)
-test.run()
-#test.execute_line_by_line()
-
-
-# WARNING : can't execute line by line with function. Needs to be a whole block or Error
-
-
-print("#=======================================================================================================#")
-
 
 class program4:
     def __init__(self, program):
@@ -102,7 +58,6 @@ class program4:
                 compiled_line = line
             self.compiled_program.append(compiled_line)
             #print(self.compiled_program)
-
     
     def execute(self):
         exec(self.compiled)
@@ -116,46 +71,6 @@ class program4:
         #print(self.compiled)
 
         self.execute()
-
-prog = """
-x <- 5
-k <- x
-print(x)"""
-
-print("PROGRAM4 TEST :", prog, "\n")
-
-test = program4(prog)
-
-test.run()
-
-
-prog2="""
-def f(x):
-    print(x)
-
-x <- 8
-
-f(x)
-"""
-
-# WARNING : error when calling the following function on x : (g is defined after f)
-# def g(x):
-#     x += 5
-#     f(x)
-# name 'f' is not defined -> why ?
-
-
-test2 = program4(prog2)
-
-test2.run()
-
-#need to keep in mind all \t (tabs) for block indent
-
-
-
-
-print("#=======================================================================================================#")
-
 
 
 
@@ -178,7 +93,6 @@ class attribute:
             return attribute(self.value * other, self.VISUALIZE)
         else:
             raise TypeError("Unsupported operand type for *: {}".format(type(other)))
-    
     
     def debug(self):
         print("\n[DEBUG]", type(self).__name__)
@@ -204,39 +118,3 @@ class program3:
         print("\n[DEBUG]", type(self).__name__)
         for attr in self.__dict__:
             self.__dict__[attr].debug()
-    
-
-        
-print("PROGRAM3 TEST :\n")
-
-test = program3()
-
-test.x = 5
-
-print("access test.x.value :", test.x)
-
-test.k = 4
-
-test.k = test.k + test.x
-
-print("k = k + x :", test.k)
-
-test.k.debug()
-
-test.k = test.k * test.x
-
-print("k = k * x :", test.k)
-
-test.k.debug()
-
-test.debug()
-
-
-
-
-# Breakpoint
-#   python debugger (pdb library) breakpoint
-#   pause() or wait_input()
-#
-# Pseudo-code
-#   compilator -> compile from string to string / blocks are indented
