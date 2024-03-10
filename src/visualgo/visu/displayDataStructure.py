@@ -24,6 +24,7 @@ class ArrayCellWidget(QWidget):
         super().__init__()
         self._value = value
         self.state = default_state
+        self.setFixedSize(30, 30)  # cell size
 
     def set_state(self, state: DataState):
         self.state = state

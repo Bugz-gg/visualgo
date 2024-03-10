@@ -9,6 +9,24 @@ from visualgo.visu.displayDataStructure import ArrayWidget
 from visualgo.visu.programState import ProgramState
 
 
+class DataWidget(QWidget):
+    def __init__(self, name, value, parent=None):
+        super().__init__(parent)
+        self.name = QLabel(name)
+        self.value = value
+        self.setLayout(QHBoxLayout())
+        self.layout().addWidget(self.name)
+        self.layout().addWidget(self.value)
+
+    def mousePressEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.offset = event.pos()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(self.mapToParent(event.pos() - self.offset))
+
+
 # Handle the content of the visualizer : Code | Data
 class Visualizer(QHBoxLayout):
     def __init__(self):
@@ -17,7 +35,13 @@ class Visualizer(QHBoxLayout):
         # Possibility to add a label / textEdit zone with the code
         # Could be difficult to retrieve the code tho
 
-        demo_code = "This is a demo code\nImagine it is real"
+        demo_code = """
+        my_list_variable = List()
+        my_list_variable.append(1)
+        my_list_variable.append(2)
+        my_list_variable.append(3)
+        max_value = 1
+        """
         self.code_area = QLabel(demo_code)
         self.layout().addWidget(self.code_area)
 
@@ -37,5 +61,4 @@ class Visualizer(QHBoxLayout):
             self.data_area.addWidget(QLabel("Empty environment"))
         else:
             for name, get_value in program_state.variables_to_display.items():
-                self.data_area.addWidget(QLabel(name))
-                self.data_area.addWidget(get_value())
+                self.data_area.addWidget(DataWidget(name, get_value()))
