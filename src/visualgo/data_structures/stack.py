@@ -9,7 +9,7 @@ class Stack(Data):
         return self.data.pop(0)
     
     def Push(self, value):
-        self.data.insert(0,value) 
+        self.data.insert(0, value) 
         assert not self.IsEmpty(), "operation failed, stack is empty"
         
     def IsEmpty(self):
