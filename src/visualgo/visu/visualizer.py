@@ -4,8 +4,7 @@ from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget, QPushButton, \
     QVBoxLayout, QLabel
-
-from visualgo.visu.displayDataStructure import ArrayWidget
+from visualgo.visu.displayDataStructure import ArrayWidget, DataState, ArrayCellWidget, TreeNode , TreeWidget
 from visualgo.visu.programState import ProgramState
 
 

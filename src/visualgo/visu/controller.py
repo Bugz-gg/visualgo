@@ -31,6 +31,28 @@ class Controller(QMainWindow):
                               lambda: ArrayWidget([1, 2, 3],
                                                   [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
                                                   ), "max_value": lambda: ArrayCellWidget(1, DataState.CREATED)}),
+            ProgramState({"my_list_variable":
+                              lambda: ArrayWidget([1, 2, 3],
+                                                  [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
+                                                  ), "max_value": lambda: ArrayCellWidget(1, DataState.NORMAL)}),
+            ProgramState({"my_list_variable":
+                              lambda: ArrayWidget([1, 2, 3],
+                                                  [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
+                                                  ), "max_value": lambda: ArrayCellWidget(1, DataState.NORMAL),"my_tree_variable": lambda: TreeWidget(TreeNode(1,state=DataState.CREATED))}),
+            ProgramState({"my_list_variable":
+                              lambda: ArrayWidget([1, 2, 3],
+                                                  [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
+                                                  ), "max_value": lambda: ArrayCellWidget(1, DataState.NORMAL),"my_tree_variable": lambda: TreeWidget(TreeNode(1, [
+        TreeNode(2, state=DataState.CREATED),
+        TreeNode(3, state=DataState.CREATED)    
+    ]))}),            ProgramState({"my_list_variable":
+                              lambda: ArrayWidget([1, 2, 3],
+                                                  [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
+                                                  ), "max_value": lambda: ArrayCellWidget(1, DataState.NORMAL),"my_tree_variable": lambda: TreeWidget(TreeNode(1, [
+        TreeNode(2,[TreeNode(4, state=DataState.CREATED),TreeNode(5, state=DataState.CREATED)]),
+        TreeNode(3)    
+    ]))}),
+            
         ]
         # Start at state 0
         self.current_state_index = 0
