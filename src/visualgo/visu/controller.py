@@ -5,7 +5,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget, QPushButton, \
     QVBoxLayout, QLabel
 
-from visualgo.visu.displayDataStructure import ArrayWidget, DataState, ArrayCellWidget
+from visualgo.visu.displayDataStructure import ArrayWidget, DataState, ArrayCellWidget, TreeNode, TreeWidget
 from visualgo.visu.programState import ProgramState
 from visualgo.visu.visualizer import Visualizer
 
@@ -60,6 +60,8 @@ class Controller(QMainWindow):
         # DISPLAY SECTION
         self.setWindowTitle("Visualiser Visualgo")
 
+        self.setObjectName("controller")
+
         # Initialize layouts
         self.main_layout = QVBoxLayout()
 
@@ -85,11 +87,15 @@ class Controller(QMainWindow):
         self.main_layout.setStretch(1, 3)
 
         # Set the minimum size, modify as needed
-        self.setMinimumSize(QSize(600, 300))
+        self.resize(QSize(600, 400))
+
+        # default size at startup
+        self.resize(1200, 800)
 
     # Handle the title of the window
     def set_title(self, title):
         title = QLabel(title)
+        title.setObjectName("title")
         title_font = QFont()
         title_font.setPointSize(20)
         title.setFont(title_font)
@@ -111,6 +117,7 @@ class Controller(QMainWindow):
 
         # Current state index display
         self.state_label = QLabel(self.get_state_label_text())
+        self.state_label.setObjectName("stateLabel")
         self.controller_layout.addWidget(self.state_label)
 
     def get_state_label_text(self):

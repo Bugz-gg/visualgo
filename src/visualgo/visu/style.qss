@@ -1,9 +1,35 @@
-MainWindow {
-  background-color: white;
+QMainWindow#controller {
+  background-color: #6969B3;
 }
 
-ArrayCellWidget {
-  background-color: red;
+QWidget#ArrayWidget {
+
+}
+
+QWidget#dataWidget {
+
+}
+
+QLabel#dataName {
+    background-color: #98C1D9;
+    color: #4B244A;
+    font-weight: bold;
+    padding: 20px; /* Add some padding around the title */
+    border: 1px solid #6969B3; /* Gray border */
+    border-radius: 5px; /* Rounded corners */
+    font-family: Arial, sans-serif; /* Font family */
+    font-size: 24px; /* Font size */
+}
+
+
+
+QLabel#stateLabel {
+    background-color: #98C1D9;
+    color: #4B244A; font-weight: bold;
+    font-size: 24px; /* Font size */
+    border-radius: 8px;
+    border: 1px solid #0d6efd;
+    padding: 5px 15px;
 }
 
 QPushButton {
@@ -20,7 +46,28 @@ QPushButton:hover,
 QPushButton:focus {
   border: 3px solid #9ac3fe;
 }
-QPushButton:pressed{
+QPushButton:pressed {
   background-color: #0b5ed7;
   border: 3px solid #9ac3fe;
+}
+
+QLabel#codeLabel {
+    background-color: #98C1D9;
+    color: #25171A;
+    font-family: Courier, monospace; /* Monospace font */
+    font-size: 12px; /* Font size */
+    padding: 1px; /* Padding around the text */
+    border: 1px solid #6969B3; /* Gray border */
+    border-radius: 5px; /* Rounded corners */
+}
+
+QLabel#title {
+    background-color: #98C1D9;
+    color: #4B244A;
+    font-weight: bold;
+    padding: 20px; /* Add some padding around the title */
+    border: 1px solid #6969B3; /* Gray border */
+    border-radius: 5px; /* Rounded corners */
+    font-family: Arial, sans-serif; /* Font family */
+    font-size: 24px; /* Font size */
 }

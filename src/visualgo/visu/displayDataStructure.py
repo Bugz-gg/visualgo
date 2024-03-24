@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (QApplication, QWidget, QGridLayout, QVBoxLayout,
                              QHBoxLayout, QPushButton, QGraphicsView, QGraphicsScene, 
                              QGraphicsItem, QGraphicsEllipseItem, QGraphicsLineItem, 
                              QGraphicsTextItem)
-from PyQt5.QtCore import Qt, QRect, QPointF
+from PyQt5.QtCore import Qt, QRect, QPointF, QRectF
 from PyQt5.QtGui import QPainter, QPen, QColor, QBrush, QFont
 
 
@@ -34,12 +34,23 @@ class ArrayCellWidget(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)  # Enable antialiasing for smoother edges
         font = painter.font()
         font.setPointSize(20)
         painter.setFont(font)
 
+        # Calculate the bounding rectangle for the circle
+        radius = min(self.width(), self.height()) / 2   # Radius of the circle
+        center = self.rect().center()  # Center of the window
+        circle_rect = QRectF(center.x() - radius, center.y() - radius, 2 * radius, 2 * radius)
+
+        painter.setBrush(self.state.color)
+
+        # Draw the circle
+        painter.drawEllipse(circle_rect)
+
         # Set correct background color
-        painter.fillRect(self.rect(), self.state.color)
+        # painter.fillRect(self.rect(), self.state.color)
         painter.drawText(self.rect(), Qt.AlignCenter, str(self._value))
 
 
@@ -75,6 +86,7 @@ class TreeNode:
         
         self.state = state
 
+
 class TreeWidget(QGraphicsView):
     def __init__(self, tree_root, parent=None):
         super().__init__(parent)
@@ -83,7 +95,7 @@ class TreeWidget(QGraphicsView):
         
         # Enable anti-aliasing for smoother rendering
         self.setRenderHint(QPainter.Antialiasing)
-        self.setBackgroundBrush(QBrush(QColor("white")))
+        self.setBackgroundBrush(QBrush(QColor("#98C1D9")))
         self.setScene(QGraphicsScene())
         # Set the size of the scene
         self.setSceneRect(0, 0, 800, 600)
@@ -141,6 +153,8 @@ class TreeWidget(QGraphicsView):
                 
                 # Update the x-coordinate for the next child node
                 child_x += 100
+
+
 if __name__ == "__main__":
     app = QApplication([])
     # load QSS file

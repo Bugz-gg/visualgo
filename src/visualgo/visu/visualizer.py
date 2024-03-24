@@ -12,10 +12,12 @@ class DataWidget(QWidget):
     def __init__(self, name, value, parent=None):
         super().__init__(parent)
         self.name = QLabel(name)
+        self.name.setObjectName("dataName")
         self.value = value
         self.setLayout(QHBoxLayout())
         self.layout().addWidget(self.name)
         self.layout().addWidget(self.value)
+        self.setObjectName("dataWidget")
 
     def mousePressEvent(self, event):
         if event.buttons() == Qt.LeftButton:
@@ -40,8 +42,12 @@ class Visualizer(QHBoxLayout):
         my_list_variable.append(2)
         my_list_variable.append(3)
         max_value = 1
+        my_tree_variable = Tree(1)
+        my_tree_variable.addNodes(2, 3)
+        my_tree_variable.addNodes(4, 5)
         """
         self.code_area = QLabel(demo_code)
+        self.code_area.setObjectName("codeLabel")
         self.layout().addWidget(self.code_area)
 
         self.data_area = QVBoxLayout()
