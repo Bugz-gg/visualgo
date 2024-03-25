@@ -6,22 +6,22 @@ class Stack(Data):
         self.is_visualisable = is_visualisable
     
     def pop(self):
-        assert not self.IsEmpty(), "stack is empty"
+        assert not self.isEmpty(), "stack is empty"
         return self.data.pop(0)
     
     def push(self, value):
         self.data.insert(0, value) 
-        assert not self.IsEmpty(), "operation failed, stack is empty"
+        assert not self.isEmpty(), "operation failed, stack is empty"
         
     def isEmpty(self):
-        return self.Size() == 0
+        return self.size() == 0
     
     def size(self):
         return len(self.data)
     
     def clear(self):
         self.data = []
-        assert self.IsEmpty(), "stack not empty"
+        assert self.isEmpty(), "stack not empty"
     
     def affect(self, stack):
         assert isinstance(stack, Stack), "r value must but a Stack"
