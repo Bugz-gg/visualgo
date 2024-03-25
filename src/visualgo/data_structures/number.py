@@ -14,5 +14,3 @@ class Number(Data):
         self.value = value
         self.status = Status.AFFECTED
     
-    def idle(self):
-        self.status = Status.NONE

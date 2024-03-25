@@ -6,6 +6,12 @@ class Data(ABC):
         self.is_visualisable = is_visualisable
         self.status = Status.CREATED
         
+    def reset_status(self):
+        self.status = Status.NONE
+        
+    def affectation(self):
+        pass
+
 class Status(Enum):
     NONE = 0
     CREATED = 1

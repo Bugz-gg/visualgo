@@ -10,7 +10,7 @@ def test_stack_push():
     assert stack.IsEmpty() == False
     assert stack.Size() == 1
     assert stack.data[0] == 1
-    
+
 def test_stack_pop():
     stack = Stack(True)
     # stack.Pop() # test error case

@@ -3,24 +3,30 @@ from visualgo.data_structures.data import Data,Status
 class Stack(Data):
     def __init__(self, is_visualisable):
         self.data = []
+        self.is_visualisable = is_visualisable
     
-    def Pop(self):
+    def pop(self):
         assert not self.IsEmpty(), "stack is empty"
         return self.data.pop(0)
     
-    def Push(self, value):
+    def push(self, value):
         self.data.insert(0, value) 
         assert not self.IsEmpty(), "operation failed, stack is empty"
         
-    def IsEmpty(self):
+    def isEmpty(self):
         return self.Size() == 0
     
-    def Size(self):
+    def size(self):
         return len(self.data)
     
-    def Clear(self):
+    def clear(self):
         self.data = []
         assert self.IsEmpty(), "stack not empty"
+    
+    def affect(self, stack):
+        assert isinstance(stack, Stack), "r value must but a Stack"
+        self.data = stack.data
+        self.status = Status.AFFECTED
         
         
     
