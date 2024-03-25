@@ -6,22 +6,22 @@ class Queue(Data):
         self.is_visualisable = is_visualisable
     
     def remove(self):
-        assert not self.IsEmpty(), "queue is empty"
-        return self.data.pop(self.Size())
+        assert not self.isEmpty(), "queue is empty"
+        return self.data.pop(self.size())
     
     def add(self, value):
         self.data.insert(0, value) 
-        assert not self.IsEmpty(), "operation failed, queue is empty"
+        assert not self.isEmpty(), "operation failed, queue is empty"
         
     def isEmpty(self):
-        return self.Size() == 0
+        return self.size() == 0
     
     def size(self):
         return len(self.data)
     
     def clear(self):
         self.data = []
-        assert self.IsEmpty(), "queue not empty"
+        assert self.isEmpty(), "queue not empty"
         
         
     
