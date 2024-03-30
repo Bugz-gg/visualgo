@@ -1,4 +1,5 @@
 from visualgo.data_structures.stack import Stack
+from visualgo.data_structures.data import Data
 
 def test_stack_init():
     stack = Stack(True)

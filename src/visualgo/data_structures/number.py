@@ -1,4 +1,4 @@
-from data import Status, Data
+from visualgo.data_structures.data import Status, Data
 
 class Number(Data):
 
