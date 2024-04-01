@@ -1,11 +1,10 @@
 import logging
 import sys
 
-from PyQt5.QtCore import Qt, QRect, QRectF, QPoint
+from PyQt5.QtCore import Qt, QRectF, QPoint
 from PyQt5.QtGui import QPainter, QBrush, QColor
-from PyQt5.QtWidgets import QWidget, QApplication, QLabel
 
-from visualgo.visu.CanvasContainer import CanvasContainer
+from visualgo.visu import CanvasContainer
 from visualgo.visu.ZoomableWidget import ZoomableWidget
 
 
@@ -14,8 +13,8 @@ class WorldCanvasWidget(ZoomableWidget):
 
     def __init__(self):
         super().__init__()
-        self.center_pos: QPoint = QPoint(self.frameGeometry().width() // 2, self.frameGeometry().height() // 2)
-        self.containers = []
+        self.current_position: QPoint = QPoint(0, 0)
+        self.containers: list[CanvasContainer] = []
 
     # shorter getters
     @property
@@ -28,24 +27,35 @@ class WorldCanvasWidget(ZoomableWidget):
 
     def _paint_grid(self, painter, dot_size):
         dot_size *= self.zoom
-        start = self.center_pos - QPoint(self.width // 2, self.height // 2) * self.zoom
-
         local_spacing = int(self.DOT_SPACING * self.zoom)
-        for i in range(self.width // local_spacing):
-            for j in range(self.height // local_spacing):
+
+        # Painful, I know
+        # The idea is to determine the screen position of the center dot
+        # And then shift to the top left of the screen
+        # And then start drawing them in the for loop.
+        center_dot_pos = self._screen_pos_to_canvas_pos(QPoint(self.width // 2, self.height // 2)) + QPoint(self.current_position.x() % local_spacing, self.current_position.y() % local_spacing)
+        top_left_dot_pos = self._canvas_pos_to_screen_pos(center_dot_pos + self._screen_pos_to_canvas_pos(QPoint(0, local_spacing)))
+        start = top_left_dot_pos
+
+        for i in range(self.width // local_spacing + 1):
+            for j in range(self.height // local_spacing + 1):
                 rect = QRectF(start.x() + local_spacing * i, start.y() + local_spacing * j, dot_size, dot_size)
                 painter.drawEllipse(rect)
+
+    def _screen_pos_to_canvas_pos(self, screen_pos: QPoint):
+        return QPoint(screen_pos.x() - self.width // 2, -screen_pos.y() + self.height // 2)
+
+    def _canvas_pos_to_screen_pos(self, canvas_pos: QPoint):
+        return QPoint(canvas_pos.x() + self.width // 2, -canvas_pos.y() + self.height // 2)
 
     def paintEvent(self, e):
         try:
             painter = QPainter(self)
             brush = QBrush()
-            brush.setColor(QColor('lightgray'))
+            brush.setColor(QColor(100, 100, 255, 150))
             brush.setStyle(Qt.SolidPattern)
             painter.setBrush(brush)
             self._paint_grid(painter, 5)
-            for container in self.containers:
-                container.repaint()
 
         except Exception as e:
             logging.error("An error occurred:", exc_info=True)
@@ -58,21 +68,10 @@ class WorldCanvasWidget(ZoomableWidget):
     def mouseMoveEvent(self, event):
         if event.buttons() == Qt.LeftButton:
             try:
-                delta = event.pos() - self.drag_start_position
-                self.center_pos += delta
+                delta: QPoint = event.pos() - self.drag_start_position
+                delta.setY(-delta.y())  # Invert Y movement
+                self.current_position += delta
                 self.drag_start_position = event.pos()
                 self.repaint()
             except Exception as e:
                 logging.error("An error occurred:", exc_info=True)
-
-
-if __name__ == "__main__":
-    app = QApplication([])
-    # load QSS file
-    with open("style.qss", "r") as f:
-        app.setStyleSheet(f.read())
-
-    window = WorldCanvasWidget()
-    window.containers.append(CanvasContainer(0, 0, 3, 3, QLabel("Hello world")))
-    window.show()
-    app.exec()
