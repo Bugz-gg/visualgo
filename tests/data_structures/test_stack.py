@@ -46,6 +46,4 @@ def test_number_compared():
     s2 = Stack()
     s1 == s2
     assert s1.get_status() == Status.COMPARED
-
-
     

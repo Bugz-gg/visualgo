@@ -21,7 +21,7 @@ class Queue(Data):
     
     def clear(self):
         self.data = []
-        assert self.IsEmpty(), "queue not empty"
+        assert self.isEmpty(), "queue not empty"
         
         
     

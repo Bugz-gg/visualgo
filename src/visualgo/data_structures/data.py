@@ -12,7 +12,7 @@ class Data(ABC):
     
     def set_status(self, status):
         self.status = status
-        print("------------ status has changed for",  self.status, "------------")
+        # print("------------ status has changed for",  self.status, "------------")
         
     def get_status(self):
         return self.status

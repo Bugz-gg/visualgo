@@ -13,7 +13,6 @@ class Stack(Data):
     
     def push(self, value):
         self.value.insert(0, value) 
-        assert not self.isEmpty(), "operation failed, stack is empty"
         
     def isEmpty(self):
         return self.size() == 0
@@ -38,5 +37,4 @@ class Stack(Data):
         super().set_status(Status.COMPARED)
         if isinstance(other, Stack):
             return self.value == other.value
-        return False
-    
+        return False    
