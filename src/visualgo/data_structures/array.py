@@ -24,4 +24,3 @@ class Array(Data):
             raise ValueError("Cannot assign given type to array cell")
     
 
-
