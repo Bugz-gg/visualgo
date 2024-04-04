@@ -9,14 +9,21 @@ from visualgo.visu.WorldCanvasWidget import WorldCanvasWidget
 
 
 class CanvasContainer(QWidget):
-    def __init__(self, parent: QWidget, start: QPoint, size: QSizeF, inside_widget: QWidget):
+    def __init__(self, parent: QWidget, start: QPoint, size: QSizeF, inside_widget: QWidget, container_name: str):
         super().__init__(parent)
         self.start: QPoint = start
         self.size: QSizeF = size
 
+        self.setObjectName("containerWidget")  # Used to set a name for styling
+
+        self.name = QLabel(container_name)
+        self.name.setObjectName("containerName")
+
         layout = QVBoxLayout()
-        layout.addWidget(inside_widget)
         self.setLayout(layout)
+        self.layout().addWidget(self.name)
+        self.layout().addWidget(inside_widget)
+
         self.segment_size = WorldCanvasWidget.DOT_SPACING
         self.zoom = 1.0
 
@@ -40,6 +47,15 @@ class CanvasContainer(QWidget):
         except Exception as e:
             logging.error("An error occurred:", exc_info=True)
 
+    # Make the container draggable
+    def mousePressEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.offset = event.pos()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(self.mapToParent(event.pos() - self.offset))
+
 
 if __name__ == "__main__":
     app = QApplication([])
@@ -47,6 +63,6 @@ if __name__ == "__main__":
     with open("style.qss", "r") as f:
         app.setStyleSheet(f.read())
 
-    window = CanvasContainer(None, QPoint(5, 3), QSize(3, 3), QLabel("Hello world"))
+    window = CanvasContainer(None, QPoint(5, 3), QSize(3, 3), QLabel("Hello world"), "hey")
     window.show()
     app.exec()

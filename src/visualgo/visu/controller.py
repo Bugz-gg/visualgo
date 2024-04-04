@@ -1,3 +1,4 @@
+from __future__ import annotations
 import sys
 
 from PyQt5.QtCore import QSize, Qt
@@ -69,7 +70,7 @@ class Controller(QMainWindow):
         self.set_title(program_name)
 
         # Content layout : code / data
-        self.content_layout = Visualizer()  # set up the visualiser
+        self.content_layout = Visualizer(self)  # set up the visualiser
         self.content_layout.update_data(self.program_states[self.current_state_index])  # update it once at beginning
         self.main_layout.addLayout(self.content_layout)
 
@@ -100,6 +101,7 @@ class Controller(QMainWindow):
         title_font.setPointSize(20)
         title.setFont(title_font)
         title.setAlignment(Qt.AlignCenter)
+        title.setMaximumHeight(25)  # Restrain wigdet size
         self.main_layout.addWidget(title)
 
     # Handle the controls of the visualizer : Run / step / pause?

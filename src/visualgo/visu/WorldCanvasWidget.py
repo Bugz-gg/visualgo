@@ -1,20 +1,21 @@
+from __future__ import annotations
+
 import logging
 import sys
 
-from PyQt5.QtCore import Qt, QRectF, QPoint, QPointF, QRect, QSize, QSizeF
+from PyQt5.QtCore import Qt, QRectF, QPoint, QSizeF
 from PyQt5.QtGui import QPainter, QBrush, QColor, QPaintEvent
 
-from visualgo.visu import CanvasContainer
 from visualgo.visu.ZoomableWidget import ZoomableWidget
 
 
 class WorldCanvasWidget(ZoomableWidget):
-    DOT_SPACING = 75
+    DOT_SPACING = 150
 
     def __init__(self):
         super().__init__()
         self.current_position: QPoint = QPoint(0, 0)
-        self.containers: list[CanvasContainer] = []
+        self.containers: list[WorldCanvasWidget] = []
 
     # shorter getters
     @property

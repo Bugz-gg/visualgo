@@ -10,7 +10,7 @@ QWidget#dataWidget {
 
 }
 
-QLabel#dataName {
+QLabel#containerName {
     background-color: #98C1D9;
     color: #4B244A;
     font-weight: bold;
@@ -56,16 +56,14 @@ QLabel#codeLabel {
     color: #25171A;
     font-family: Courier, monospace; /* Monospace font */
     font-size: 12px; /* Font size */
-    padding: 1px; /* Padding around the text */
     border: 1px solid #6969B3; /* Gray border */
-    border-radius: 5px; /* Rounded corners */
+    border-radius: 15px; /* Rounded corners */
 }
 
 QLabel#title {
     background-color: #98C1D9;
     color: #4B244A;
     font-weight: bold;
-    padding: 20px; /* Add some padding around the title */
     border: 1px solid #6969B3; /* Gray border */
     border-radius: 5px; /* Rounded corners */
     font-family: Arial, sans-serif; /* Font family */
