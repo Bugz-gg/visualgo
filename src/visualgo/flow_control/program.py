@@ -3,6 +3,7 @@ from copy import deepcopy
 from ..data_structures.data import *
 from ..data_structures.number import Number
 from ..data_structures.stack import Stack
+count = 0
 
 
 class Program:
@@ -21,22 +22,20 @@ class Program:
             self.__dict__[__name] = __value
         else:
             raise AttributeError("Unknown attribute")
-        if not __name == "historic":
+        if not __name == "historic" or __name == "log" or __name == "__dict__":
             self.log
 
     @property
     def log(self):
         attr = super().__getattribute__("__dict__")
-        state = []
         for attr_name in attr:
-            if attr_name != "historic":
+            if attr_name != "historic" and "historic" in attr:
                 if isinstance(attr[attr_name], Data):
-                    state.append((attr_name, deepcopy(attr[attr_name])))
-        if "historic" in attr:
-            super().__getattribute__("historic").append(state)
+                    super().__getattribute__("historic").append(
+                        (attr_name, deepcopy(attr[attr_name])))
 
     def __getattribute__(self, __name: str) -> Any:
-        if __name == "historic":
+        if __name == "historic" or __name == "log" or __name == "__dict__":
             return super().__getattribute__(__name)
         super().__getattribute__("log")
         return super().__getattribute__(__name)
