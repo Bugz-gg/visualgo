@@ -89,4 +89,4 @@ class Number(Data):
         elif isinstance(other, int) or isinstance(other, float):
             self.status = Status.COMPARED
             return self.value == other
-        raise TypeErroR
+        raise TypeError

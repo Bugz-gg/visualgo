@@ -9,7 +9,7 @@ count = 0
 class Program:
 
     def __init__(self) -> None:
-        self.historic = []
+        self.historic: list[tuple[str, Data]] = []
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if isinstance(__value, list) and __name == 'historic':
