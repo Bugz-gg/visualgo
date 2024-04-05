@@ -1,9 +1,10 @@
 from visualgo.flow_control.program import Program
 from visualgo.data_structures.stack import Stack
 
+
 def test_program_stack():
     p = Program()
-    p.s = Stack(True)
+    p.s = Stack()
     assert type(p.s) == Stack
     p.s.push(5)
     p.s.push(6)

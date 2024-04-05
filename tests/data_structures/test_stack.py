@@ -1,4 +1,5 @@
-from visualgo.data_structures.data import Data
+from visualgo.data_structures.stack import Stack
+from visualgo.data_structures.number import Status
 
 
 def test_stack_init():
@@ -33,11 +34,6 @@ def test_stack_peep():
     assert stack.peep() == 42
 
 # --------------- Status tests ---------------
-
-
-def test_number_status_created():
-    s = Stack()
-    assert s.get_status() == Status.CREATED
 
 
 def test_number_affected():

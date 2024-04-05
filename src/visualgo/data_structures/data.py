@@ -23,7 +23,7 @@ class Data(ABC):
 
     def __getattribute__(self, name: str):
         # print("__getattribute__ called on", name) # Debug logs
-        if name == 'value':
+        if name == 'value' and self.status != Status.COMPARED:
             self.set_status(Status.READ)
         return super().__getattribute__(name)
 
