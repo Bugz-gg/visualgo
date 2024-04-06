@@ -18,7 +18,7 @@ print("Number", hist)
 
 for i in hist:
     # Toujours regarder le status avant la value sinon on modifie son status.
-    print(i[0], i[1].status, i[1].value)
+    print(i[0][0], i[0][1].status, i[0][1].value)
 print("----------------------------------------------------------------")
 
 # -------------- Test Stack ---------------
@@ -35,7 +35,7 @@ hist2 = p2.historic
 print("Stack", hist2)
 
 for i in hist2:
-    print(i[0], i[1].status, i[1].value)
+    print(i[0][0], i[0][1].status, i[0][1].value)
 
 # ----------- Fonction MAX -----------------
 
@@ -62,7 +62,7 @@ p3.st.push(19)
 
 max_stack(p3)
 hist3 = p3.historic
-print("Stack", hist3)
+print("Max Func:", hist3)
 
 for i in hist3:
-    print(i[0], i[1].status, i[1].value)
+    print(i[0][0], i[0][1].status, i[0][1].value)
