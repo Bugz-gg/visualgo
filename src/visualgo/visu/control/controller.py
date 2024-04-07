@@ -7,10 +7,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget, QPu
     QVBoxLayout, QLabel
 
 from visualgo.data_structures.data import Data
-from visualgo.visu.WorldCanvasWidget import WorldCanvasWidget
-from visualgo.visu.displayDataStructure import ArrayWidget, DataState, ArrayCellWidget, TreeNode, TreeWidget
-from visualgo.visu.programState import ProgramState
-from visualgo.visu.visualizer import Visualizer
+from visualgo.visu.control.programState import ProgramState
+from visualgo.visu.control.visualizer import Visualizer
 
 
 class Controller(QMainWindow):
@@ -18,48 +16,9 @@ class Controller(QMainWindow):
         super().__init__()
 
         # Transform historic into a list of program state ?
+        histo_len = len(historic)
+        self.program_states = [ProgramState(historic[:i]) for i in range(1, histo_len)]
 
-
-        # DATA SECTION
-        # freezing the values is necessary as we need to instantiate new one each time,
-        # to ensure that the originals don't get modified
-        self.program_states: list[ProgramState] = [
-            ProgramState({"my_list_variable":
-                              lambda: ArrayWidget([])}),
-            ProgramState({"my_list_variable":
-                              lambda: ArrayWidget([1], [DataState.CREATED])}),
-            ProgramState({"my_list_variable":
-                              lambda: ArrayWidget([1, 2], [DataState.NORMAL, DataState.CREATED])}),
-            ProgramState({"my_list_variable":
-                              lambda: ArrayWidget([1, 2, 3],
-                                                  [DataState.NORMAL, DataState.NORMAL, DataState.CREATED])}),
-            ProgramState({"my_list_variable":
-                              lambda: ArrayWidget([1, 2, 3],
-                                                  [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
-                                                  ), "max_value": lambda: ArrayCellWidget(1, DataState.CREATED)}),
-            ProgramState({"my_list_variable":
-                              lambda: ArrayWidget([1, 2, 3],
-                                                  [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
-                                                  ), "max_value": lambda: ArrayCellWidget(1, DataState.NORMAL)}),
-            ProgramState({"my_list_variable":
-                              lambda: ArrayWidget([1, 2, 3],
-                                                  [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
-                                                  ), "max_value": lambda: ArrayCellWidget(1, DataState.NORMAL),"my_tree_variable": lambda: TreeWidget(TreeNode(1,state=DataState.CREATED))}),
-            ProgramState({"my_list_variable":
-                              lambda: ArrayWidget([1, 2, 3],
-                                                  [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
-                                                  ), "max_value": lambda: ArrayCellWidget(1, DataState.NORMAL),"my_tree_variable": lambda: TreeWidget(TreeNode(1, [
-        TreeNode(2, state=DataState.CREATED),
-        TreeNode(3, state=DataState.CREATED)    
-    ]))}),            ProgramState({"my_list_variable":
-                              lambda: ArrayWidget([1, 2, 3],
-                                                  [DataState.NORMAL, DataState.NORMAL, DataState.NORMAL]
-                                                  ), "max_value": lambda: ArrayCellWidget(1, DataState.NORMAL),"my_tree_variable": lambda: TreeWidget(TreeNode(1, [
-        TreeNode(2,[TreeNode(4, state=DataState.CREATED),TreeNode(5, state=DataState.CREATED)]),
-        TreeNode(3)    
-    ]))}),
-            
-        ]
         # Start at state 0
         self.current_state_index = 0
 
@@ -152,7 +111,7 @@ class Controller(QMainWindow):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     # load QSS file
-    with open("style.qss", "r") as f:
+    with open("../style.qss", "r") as f:
         app.setStyleSheet(f.read())
 
     window = Controller("Demo visualisation")

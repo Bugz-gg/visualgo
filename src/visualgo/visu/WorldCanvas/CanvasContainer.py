@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 import logging
-import sys
 
 from PyQt5.QtCore import Qt, QRect, QMargins, QPoint, QSize, QSizeF
-from PyQt5.QtGui import QPainter, QBrush, QColor, QPaintEvent
-from PyQt5.QtWidgets import QVBoxLayout, QLabel, QApplication, QWidget, QHBoxLayout
+from PyQt5.QtGui import QPainter, QBrush, QColor
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QApplication, QWidget
 
-from visualgo.visu.WorldCanvasWidget import WorldCanvasWidget
+from visualgo.visu.WorldCanvas.WorldCanvasWidget import WorldCanvasWidget
+from visualgo.visu.utils import always_try
 
 
 class CanvasContainer(QWidget):
@@ -45,12 +45,10 @@ class CanvasContainer(QWidget):
         self.setGeometry(QRect(world.canvas_pos_to_screen_pos(self.start * local_spacing), adapted_size))
         self.zoom = world.zoom
 
+    @always_try
     def paintEvent(self, event):
-        try:
-            inside = self.geometry().marginsRemoved(QMargins(5, 5, 5, 5))
-            self.painter.drawRoundedRect(inside, 10, 10)  # Adjust radius for desired roundness
-        except Exception as e:
-            logging.error("An error occurred:", exc_info=True)
+        inside = self.geometry().marginsRemoved(QMargins(5, 5, 5, 5))
+        self.painter.drawRoundedRect(inside, 10, 10)  # Adjust radius for desired roundness
 
     # Make the container draggable
     def mousePressEvent(self, event):
@@ -65,7 +63,7 @@ class CanvasContainer(QWidget):
 if __name__ == "__main__":
     app = QApplication([])
     # load QSS file
-    with open("style.qss", "r") as f:
+    with open("../style.qss", "r") as f:
         app.setStyleSheet(f.read())
 
     window = CanvasContainer(None, QPoint(5, 3), QSize(3, 3), QLabel("Hello world"), "hey")

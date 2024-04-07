@@ -1,23 +1,20 @@
 from __future__ import annotations
 
-import logging
-import sys
-
 from PyQt5.QtCore import Qt, QRectF, QPoint, QSizeF
-from PyQt5.QtGui import QPainter, QBrush, QColor, QPaintEvent
-from PyQt5.QtWidgets import QVBoxLayout
+from PyQt5.QtGui import QPainter, QBrush, QColor
+from PyQt5.QtWidgets import QVBoxLayout, QWidget
 
-from visualgo.visu.ZoomableWidget import ZoomableWidget
+from visualgo.visu.WorldCanvas.ZoomableWidget import ZoomableWidget
 from visualgo.visu.utils import always_try
 
 
 class WorldCanvasWidget(ZoomableWidget):
-    DOT_SPACING = 150
+    DOT_SPACING = 150  # Toy around with this one if you want more or less dot
 
     def __init__(self):
         super().__init__()
         self.current_position: QPoint = QPoint(0, 0)
-        self.containers: list[WorldCanvasWidget] = []
+        self.containers: list[QWidget] = []
         self.setLayout(QVBoxLayout())
 
     # shorter getters
@@ -34,7 +31,6 @@ class WorldCanvasWidget(ZoomableWidget):
         local_spacing = int(self.DOT_SPACING * self.zoom)
 
         # Top left position :D
-
         start = QPoint(- self.current_position.x() % local_spacing, self.current_position.y() % local_spacing)
 
         for i in range(self.width // local_spacing + 1):
@@ -75,13 +71,6 @@ class WorldCanvasWidget(ZoomableWidget):
         if event.buttons() == Qt.LeftButton:
             self.drag_start_position = event.pos()
 
-    def clear(self):
-        while self.layout().count():
-            item = self.layout().takeAt(0)
-            widget = item.widget()
-            if widget is not None:
-                widget.deleteLater()
-
     @always_try
     def mouseMoveEvent(self, event):
         if event.buttons() == Qt.LeftButton:
@@ -92,3 +81,12 @@ class WorldCanvasWidget(ZoomableWidget):
             self.repaint()
             for container in self.containers:
                 container.move(container.pos() + delta)
+
+    def clear(self):
+        self.containers = []
+        while self.layout().count():
+            item = self.layout().takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.hide()  # Hide or delete, deleting breaks going back
+                # But I guess hide doesn't clear the memory, so it's a leak until it's fixed

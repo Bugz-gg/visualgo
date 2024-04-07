@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QApplication
 from ..data_structures.data import *
 from ..data_structures.number import Number
 from ..data_structures.stack import Stack
-from ..visu.controller import Controller
+from visualgo.visu.control.controller import Controller
 
 count = 0
 
@@ -52,6 +52,6 @@ class Program:
         with open("visualgo/visu/style.qss", "r") as f:
             app.setStyleSheet(f.read())
 
-        window = Controller(program_name)
+        window = Controller(program_name, self.historic)
         window.show()
         sys.exit(app.exec())

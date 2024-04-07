@@ -13,12 +13,7 @@ p.y = Number(6)
 p.z = p.x + p.y
 p.x += Number(10)
 p.y -= Number(2)
-p.visualize()
-exit(0)
-hist = p.historic
-print("Number", hist)
-
-for i in hist:
+for i in p.historic:
     # Toujours regarder le status avant la value sinon on modifie son status.
     print(i[0], i[1].status, i[1].value)
 print("----------------------------------------------------------------")
@@ -68,3 +63,5 @@ print("Stack", hist3)
 
 for i in hist3:
     print(i[0], i[1].status, i[1].value)
+
+p.visualize()
