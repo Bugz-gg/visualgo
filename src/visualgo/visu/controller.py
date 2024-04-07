@@ -6,6 +6,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget, QPushButton, \
     QVBoxLayout, QLabel
 
+from visualgo.data_structures.data import Data
 from visualgo.visu.WorldCanvasWidget import WorldCanvasWidget
 from visualgo.visu.displayDataStructure import ArrayWidget, DataState, ArrayCellWidget, TreeNode, TreeWidget
 from visualgo.visu.programState import ProgramState
@@ -13,8 +14,11 @@ from visualgo.visu.visualizer import Visualizer
 
 
 class Controller(QMainWindow):
-    def __init__(self, program_name):
+    def __init__(self, program_name, historic: list[tuple[str, Data]]):
         super().__init__()
+
+        # Transform historic into a list of program state ?
+
 
         # DATA SECTION
         # freezing the values is necessary as we need to instantiate new one each time,
@@ -61,7 +65,6 @@ class Controller(QMainWindow):
 
         # DISPLAY SECTION
         self.setWindowTitle("Visualiser Visualgo")
-
         self.setObjectName("controller")
 
         # Initialize layouts

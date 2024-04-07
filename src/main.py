@@ -13,6 +13,8 @@ p.y = Number(6)
 p.z = p.x + p.y
 p.x += Number(10)
 p.y -= Number(2)
+p.visualize()
+exit(0)
 hist = p.historic
 print("Number", hist)
 

@@ -1,8 +1,14 @@
+import sys
 from typing import Any
 from copy import deepcopy
+
+from PyQt5.QtWidgets import QApplication
+
 from ..data_structures.data import *
 from ..data_structures.number import Number
 from ..data_structures.stack import Stack
+from ..visu.controller import Controller
+
 count = 0
 
 
@@ -39,3 +45,13 @@ class Program:
             return super().__getattribute__(__name)
         super().__getattribute__("log")
         return super().__getattribute__(__name)
+
+    def visualize(self, program_name="visualisation"):
+        app = QApplication(sys.argv)
+        # load QSS file
+        with open("visualgo/visu/style.qss", "r") as f:
+            app.setStyleSheet(f.read())
+
+        window = Controller(program_name)
+        window.show()
+        sys.exit(app.exec())
