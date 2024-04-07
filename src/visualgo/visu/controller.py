@@ -6,6 +6,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget, QPushButton, \
     QVBoxLayout, QLabel
 
+from visualgo.visu.WorldCanvasWidget import WorldCanvasWidget
 from visualgo.visu.displayDataStructure import ArrayWidget, DataState, ArrayCellWidget, TreeNode, TreeWidget
 from visualgo.visu.programState import ProgramState
 from visualgo.visu.visualizer import Visualizer
@@ -70,9 +71,9 @@ class Controller(QMainWindow):
         self.set_title(program_name)
 
         # Content layout : code / data
-        self.content_layout = Visualizer(self)  # set up the visualiser
-        self.content_layout.update_data(self.program_states[self.current_state_index])  # update it once at beginning
-        self.main_layout.addLayout(self.content_layout)
+        self.content_layout = Visualizer()  # set up the visualiser
+
+        self.main_layout.addWidget(self.content_layout)
 
         # Controller layout : mainly buttons
         self.controller_layout = QHBoxLayout()

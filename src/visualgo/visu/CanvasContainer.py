@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import logging
 import sys
 
 from PyQt5.QtCore import Qt, QRect, QMargins, QPoint, QSize, QSizeF
-from PyQt5.QtGui import QPainter, QBrush, QColor
-from PyQt5.QtWidgets import QVBoxLayout, QLabel, QApplication, QWidget
+from PyQt5.QtGui import QPainter, QBrush, QColor, QPaintEvent
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QApplication, QWidget, QHBoxLayout
 
 from visualgo.visu.WorldCanvasWidget import WorldCanvasWidget
 
@@ -18,11 +20,15 @@ class CanvasContainer(QWidget):
 
         self.name = QLabel(container_name)
         self.name.setObjectName("containerName")
+        self.name.setAlignment(Qt.AlignCenter)
 
         layout = QVBoxLayout()
         self.setLayout(layout)
         self.layout().addWidget(self.name)
         self.layout().addWidget(inside_widget)
+        self.inside_widget = inside_widget
+        layout.setStretch(0, 0)
+        layout.setStretch(1, 1)  # Give the majority of space to the widget
 
         self.segment_size = WorldCanvasWidget.DOT_SPACING
         self.zoom = 1.0
@@ -34,16 +40,15 @@ class CanvasContainer(QWidget):
         self.painter = painter
 
     def set_position_and_zoom(self, world: WorldCanvasWidget):
-        adapted_size = self.size * world.zoom * world.DOT_SPACING
-        self.setGeometry(QRect(world.canvas_pos_to_screen_pos(self.start), adapted_size))
+        local_spacing = world.zoom * world.DOT_SPACING
+        adapted_size = self.size * local_spacing
+        self.setGeometry(QRect(world.canvas_pos_to_screen_pos(self.start * local_spacing), adapted_size))
         self.zoom = world.zoom
 
     def paintEvent(self, event):
         try:
-
             inside = self.geometry().marginsRemoved(QMargins(5, 5, 5, 5))
             self.painter.drawRoundedRect(inside, 10, 10)  # Adjust radius for desired roundness
-
         except Exception as e:
             logging.error("An error occurred:", exc_info=True)
 

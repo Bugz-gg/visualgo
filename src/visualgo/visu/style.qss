@@ -6,19 +6,24 @@ QWidget#ArrayWidget {
 
 }
 
-QWidget#dataWidget {
-
+QWidget#containerWidget {
+    background-color: #98C1D9;
+    color: #4B244A;
+    font-weight: bold;
+    border: 1px solid #6969B3; /* Gray border */
+    border-radius: 5px; /* Rounded corners */
+    font-family: Arial, sans-serif; /* Font family */
+    font-size: 10px; /* Font size */
 }
 
 QLabel#containerName {
     background-color: #98C1D9;
     color: #4B244A;
     font-weight: bold;
-    padding: 20px; /* Add some padding around the title */
     border: 1px solid #6969B3; /* Gray border */
     border-radius: 5px; /* Rounded corners */
     font-family: Arial, sans-serif; /* Font family */
-    font-size: 24px; /* Font size */
+    font-size: 10px; /* Font size */
 }
 
 
