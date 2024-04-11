@@ -4,10 +4,10 @@ from PyQt5.QtCore import QRectF, Qt
 from PyQt5.QtGui import QPainter
 from PyQt5.QtWidgets import QWidget
 
-from visualgo.data_structures.data import Data
+from visualgo.data_structures.data import Data, Status
 from visualgo.data_structures.number import Number
 from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
-from visualgo.visu.data_structures.data_states import DataStates
+from visualgo.visu.data_structures.data_states import status_to_color
 from visualgo.visu.utils import always_try
 
 
@@ -17,10 +17,10 @@ class CellWidget(WidgetWithZoom):
     def __init__(self, value: Number):
         super().__init__()
         self._value = value.value
-        self.state = DataStates.from_status(value.get_status())
+        self.status: Status = value.status
 
-    def set_state(self, state: DataStates):
-        self.state = state
+    def color(self):
+        return status_to_color(self.status)
 
     @always_try
     def paintEvent(self, event):
@@ -34,7 +34,7 @@ class CellWidget(WidgetWithZoom):
         self.setFixedSize(zoomed_cell_size, zoomed_cell_size)  # cell size
 
         brush = painter.brush()
-        brush.setColor(self.state.color)
+        brush.setColor(self.color())
         painter.setBrush(brush)
 
         painter.drawRect(self.rect())
