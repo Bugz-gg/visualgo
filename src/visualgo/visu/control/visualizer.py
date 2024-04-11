@@ -43,6 +43,16 @@ class Visualizer(QWidget):
 
         self.data_area.update()
 
-    def get_free_pos(self, size):
-        return QPoint(random.randint(-3, 3), random.randint(-3, 3))
+    def get_free_pos(self, size):       
+            if not self.data_positions: # Check if there are any existing objects
+                # If no objects, place the new object at (0, 0)
+                return QPoint(0, 0)
+
+            # Find the rightmost position of the existing objects
+            rightmost_pos = max(pos.x() for pos in self.data_positions.values())
+
+            # Calculate the next available position
+            next_pos = QPoint(rightmost_pos + 1, 0)
+
+            return next_pos
 
