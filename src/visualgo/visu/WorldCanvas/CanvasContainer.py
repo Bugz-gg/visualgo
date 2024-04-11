@@ -12,6 +12,8 @@ from visualgo.visu.utils import always_try
 
 
 class CanvasContainer(WidgetWithZoom):
+    BASE_FONT_SIZE = 30
+
     def __init__(self, parent: QWidget, start: QPoint, size: QSizeF, inside_widget: QWidget, container_name: str):
         super().__init__(parent)
         self.start: QPoint = start
@@ -39,16 +41,13 @@ class CanvasContainer(WidgetWithZoom):
         self.setGeometry(QRect(world.canvas_pos_to_screen_pos(self.start * local_spacing), adapted_size))
         self.zoom = world.zoom
         self.inside_widget.zoom = world.zoom
+        self.update_name_size()
 
-    @always_try
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)  # Enable antialiasing for smooth edges
-        painter.setPen(Qt.NoPen)
-        painter.setBrush(QBrush(QColor(100, 100, 255, 150)))
+    def update_name_size(self):
+        font = self.name.font()
+        font.setPixelSize(self.zoomed_int(self.BASE_FONT_SIZE))
+        self.name.setFont(font)
 
-        inside = self.geometry().marginsRemoved(QMargins(5, 5, 5, 5))
-        painter.drawRoundedRect(inside, 10, 10)  # Adjust radius for desired roundness
 
     # Make the container draggable
     def mousePressEvent(self, event):

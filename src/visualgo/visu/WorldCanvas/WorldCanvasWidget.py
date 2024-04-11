@@ -96,5 +96,4 @@ class WorldCanvasWidget(ZoomableWidget):
             item = self.layout().takeAt(0)
             widget = item.widget()
             if widget is not None:
-                widget.hide()  # Hide or delete, deleting breaks going back
-                # But I guess hide doesn't clear the memory, so it's a leak until it's fixed
+                widget.deleteLater()

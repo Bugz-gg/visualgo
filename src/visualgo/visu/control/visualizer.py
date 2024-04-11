@@ -30,7 +30,7 @@ class Visualizer(QWidget):
         if program_state is None:
             return
 
-        for name, value in program_state.variables_to_display.items():
+        for name, data in program_state.variables_to_display.items():
             try:
                 pos = self.data_positions[name]
             except KeyError:
@@ -38,7 +38,8 @@ class Visualizer(QWidget):
                 self.data_positions[name] = pos
 
             print(f"Adding {name} component at {pos}!")
-            self.data_area.add_container(CanvasContainer(self, pos, QSize(1, 1), value, name))
+            self.data_area.add_container(CanvasContainer(self, pos, QSize(1, 1),
+                                                         ProgramState.resolve_visual_structure(data), name))
 
         self.data_area.update()
 

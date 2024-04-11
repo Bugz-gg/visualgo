@@ -1,10 +1,7 @@
-import sys
-
-from PyQt5.QtCore import QRectF, Qt
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter
-from PyQt5.QtWidgets import QWidget
 
-from visualgo.data_structures.data import Data, Status
+from visualgo.data_structures.data import Status
 from visualgo.data_structures.number import Number
 from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
 from visualgo.visu.data_structures.data_states import status_to_color
@@ -31,7 +28,7 @@ class CellWidget(WidgetWithZoom):
         painter.setFont(font)
 
         zoomed_cell_size = self.zoomed_int(self.DEFAULT_CELL_SIZE)
-        self.setFixedSize(zoomed_cell_size, zoomed_cell_size)  # cell size
+        self.setMinimumSize(zoomed_cell_size, zoomed_cell_size)  # cell size
 
         brush = painter.brush()
         brush.setColor(self.color())
