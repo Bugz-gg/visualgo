@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import math
 import random
 
-from PyQt5.QtCore import QSize, QPoint
+from PyQt5.QtCore import QSize, QPoint, Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
 from visualgo.visu.WorldCanvas.CanvasContainer import CanvasContainer
@@ -38,8 +39,9 @@ class Visualizer(QWidget):
                 self.data_positions[name] = pos
 
             print(f"Adding {name} component at {pos}!")
-            self.data_area.add_container(CanvasContainer(self, pos, QSize(1, 1),
-                                                         ProgramState.resolve_visual_structure(data), name))
+            widget = ProgramState.resolve_visual_structure(data)
+            size = self.get_minimal_size(widget.sizeHint())
+            self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
 
         self.data_area.update()
 
@@ -55,4 +57,9 @@ class Visualizer(QWidget):
             next_pos = QPoint(rightmost_pos + 1, 0)
 
             return next_pos
+    def get_minimal_size(self, hint: QSize):
+        width = math.ceil(hint.width() / self.data_area.DOT_SPACING)
+        height = math.ceil(hint.height() / self.data_area.DOT_SPACING)
+        return QSize(width, height)
+
 

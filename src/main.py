@@ -64,4 +64,5 @@ print("Stack", hist3)
 for i in hist3:
     print(i[0], i[1].status, i[1].value)
 
-p.visualize()
+
+p3.visualize()

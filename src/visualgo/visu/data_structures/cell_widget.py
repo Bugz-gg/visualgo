@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QMargins
 from PyQt5.QtGui import QPainter
 
 from visualgo.data_structures.data import Status
@@ -13,8 +13,8 @@ class CellWidget(WidgetWithZoom):
 
     def __init__(self, value: Number):
         super().__init__()
-        self._value = value.value
         self.status: Status = value.status
+        self._value = value.value
 
     def color(self):
         return status_to_color(self.status)
@@ -29,12 +29,16 @@ class CellWidget(WidgetWithZoom):
 
         zoomed_cell_size = self.zoomed_int(self.DEFAULT_CELL_SIZE)
         self.setMinimumSize(zoomed_cell_size, zoomed_cell_size)  # cell size
-
         brush = painter.brush()
         brush.setColor(self.color())
         painter.setBrush(brush)
 
-        painter.drawRect(self.rect())
+        x, y, w, h = self.rect().x(), self.rect().y(), self.rect().width(), self.rect().height()
+
+        painter.fillRect(
+            x, y, w, h,
+            self.color()
+        )
 
         painter.drawText(self.rect(), Qt.AlignCenter, str(self._value))
 
