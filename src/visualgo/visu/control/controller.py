@@ -17,7 +17,9 @@ class Controller(QMainWindow):
 
         # Transform historic into a list of program state ?
         histo_len = len(historic)
-        self.program_states = [ProgramState(historic[:i]) for i in range(1, histo_len)]
+
+        # Convert the historic into a dict !
+        self.program_states = [ProgramState({name: value for name, value in historic[:i]}) for i in range(1, histo_len)]
 
         # Start at state 0
         self.current_state_index = 0

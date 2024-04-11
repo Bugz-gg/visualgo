@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import QWidget, QHBoxLayout
 
+from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
 from visualgo.visu.data_structures.cell_widget import CellWidget
 
 
-class VectorCellWidget(QWidget):
+class VectorCellWidget(WidgetWithZoom):
     def __init__(self, array):
         super().__init__()
         self.cell_array = [CellWidget(value) for value in array]

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import sys
+
 from PyQt5.QtCore import Qt, QRectF, QPoint, QSizeF
 from PyQt5.QtGui import QPainter, QBrush, QColor
 from PyQt5.QtWidgets import QVBoxLayout, QWidget
@@ -60,11 +62,13 @@ class WorldCanvasWidget(ZoomableWidget):
         brush.setColor(QColor(100, 100, 255, 150))
         brush.setStyle(Qt.SolidPattern)
         painter.setBrush(brush)
+
         self._paint_grid(painter, 5)
 
         for container in self.containers:
-            self.layout().addWidget(container)
             container.set_position_and_zoom(self)
+
+        print("Paiting", file=sys.stderr)
 
     # Handle mouse drag click
     def mousePressEvent(self, event):
@@ -81,6 +85,10 @@ class WorldCanvasWidget(ZoomableWidget):
             self.repaint()
             for container in self.containers:
                 container.move(container.pos() + delta)
+
+    def add_container(self, container):
+        self.layout().addWidget(container)
+        self.containers.append(container)
 
     def clear(self):
         self.containers = []

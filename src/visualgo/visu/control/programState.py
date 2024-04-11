@@ -5,7 +5,7 @@ from visualgo.visu.data_structures.cell_widget import CellWidget
 
 
 class ProgramState:
-    def __init__(self, variables_to_display: list[tuple[str, any]] = None):
+    def __init__(self, variables_to_display: dict[str, Data] = None):
         # The ProgramState should contain all the variable of the program
         # We could imagine that some variable shouldn't be displayed
         # So we only focus on the variables to display here
@@ -15,7 +15,7 @@ class ProgramState:
 
         self.variables_to_display: dict[str, any] = {}
 
-        for name, value in variables_to_display:
+        for name, value in variables_to_display.items():
             self.variables_to_display[name] = self.resolve_visual_structure(value)
 
     def __str__(self):

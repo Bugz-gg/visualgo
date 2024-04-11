@@ -38,7 +38,7 @@ class Visualizer(QWidget):
                 self.data_positions[name] = pos
 
             print(f"Adding {name} component at {pos}!")
-            self.data_area.containers.append(CanvasContainer(self, pos, QSize(1, 1), value, name))
+            self.data_area.add_container(CanvasContainer(self, pos, QSize(1, 1), value, name))
 
         self.data_area.update()
 

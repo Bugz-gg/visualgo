@@ -12,7 +12,7 @@ class DataStates(Enum):
     COMPARED = (4, QColor("red"))
     READ = (5, QColor("light blue"))
 
-    def __new__(cls, nb, color):
+    def __new__(cls, nb: int, color: QColor):
         entry = object.__new__(cls)
         entry.nb = entry._value_ = nb
         entry.color = color
