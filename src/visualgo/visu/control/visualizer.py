@@ -44,19 +44,25 @@ class Visualizer(QWidget):
             self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
 
         self.data_area.update()
+        
+    def get_free_pos(self, size):
+        # Check if there are any existing objects
+        if not self.data_positions:
+            # If no objects, place the new object at (0, 0)
+            return QPoint(0, 0)
 
-    def get_free_pos(self, size):       
-            if not self.data_positions: # Check if there are any existing objects
-                # If no objects, place the new object at (0, 0)
-                return QPoint(0, 0)
+        # Find the total number of objects
+        num_objects = len(self.data_positions)
 
-            # Find the rightmost position of the existing objects
-            rightmost_pos = max(pos.x() for pos in self.data_positions.values())
+        # Calculate the row and column of the next position
+        threshold = 3  # Change the value '3' to the desired threshold
+        row = num_objects // threshold
+        col = num_objects % threshold
 
-            # Calculate the next available position
-            next_pos = QPoint(rightmost_pos + 1, 0)
+        # Calculate the next position based on the row and column
+        next_pos = QPoint(col, row)
 
-            return next_pos
+        return next_pos
     def get_minimal_size(self, hint: QSize):
         width = math.ceil(hint.width() / self.data_area.DOT_SPACING)
         height = math.ceil(hint.height() / self.data_area.DOT_SPACING)
