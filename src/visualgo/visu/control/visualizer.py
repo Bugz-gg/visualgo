@@ -67,6 +67,7 @@ class Visualizer(QWidget):
         next_pos = QPoint(col, row)
 
         return next_pos
+
     def get_minimal_size(self, hint: QSize):
         width = math.ceil(hint.width() / self.data_area.DOT_SPACING)
         height = math.ceil(hint.height() / self.data_area.DOT_SPACING)

@@ -21,6 +21,8 @@ class CanvasContainer(WidgetWithZoom):
 
         self.setObjectName("containerWidget")  # Used to set a name for styling
 
+        self.font_size = self.get_font_size(len(container_name))
+
         self.name = QLabel(container_name)
         self.name.setObjectName("containerName")
         self.name.setAlignment(Qt.AlignCenter)
@@ -35,6 +37,18 @@ class CanvasContainer(WidgetWithZoom):
 
         self.segment_size = WorldCanvasWidget.DOT_SPACING
 
+    def get_font_size(self, name_length):
+
+        # with a base font size of 30, about 7 chars fit in 30 px
+        # smallest object are cell_widget with 30 px width
+        # some can be larger, maybe take advantage of that ?
+        font_scaling = 7 / name_length
+
+        # clamp max scaling
+        font_scaling = min(1, font_scaling)
+
+        return int(font_scaling * self.BASE_FONT_SIZE)
+
     def set_position_and_zoom(self, world: WorldCanvasWidget):
         local_spacing = world.zoom * world.DOT_SPACING
         adapted_size = self.size * local_spacing
@@ -45,9 +59,8 @@ class CanvasContainer(WidgetWithZoom):
 
     def update_name_size(self):
         font = self.name.font()
-        font.setPixelSize(self.zoomed_int(self.BASE_FONT_SIZE))
+        font.setPixelSize(self.zoomed_int(self.font_size))
         self.name.setFont(font)
-
 
     # Make the container draggable
     def mousePressEvent(self, event):
