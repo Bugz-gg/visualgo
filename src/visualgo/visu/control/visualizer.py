@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from visualgo.visu.WorldCanvas.CanvasContainer import CanvasContainer
 from visualgo.visu.WorldCanvas.WorldCanvasWidget import WorldCanvasWidget
 from visualgo.visu.control.programState import ProgramState
+from visualgo.data_structures.number import Number
 from visualgo.visu.utils import always_try
 
 
@@ -40,8 +41,11 @@ class Visualizer(QWidget):
 
             print(f"Adding {name} component at {pos}!")
             widget = ProgramState.resolve_visual_structure(data)
-            size = self.get_minimal_size(widget.sizeHint())
-            self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
+            if isinstance(data, Number):
+                self.data_area.add_container(CanvasContainer(self, pos, QSize(1, 1),widget, name))
+            else:
+                size = self.get_minimal_size(widget.sizeHint())
+                self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
 
         self.data_area.update()
         
@@ -49,7 +53,7 @@ class Visualizer(QWidget):
         # Check if there are any existing objects
         if not self.data_positions:
             # If no objects, place the new object at (0, 0)
-            return QPoint(0, 0)
+            return QPoint(2, 2)
 
         # Find the total number of objects
         num_objects = len(self.data_positions)

@@ -1,7 +1,7 @@
 from __future__ import annotations
 import sys
 
-from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtCore import QSize, Qt, QTimer
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget, QPushButton, \
     QVBoxLayout, QLabel
@@ -58,6 +58,11 @@ class Controller(QMainWindow):
         # default size at startup
         self.resize(1200, 800)
 
+        # Timer for automatic state advancement
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.step_next)
+        self.timer.setInterval(500)  # 0.5 seconds
+
     # Handle the title of the window
     def set_title(self, title):
         title = QLabel(title)
@@ -82,6 +87,11 @@ class Controller(QMainWindow):
         step_next_button.clicked.connect(self.step_next)
         self.controller_layout.addWidget(step_next_button)
 
+        # Pause/Resume button
+        self.pause_button = QPushButton("Pause")
+        self.pause_button.clicked.connect(self.toggle_pause)
+        self.controller_layout.addWidget(self.pause_button)
+
         # Current state index display
         self.state_label = QLabel(self.get_state_label_text())
         self.state_label.setObjectName("stateLabel")
@@ -99,6 +109,8 @@ class Controller(QMainWindow):
 
     def step_next(self):
         if self.current_state_index >= len(self.program_states) - 1:
+            self.timer.stop()
+            self.pause_button.setText("Restart")
             return
         self.current_state_index += 1
         self.display_current_state()
@@ -109,6 +121,16 @@ class Controller(QMainWindow):
         self.current_state_index -= 1
         self.display_current_state()
 
+    def toggle_pause(self):
+        if self.timer.isActive():
+            self.timer.stop()
+            self.pause_button.setText("Resume")
+        else:
+            if self.current_state_index >= len(self.program_states) - 1:
+                self.current_state_index = 0
+                self.display_current_state()
+            self.timer.start()
+            self.pause_button.setText("Pause")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
