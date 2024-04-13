@@ -1,4 +1,4 @@
-from PyQt5.QtCore import Qt, QMargins
+from PyQt5.QtCore import Qt, QMargins, QSize
 from PyQt5.QtGui import QPainter
 
 from visualgo.data_structures.data import Status
@@ -15,6 +15,9 @@ class CellWidget(WidgetWithZoom):
         super().__init__()
         self.status: Status = value.status
         self._value = value.value
+
+    def sizeHint(self):
+        return QSize(self.DEFAULT_CELL_SIZE, self.DEFAULT_CELL_SIZE)
 
     def color(self):
         return status_to_color(self.status)

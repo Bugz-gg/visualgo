@@ -48,7 +48,7 @@ class Visualizer(QWidget):
     def get_minimal_size(self, hint: QSize):
         width = math.ceil(hint.width() / self.data_area.DOT_SPACING)
         height = math.ceil(hint.height() / self.data_area.DOT_SPACING)
-        return QSize(width, height)
+        return QSize(max(width, 1), max(1, height))
 
     def get_free_pos(self, size):
         return QPoint(random.randint(-3, 3), random.randint(-3, 3))
