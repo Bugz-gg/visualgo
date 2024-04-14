@@ -13,9 +13,10 @@ p.y = Number(6)
 p.z = p.x + p.y
 p.x += Number(10)
 p.y -= Number(2)
+p.visualize()
 for i in p.historic:
     # Toujours regarder le status avant la value sinon on modifie son status.
-    print(i[0], i[1].status, i[1].value)
+    print(i)
 print("----------------------------------------------------------------")
 
 # -------------- Test Stack ---------------
@@ -28,11 +29,14 @@ p2.st.push(4)
 p2.st.push(10)
 p2.st.push(-16)
 p2.st.pop()
+p2.st.pop()
+p2.st.pop()
+p2.st.push(-16)
 hist2 = p2.historic
 print("Stack", hist2)
 
 for i in hist2:
-    print(i[0], i[1].status, i[1].value)
+    print(i)
 
 # ----------- Fonction MAX -----------------
 

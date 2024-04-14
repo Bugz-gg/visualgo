@@ -12,14 +12,14 @@ from visualgo.visu.control.visualizer import Visualizer
 
 
 class Controller(QMainWindow):
-    def __init__(self, program_name, historic: list[tuple[str, Data]]):
+    def __init__(self, program_name, historic: list[ProgramState]):
         super().__init__()
 
         # Transform historic into a list of program state ?
         histo_len = len(historic)
 
         # Convert the historic into a dict ! >:D
-        self.program_states = [ProgramState({name: value for name, value in historic[:i]}) for i in range(1, histo_len)]
+        self.program_states = historic
 
         # Start at state 0
         self.current_state_index = 0

@@ -14,7 +14,7 @@ class CellWidget(WidgetWithZoom):
     def __init__(self, value: Number):
         super().__init__()
         self.status: Status = value.status
-        self._value = value.value
+        self._value = value.__dict__["value"]
 
     def sizeHint(self):
         return QSize(self.DEFAULT_CELL_SIZE, self.DEFAULT_CELL_SIZE)
