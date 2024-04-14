@@ -74,23 +74,32 @@ class Controller(QMainWindow):
         title.setMaximumHeight(25)  # Restrain wigdet size
         self.main_layout.addWidget(title)
 
+    @staticmethod
+    def set_button_size(button, size):
+        font = button.font()
+        font.setPointSize(size)  # Set font size to 16 points
+        button.setFont(font)
+
     # Handle the controls of the visualizer : Run / step / pause?
     def setup_controller_layout(self):
         self.main_layout.addLayout(self.controller_layout)
 
         # Buttons control
-        step_prev_button = QPushButton("<|")
+        step_prev_button = QPushButton("⏪")
         step_prev_button.clicked.connect(self.step_previous)
         self.controller_layout.addWidget(step_prev_button)
+        self.set_button_size(step_prev_button, 20)
 
-        step_next_button = QPushButton("|>")
+        step_next_button = QPushButton("⏩")
         step_next_button.clicked.connect(self.step_next)
         self.controller_layout.addWidget(step_next_button)
+        self.set_button_size(step_next_button, 20)
 
         # Pause/Resume button
-        self.pause_button = QPushButton("Pause")
+        self.pause_button = QPushButton("⏯️")
         self.pause_button.clicked.connect(self.toggle_pause)
         self.controller_layout.addWidget(self.pause_button)
+        self.set_button_size(self.pause_button, 20)
 
         # Current state index display
         self.state_label = QLabel(self.get_state_label_text())
@@ -124,10 +133,10 @@ class Controller(QMainWindow):
     def toggle_pause(self):
         if self.timer.isActive():
             self.timer.stop()
-            self.pause_button.setText("Resume")
+            self.pause_button.setText("⏯️")
         else:
             if self.current_state_index >= len(self.program_states) - 1:
                 self.current_state_index = 0
                 self.display_current_state()
             self.timer.start()
-            self.pause_button.setText("Pause")
+            self.pause_button.setText("⏸️")

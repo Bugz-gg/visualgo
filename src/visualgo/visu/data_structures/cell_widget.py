@@ -32,16 +32,14 @@ class CellWidget(WidgetWithZoom):
 
         zoomed_cell_size = self.zoomed_int(self.DEFAULT_CELL_SIZE)
         self.setMinimumSize(zoomed_cell_size, zoomed_cell_size)  # cell size
-        brush = painter.brush()
-        brush.setColor(self.color())
-        painter.setBrush(brush)
-
-        x, y, w, h = self.rect().x(), self.rect().y(), self.rect().width(), self.rect().height()
-
-        painter.fillRect(
-            x, y, w, h,
-            self.color()
+        painter.setBrush(self.color())
+        pen = painter.pen()
+        painter.setPen(Qt.NoPen)
+        painter.drawRoundedRect(
+            self.rect(),
+            self.zoomed_float(20),
+            self.zoomed_float(20)
         )
 
+        painter.setPen(pen)
         painter.drawText(self.rect(), Qt.AlignCenter, str(self._value))
-

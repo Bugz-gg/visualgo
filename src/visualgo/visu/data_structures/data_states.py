@@ -2,13 +2,13 @@ from PyQt5.QtGui import QColor
 
 from visualgo.data_structures.data import Status
 
-default_color = QColor("white")
+default_color = QColor(168, 213, 226)
 
 status_to_color_dict: dict[Status, QColor] = {
     Status.NONE: default_color,
-    Status.CREATED: QColor("lime green"),
-    Status.AFFECTED: QColor("pink"),
-    Status.COMPARED: QColor("red"),
+    Status.CREATED: QColor(108, 174, 117),
+    Status.AFFECTED: QColor(237, 240, 218),
+    Status.COMPARED: QColor(211, 135, 171),
     Status.READ: QColor("light blue")
 }
 

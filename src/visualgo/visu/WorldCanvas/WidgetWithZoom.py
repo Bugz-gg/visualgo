@@ -6,5 +6,11 @@ class WidgetWithZoom(QWidget):
         super().__init__(parent)
         self.zoom = 1.0
 
+    def update_zoom(self, new_zoom):
+        self.zoom = new_zoom
+
     def zoomed_int(self, value):
         return int(value * self.zoom)
+
+    def zoomed_float(self, value):
+        return float(value * self.zoom)

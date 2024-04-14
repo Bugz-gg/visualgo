@@ -49,19 +49,23 @@ class CanvasContainer(WidgetWithZoom):
 
         return int(font_scaling * self.BASE_FONT_SIZE)
 
+    def update_zoom(self, new_zoom):
+        self.zoom = new_zoom
+        self.inside_widget.update_zoom(new_zoom)
+
     def set_position_and_zoom(self, world: WorldCanvasWidget):
         local_spacing = world.zoom * world.DOT_SPACING
         adapted_size = self.canvas_size * local_spacing
         self.setGeometry(QRect(world.canvas_pos_to_screen_pos(self.start * local_spacing),
                                QSize(int(adapted_size.width()), int(adapted_size.height()))))
-        self.zoom = world.zoom
-        self.inside_widget.zoom = world.zoom
+        self.update_zoom(world.zoom)
         self.update_name_size()
 
     def update_name_size(self):
         font = self.name.font()
         font.setPixelSize(self.zoomed_int(self.font_size))
         self.name.setFont(font)
+        self.name.setMinimumHeight(self.zoomed_int(30))
 
     # Make the container draggable
     def mousePressEvent(self, event):

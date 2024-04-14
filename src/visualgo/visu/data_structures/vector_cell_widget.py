@@ -28,3 +28,8 @@ class VectorCellWidget(WidgetWithZoom):
         width = max(1, len(self.cell_array)) * 2 * (CellWidget.DEFAULT_CELL_SIZE + self.ELEMENT_MARGIN)
         height = CellWidget.DEFAULT_CELL_SIZE + self.ELEMENT_MARGIN
         return QSize(width, height)
+
+    def update_zoom(self, new_zoom):
+        self.zoom = new_zoom
+        for cell in self.cell_array:
+            cell.update_zoom(new_zoom)
