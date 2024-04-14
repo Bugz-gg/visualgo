@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 import random
 
-from PyQt5.QtCore import QSize, QPoint, Qt
+from PyQt5.QtCore import QSize, QPoint, Qt, QSizeF
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
 from visualgo.visu.WorldCanvas.CanvasContainer import CanvasContainer
@@ -26,11 +26,8 @@ class Visualizer(QWidget):
         self.layout().addWidget(self.data_area)
 
     @always_try
-    def update_data(self, program_state: ProgramState = None):
+    def update_data(self, program_state: ProgramState):
         self.data_area.clear()  # Clear previous data
-
-        if program_state is None:
-            return
 
         for name, data in program_state.variables_to_display.items():
             try:
@@ -39,10 +36,9 @@ class Visualizer(QWidget):
                 pos = self.get_free_pos(QSize(1, 1))
                 self.data_positions[name] = pos
 
-            print(f"Adding {name} component at {pos}!")
             widget = ProgramState.resolve_visual_structure(data)
             if isinstance(data, Number):
-                self.data_area.add_container(CanvasContainer(self, pos, QSize(1, 1),widget, name))
+                self.data_area.add_container(CanvasContainer(self, pos, QSizeF(1, 1), widget, name))
             else:
                 size = self.get_minimal_size(widget.sizeHint())
                 self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))

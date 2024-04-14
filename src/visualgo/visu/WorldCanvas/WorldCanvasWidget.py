@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import sys
+from typing import Any
 
 from PyQt5.QtCore import Qt, QRectF, QPoint, QSizeF
 from PyQt5.QtGui import QPainter, QBrush, QColor
-from PyQt5.QtWidgets import QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QVBoxLayout
 
 from visualgo.visu.WorldCanvas.ZoomableWidget import ZoomableWidget
 from visualgo.visu.utils import always_try
@@ -16,7 +16,7 @@ class WorldCanvasWidget(ZoomableWidget):
     def __init__(self):
         super().__init__()
         self.current_position: QPoint = QPoint(0, 0)
-        self.containers: list[QWidget] = []
+        self.containers: list[Any] = []
         self.setLayout(QVBoxLayout())
 
     # shorter getters
@@ -43,10 +43,6 @@ class WorldCanvasWidget(ZoomableWidget):
                 rect = QRectF(screen_pos, QSizeF(dot_size, dot_size))
                 painter.drawEllipse(rect)
 
-                # Debug texts
-                # world_pos = self._screen_pos_to_canvas_pos(screen_pos)
-                # painter.drawText(screen_pos, f"{world_pos.x() // local_spacing}, {world_pos.y() // local_spacing}")
-
     def screen_pos_to_canvas_pos(self, screen_pos: QPoint):
         return QPoint(screen_pos.x() - self.width // 2, -screen_pos.y() + self.height // 2) + self.current_position
 
@@ -67,8 +63,6 @@ class WorldCanvasWidget(ZoomableWidget):
 
         for container in self.containers:
             container.set_position_and_zoom(self)
-
-        print("Paiting", file=sys.stderr)
 
     # Handle mouse drag click
     def mousePressEvent(self, event):

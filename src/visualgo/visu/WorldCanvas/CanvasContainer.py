@@ -14,10 +14,10 @@ from visualgo.visu.utils import always_try
 class CanvasContainer(WidgetWithZoom):
     BASE_FONT_SIZE = 30
 
-    def __init__(self, parent: QWidget, start: QPoint, size: QSizeF, inside_widget: QWidget, container_name: str):
+    def __init__(self, parent: QWidget, start: QPoint, size: QSizeF, inside_widget: WidgetWithZoom, container_name: str):
         super().__init__(parent)
         self.start: QPoint = start
-        self.size: QSizeF = size
+        self.canvas_size: QSizeF = size
 
         self.setObjectName("containerWidget")  # Used to set a name for styling
 
@@ -31,7 +31,7 @@ class CanvasContainer(WidgetWithZoom):
         self.setLayout(layout)
         self.layout().addWidget(self.name)
         self.layout().addWidget(inside_widget)
-        self.inside_widget = inside_widget
+        self.inside_widget: WidgetWithZoom = inside_widget
         layout.setStretch(0, 0)
         layout.setStretch(1, 1)  # Give the majority of space to the widget
 
@@ -51,8 +51,9 @@ class CanvasContainer(WidgetWithZoom):
 
     def set_position_and_zoom(self, world: WorldCanvasWidget):
         local_spacing = world.zoom * world.DOT_SPACING
-        adapted_size = self.size * local_spacing
-        self.setGeometry(QRect(world.canvas_pos_to_screen_pos(self.start * local_spacing), adapted_size))
+        adapted_size = self.canvas_size * local_spacing
+        self.setGeometry(QRect(world.canvas_pos_to_screen_pos(self.start * local_spacing),
+                               QSize(int(adapted_size.width()), int(adapted_size.height()))))
         self.zoom = world.zoom
         self.inside_widget.zoom = world.zoom
         self.update_name_size()

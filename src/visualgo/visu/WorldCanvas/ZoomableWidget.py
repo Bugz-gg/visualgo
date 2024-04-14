@@ -26,8 +26,6 @@ class ZoomableWidget(WidgetWithZoom):
         if new_zoom == self.zoom:
             return
 
-        print(f"Changed zoom {self.zoom} -> {new_zoom}")
-
         self.zoom = new_zoom
 
         self.repaint()

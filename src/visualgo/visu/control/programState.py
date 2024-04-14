@@ -9,7 +9,7 @@ from visualgo.visu.data_structures.vector_cell_widget import VectorCellWidget
 
 
 class ProgramState:
-    def __init__(self, variables_to_display: dict[str, Data] = None):
+    def __init__(self, variables_to_display: dict[str, Data]):
         # The ProgramState should contain all the variable of the program
         # We could imagine that some variable shouldn't be displayed
         # So we only focus on the variables to display here

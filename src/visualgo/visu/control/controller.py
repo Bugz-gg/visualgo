@@ -131,13 +131,3 @@ class Controller(QMainWindow):
                 self.display_current_state()
             self.timer.start()
             self.pause_button.setText("Pause")
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    # load QSS file
-    with open("../style.qss", "r") as f:
-        app.setStyleSheet(f.read())
-
-    window = Controller("Demo visualisation")
-    window.show()
-    sys.exit(app.exec())

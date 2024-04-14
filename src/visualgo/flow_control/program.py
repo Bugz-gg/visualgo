@@ -14,7 +14,7 @@ from ..visu.control.programState import ProgramState
 class Program:
 
     def __init__(self) -> None:
-        self.historic: list[list[tuple[str, Data]]] = []
+        self.historic: list[ProgramState] = []
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if isinstance(__value, list) and __name == 'historic':
