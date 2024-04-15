@@ -10,6 +10,7 @@ class Data(ABC):
     def __init__(self, is_visualisable=False):
         self._is_visualisable = is_visualisable
         self.status = Status.CREATED
+        self.frozen = False
 
     def set_status(self, status):
         self.status = status
@@ -30,7 +31,7 @@ class Data(ABC):
     def __setattr__(self, name, value):
         # stack = traceback.extract_stack()[-2].name
         # print("__setattr__ called on", name, value, stack) # Debug logs
-        if name == 'value':
+        if name == 'value' and name == 'status':
             self.set_status(Status.AFFECTED)
         super().__setattr__(name, value)
 
