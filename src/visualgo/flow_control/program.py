@@ -1,10 +1,3 @@
-<<<<<<< Updated upstream
-from typing import Any
-from copy import deepcopy
-from ..data_structures.data import *
-from ..data_structures.number import Number
-from ..data_structures.stack import Stack
-=======
 import sys
 import time
 import os
@@ -19,19 +12,13 @@ from visualgo.data_structures.stack import Stack
 from visualgo.visu.control.controller import Controller
 from visualgo.visu.control.programState import ProgramState
 import threading
->>>>>>> Stashed changes
 
 
 class Program:
 
-<<<<<<< Updated upstream
-    def __init__(self) -> None:
-        self.historic: list[list[tuple[str, Data]]] = []
-=======
     def __init__(self, file_path="") -> None:
         self.historic: list[ProgramState] = []
         self.async_print_histo()
->>>>>>> Stashed changes
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if isinstance(__value, list) and __name == 'historic':
@@ -64,8 +51,6 @@ class Program:
             return super().__getattribute__(__name)
         super().__getattribute__("log")
         return super().__getattribute__(__name)
-<<<<<<< Updated upstream
-=======
 
     def visualize(historic, program_name="visualisation"):
         app = QApplication(sys.argv)
@@ -98,4 +83,3 @@ class Program:
             # Execute the function in a thread
             thread = threading.Thread(target=execute_code_in_thread)
             thread.start()
->>>>>>> Stashed changes
