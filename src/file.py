@@ -1,6 +1,9 @@
-from visualgo.flow_control.program import Program
+from visualgo.flow_control import program
+import time
+from visualgo.data_structures.data import Data
+from visualgo.data_structures.number import Number
+from visualgo.data_structures.stack import Stack
 
-<<<<<<< Updated upstream
 # Initialiser la class program qui permet de faire la sauvergarde.
 p = program.Program()
 p2 = program.Program()
@@ -11,12 +14,9 @@ p.y = Number(6)
 p.z = p.x + p.y
 p.x += Number(10)
 p.y -= Number(2)
-hist = p.historic
-print("Number", hist)
-
-for i in hist:
+for i in p.historic:
     # Toujours regarder le status avant la value sinon on modifie son status.
-    print(i[0][0], i[0][1].status, i[0][1].value)
+    print(i)
 print("----------------------------------------------------------------")
 
 # -------------- Test Stack ---------------
@@ -29,11 +29,14 @@ p2.st.push(4)
 p2.st.push(10)
 p2.st.push(-16)
 p2.st.pop()
+p2.st.pop()
+p2.st.pop()
+p2.st.push(-16)
 hist2 = p2.historic
 print("Stack", hist2)
 
 for i in hist2:
-    print(i[0][0], i[0][1].status, i[0][1].value)
+    print(i)
 
 # ----------- Fonction MAX -----------------
 
@@ -57,13 +60,14 @@ p3.st.push(-15)
 p3.st.push(100)
 p3.st.push(7)
 p3.st.push(19)
+for i in range(100):
+    print("addinf a", i, "to the stack")
+    p3.st.push(i)
+    time.sleep(1)
 
 max_stack(p3)
 hist3 = p3.historic
-print("Max Func:", hist3)
+print("Stack", hist3)
 
 for i in hist3:
-    print(i[0][0], i[0][1].status, i[0][1].value)
-=======
-Program.wrap_code_in_function(file_path="./exemple.py")
->>>>>>> Stashed changes
+    print(i)

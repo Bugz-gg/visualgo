@@ -1,14 +1,37 @@
+<<<<<<< Updated upstream
 from typing import Any
 from copy import deepcopy
 from ..data_structures.data import *
 from ..data_structures.number import Number
 from ..data_structures.stack import Stack
+=======
+import sys
+import time
+import os
+from typing import Any
+from copy import deepcopy
+
+from PyQt5.QtWidgets import QApplication
+
+from visualgo.data_structures.data import Data, Status
+from visualgo.data_structures.number import Number
+from visualgo.data_structures.stack import Stack
+from visualgo.visu.control.controller import Controller
+from visualgo.visu.control.programState import ProgramState
+import threading
+>>>>>>> Stashed changes
 
 
 class Program:
 
+<<<<<<< Updated upstream
     def __init__(self) -> None:
         self.historic: list[list[tuple[str, Data]]] = []
+=======
+    def __init__(self, file_path="") -> None:
+        self.historic: list[ProgramState] = []
+        self.async_print_histo()
+>>>>>>> Stashed changes
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if isinstance(__value, list) and __name == 'historic':
@@ -41,3 +64,38 @@ class Program:
             return super().__getattribute__(__name)
         super().__getattribute__("log")
         return super().__getattribute__(__name)
+<<<<<<< Updated upstream
+=======
+
+    def visualize(historic, program_name="visualisation"):
+        app = QApplication(sys.argv)
+        # load QSS file
+        with open("visualgo/visu/style.qss", "r") as f:
+            app.setStyleSheet(f.read())
+
+        window = Controller(program_name, historic)
+        window.show()
+        sys.exit(app.exec())
+
+    def async_print_histo(self):
+        def async_print_histo():
+            while 1:
+                print(self.historic, len(self.historic))
+                time.sleep(1)
+        thread = threading.Thread(target=async_print_histo)
+        thread.daemon = True
+        thread.start
+
+    @staticmethod
+    def wrap_code_in_function(file_path):
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                code = file.read()
+
+            def execute_code_in_thread():
+                exec(code)
+
+            # Execute the function in a thread
+            thread = threading.Thread(target=execute_code_in_thread)
+            thread.start()
+>>>>>>> Stashed changes
