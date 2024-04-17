@@ -7,6 +7,9 @@ class Number(Data):
         super().__init__()
         self.value = value
 
+    def __str__(self):
+        return f"{self.__dict__['value']} : {self.status}"
+
     # TODO: add typeguards
     # TODO: handle operations between Numbers and integers
 
