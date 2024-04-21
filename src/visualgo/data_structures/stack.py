@@ -8,6 +8,9 @@ class Stack(Data):
         super().__init__()
         self.value = []
 
+    def __str__(self):
+        return ", ".join(str(val) for val in self.__dict__['value']) + f" {self.status}"
+
     def pop(self):
         assert not self.isEmpty(), "stack is empty"
         return self.value.pop(0)
@@ -40,5 +43,4 @@ class Stack(Data):
     def __eq__(self, other):
         super().set_status(Status.COMPARED)
         if isinstance(other, Stack):
-            return self.value == other.value
         return False
