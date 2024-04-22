@@ -79,6 +79,7 @@ def test_number_compared():
     y = Number(1)   
     x == y
     assert x.get_status() == Status.COMPARED
+    assert y.get_status() == Status.COMPARED
     
 def test_number_read():
     x = Number(1) 
