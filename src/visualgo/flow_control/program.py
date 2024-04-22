@@ -16,9 +16,10 @@ import threading
 
 class Program:
 
-    def __init__(self, file_path="") -> None:
+    def __init__(self) -> None:
         self.historic: list[ProgramState] = []
         self.async_print_histo()
+        self.visualize(self.historic)
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if isinstance(__value, list) and __name == 'historic':
@@ -40,7 +41,7 @@ class Program:
         state = []
         for attr_name in attr:
             if attr_name != "historic" and "historic" in attr:
-                if isinstance(attr[attr_name], Data):
+                if (isinstance(attr[attr_name], Data) and not (attr[attr_name]._is_visualisable)):
                     state.append(
                         (attr_name, deepcopy(attr[attr_name])))
         if "historic" in attr:
@@ -51,7 +52,8 @@ class Program:
             return super().__getattribute__(__name)
         super().__getattribute__("log")
         return super().__getattribute__(__name)
-
+    
+    @staticmethod
     def visualize(historic, program_name="visualisation"):
         app = QApplication(sys.argv)
         # load QSS file

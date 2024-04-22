@@ -43,4 +43,4 @@ class Stack(Data):
     def __eq__(self, other):
         super().set_status(Status.COMPARED)
         if isinstance(other, Stack):
-        return False
+            return False
