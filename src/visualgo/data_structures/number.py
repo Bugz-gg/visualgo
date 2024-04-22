@@ -10,24 +10,38 @@ class Number(Data):
     # TODO: handle operations between Numbers and integers
         
     def __add__(self, other):
+        super().set_status(Status.READ)
+        other.set_status(Status.READ)
         return Number(self.value + other.value)
     
     def __iadd__(self, other):
+        super().set_status(Status.READ)
+        other.set_status(Status.READ)
         return Number(self.value + other.value)
     
     def __sub__(self, other):
+        super().set_status(Status.READ)
+        other.set_status(Status.READ)
         return Number(self.value - other.value)
     
     def __isub__(self, other):
+        super().set_status(Status.READ)
+        other.set_status(Status.READ)
         return Number(self.value - other.value)
     
     def __mul__(self, other):
+        super().set_status(Status.READ)
+        other.set_status(Status.READ)
         return Number(self.value * other.value)
     
     def __imul__(self, other):
+        super().set_status(Status.READ)
+        other.set_status(Status.READ)
         return Number(self.value * other.value)
     
     def __pow__(self, other):
+        super().set_status(Status.READ)
+        other.set_status(Status.READ)
         return Number(self.value ** other.value)
     
     def __lt__(self, other):

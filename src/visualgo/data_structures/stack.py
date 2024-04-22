@@ -1,18 +1,25 @@
 from visualgo.data_structures.data import Data,Status
-import traceback
-
+from visualgo.data_structures.number import Number
 
 class Stack(Data):
-    def __init__(self, ):
+    def __init__(self):
         super().__init__()
         self.value = []
     
+    def __str__(self):
+        return ", ".join(str(val) for val in self.__dict__['value']) + f" {self.status}"
+    
     def pop(self):
+        super().set_status(Status.READ)
         assert not self.isEmpty(), "stack is empty"
         return self.value.pop(0)
     
     def push(self, value):
-        self.value.insert(0, value) 
+        super().set_status(Status.READ)
+        if isinstance(value, int):
+            self.value.insert(0, Number(value))
+        else:
+            self.value.insert(0, value)
         
     def isEmpty(self):
         return self.size() == 0
@@ -23,11 +30,6 @@ class Stack(Data):
     def clear(self):
         self.value = []
         assert self.isEmpty(), "stack not empty"
-    
-    def affect(self, stack):
-        assert isinstance(stack, Stack), "r value must but a Stack"
-        self.value = stack.data
-        self.status = Status.AFFECTED
     
     def peep(self):
         assert not self.isEmpty(), "stack is empty"

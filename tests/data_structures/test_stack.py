@@ -1,5 +1,8 @@
 from visualgo.data_structures.stack import Stack
-from visualgo.data_structures.number import Status
+from visualgo.data_structures.data import Status
+from visualgo.data_structures.number import Number
+
+import pytest
 
 
 def test_stack_init():
@@ -15,8 +18,14 @@ def test_stack_push():
 
 def test_stack_pop():
     stack = Stack()
-    # stack.Pop() # test error case
+    
     assert stack.isEmpty()
+    
+    # testing error case
+    with pytest.raises(AssertionError) as exc_info:
+        stack.pop()
+    assert exc_info.value.args[0] == "stack is empty"
+    
     
     stack.push(1)
     value = stack.pop()
@@ -35,6 +44,9 @@ def test_stack_peep():
 def test_number_status_created():
     s = Stack()
     assert s.get_status() == Status.CREATED
+    s.push(Number(1))
+    assert s.get_status() != Status.CREATED
+    assert s.get_status() == Status.READ
     
 def test_number_affected():
     s = Stack()

@@ -80,3 +80,10 @@ def test_number_compared():
     x == y
     assert x.get_status() == Status.COMPARED
     
+def test_number_read():
+    x = Number(1) 
+    y = Number(1)  
+    z = x + y
+    assert x.get_status() == Status.READ
+    assert y.get_status() == Status.READ
+    assert z.get_status() == Status.CREATED    

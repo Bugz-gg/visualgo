@@ -36,4 +36,4 @@ class Status(Enum):
     CREATED = 1
     AFFECTED = 2
     COMPARED = 3
-    READ = 4 # not used for now
+    READ = 4 
