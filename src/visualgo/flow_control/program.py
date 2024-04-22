@@ -19,6 +19,7 @@ class Program:
     def __init__(self, file_path="") -> None:
         self.historic: list[ProgramState] = []
         self.async_print_histo()
+        self.visualize(self.historic)
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if isinstance(__value, list) and __name == 'historic':
