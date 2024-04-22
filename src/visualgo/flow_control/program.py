@@ -19,7 +19,7 @@ class Program:
     def __init__(self) -> None:
         self.historic: list[ProgramState] = []
         self.async_print_histo()
-        self.visualize(self.historic)
+        # self.visualize(self.historic)
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if isinstance(__value, list) and __name == 'historic':
@@ -38,21 +38,25 @@ class Program:
     @ property
     def log(self):
         attr = super().__getattribute__("__dict__")
-        state = []
+        state = {}
         for attr_name in attr:
             if attr_name != "historic" and "historic" in attr:
-                if (isinstance(attr[attr_name], Data) and not (attr[attr_name]._is_visualisable)):
-                    state.append(
-                        (attr_name, deepcopy(attr[attr_name])))
-        if "historic" in attr:
-            super().__getattribute__("historic").append(state)
+                if isinstance(attr[attr_name], Data):
+                    x = deepcopy(attr[attr_name])
+                    x.frozen = True
+                    state[attr_name] = x
+                    attr[attr_name].reset_status()
+        if len(list(filter(lambda x: x[1].status != Status.NONE, state.items()))) == 0:
+            pass
+        elif "historic" in attr:
+            super().__getattribute__("historic").append(ProgramState(state))
 
     def __getattribute__(self, __name: str) -> Any:
         if __name == "historic" or __name == "log" or __name == "__dict__":
             return super().__getattribute__(__name)
         super().__getattribute__("log")
         return super().__getattribute__(__name)
-    
+
     @staticmethod
     def visualize(historic, program_name="visualisation"):
         app = QApplication(sys.argv)
@@ -71,7 +75,7 @@ class Program:
                 time.sleep(1)
         thread = threading.Thread(target=async_print_histo)
         thread.daemon = True
-        thread.start
+        thread.start()
 
     @staticmethod
     def wrap_code_in_function(file_path):
