@@ -5,7 +5,9 @@ class Number(Data):
     def __init__(self, value):
         super().__init__()
         self.value = value
-        
+    def __str__(self):
+        return f"{self.__dict__['value']} : {self.status}"
+    
     # TODO: add typeguards
     # TODO: handle operations between Numbers and integers
         
@@ -53,7 +55,7 @@ class Number(Data):
             self.status = Status.COMPARED
             return self.value < other
         raise TypeError
-    
+
     def __gt__(self, other):
         if isinstance(other, Number):
             other.status = Status.COMPARED
@@ -63,7 +65,7 @@ class Number(Data):
             self.status = Status.COMPARED
             return self.value > other
         raise TypeError
-    
+
     def __le__(self, other):
         if isinstance(other, Number):
             other.status = Status.COMPARED
@@ -73,7 +75,7 @@ class Number(Data):
             self.status = Status.COMPARED
             return self.value <= other
         raise TypeError
-    
+
     def __ge__(self, other):
         if isinstance(other, Number):
             other.status = Status.COMPARED
@@ -83,7 +85,7 @@ class Number(Data):
             self.status = Status.COMPARED
             return self.value >= other
         raise TypeError
-    
+
     def __eq__(self, other):
         if isinstance(other, Number):
             other.status = Status.COMPARED
@@ -93,7 +95,7 @@ class Number(Data):
             self.status = Status.COMPARED
             return self.value == other
         raise TypeError
-    
+
     def __ne__(self, other):
         if isinstance(other, Number):
             other.status = Status.COMPARED

@@ -23,7 +23,7 @@ class Stack(Data):
         
     def isEmpty(self):
         return self.size() == 0
-    
+
     def size(self):
         return len(self.value)
     

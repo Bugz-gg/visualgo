@@ -16,7 +16,7 @@ class Queue(Data):
         assert not self.isEmpty(), "operation failed, queue is empty"
         
     def isEmpty(self):
-        return self.size() == 0
+        return self.Size() == 0
     
     def size(self):
         return len(self.value)
