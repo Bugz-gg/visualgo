@@ -5,15 +5,8 @@ import traceback
 class Data(ABC):
     def __init__(self, is_visualisable=False):
         self.__is_visualisable = is_visualisable
-        self.status = Status.CREATED    
-    
-    def set_status(self, status):
-        self.status = status
-        # print("------------ status has changed for",  self.status, "------------")
-        
-    def get_status(self):
-        return self.status
-
+        self.status = Status.CREATED
+           
     def set_status(self, status):
         self.status = status
         # print("------------ status has changed for",  self.status, "------------")
