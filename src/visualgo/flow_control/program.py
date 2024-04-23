@@ -4,6 +4,7 @@ import os
 from typing import Any
 from copy import deepcopy
 
+from PyQt5.QtCore import QThreadPool, QRunnable, pyqtSlot
 from PyQt5.QtWidgets import QApplication
 
 from visualgo.data_structures.data import Data, Status
@@ -18,8 +19,6 @@ class Program:
 
     def __init__(self) -> None:
         self.historic: list[ProgramState] = []
-        self.async_print_histo()
-        # self.visualize(self.historic)
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         if isinstance(__value, list) and __name == 'historic':
@@ -33,9 +32,8 @@ class Program:
         else:
             raise AttributeError("Unknown attribute")
         if not __name == "historic" or __name == "log" or __name == "__dict__":
-            self.log
+            self.log()
 
-    @ property
     def log(self):
         attr = super().__getattribute__("__dict__")
         state = {}
@@ -50,6 +48,7 @@ class Program:
             pass
         elif "historic" in attr:
             super().__getattribute__("historic").append(ProgramState(state))
+            # Send signal to controller telling historic has grown and wait for signal to continue working
 
     def __getattribute__(self, __name: str) -> Any:
         if __name == "historic" or __name == "log" or __name == "__dict__":
@@ -57,25 +56,8 @@ class Program:
         super().__getattribute__("log")
         return super().__getattribute__(__name)
 
-    @staticmethod
-    def visualize(historic, program_name="visualisation"):
-        app = QApplication(sys.argv)
-        # load QSS file
-        with open("visualgo/visu/style.qss", "r") as f:
-            app.setStyleSheet(f.read())
-
-        window = Controller(program_name, historic)
-        window.show()
-        sys.exit(app.exec())
-
-    def async_print_histo(self):
-        def async_print_histo():
-            while 1:
-                print(self.historic, len(self.historic))
-                time.sleep(1)
-        thread = threading.Thread(target=async_print_histo)
-        thread.daemon = True
-        thread.start()
+    def visualize(self, program_name="visualisation"):
+        pass
 
     @staticmethod
     def wrap_code_in_function(file_path):
@@ -83,9 +65,21 @@ class Program:
             with open(file_path, 'r') as file:
                 code = file.read()
 
-            def execute_code_in_thread():
-                exec(code)
+            p = Program()
 
-            # Execute the function in a thread
-            thread = threading.Thread(target=execute_code_in_thread)
-            thread.start()
+            app = QApplication(sys.argv)
+            # load QSS file
+            with open("visualgo/visu/style.qss", "r") as f:
+                app.setStyleSheet(f.read())
+
+            controller = Controller(p, file_path)
+
+            class Worker(QRunnable):
+                @pyqtSlot()
+                def run(self):
+                    exec(code, {"p": p})
+
+            controller.threadpool.start(Worker())
+
+            controller.show()
+            sys.exit(app.exec())

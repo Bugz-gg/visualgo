@@ -1,25 +1,20 @@
 from __future__ import annotations
-import sys
 
-from PyQt5.QtCore import QSize, Qt, QTimer
+from PyQt5.QtCore import QSize, Qt, QTimer, QThreadPool
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QMainWindow, QHBoxLayout, QWidget, QPushButton, \
+from PyQt5.QtWidgets import QMainWindow, QHBoxLayout, QWidget, QPushButton, \
     QVBoxLayout, QLabel
 
-from visualgo.data_structures.data import Data
-from visualgo.visu.control.programState import ProgramState
 from visualgo.visu.control.visualizer import Visualizer
 
 
 class Controller(QMainWindow):
-    def __init__(self, program_name, historic: list[ProgramState]):
+    def __init__(self, program, program_name):
         super().__init__()
-
-        # Transform historic into a list of program state ?
-        histo_len = len(historic)
-
         # Convert the historic into a dict ! >:D
-        self.program_states = historic
+        self.program_states = program.historic
+
+        self.threadpool = QThreadPool()
 
         # Start at state 0
         self.current_state_index = 0
