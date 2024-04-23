@@ -49,21 +49,37 @@ class Visualizer(QWidget):
         # Check if there are any existing objects
         if not self.data_positions:
             # If no objects, place the new object at (0, 0)
-            return QPoint(2, 2)
+            return QPoint(0, 0)
 
-        # Find the total number of objects
-        num_objects = len(self.data_positions)
+        # Find the maximum row and column of existing objects
+        max_row = max(pos.y() for pos in self.data_positions.values())
+        max_col = max(pos.x() for pos in self.data_positions.values())
 
-        # Calculate the row and column of the next position
-        threshold = 3  # Change the value '3' to the desired threshold
-        row = num_objects // threshold
-        col = num_objects % threshold
+        # Initialize the next position to (0, 0)
+        next_pos = QPoint(0, 0)
 
-        # Calculate the next position based on the row and column
-        next_pos = QPoint(col, row)
+        # Iterate through each row
+        for row in range(max_row + 1):
+            # Iterate through each column
+            for col in range(max_col + 1):
+                # Check if the current position is already occupied
+                if QPoint(col, row) not in self.data_positions.values():
+                    # Check if the new widget fits in the current position
+                    if self.does_widget_fit(QPoint(col, row), size):
+                        next_pos = QPoint(col, row)
+                        return next_pos
 
+        # If no suitable position found, place the widget in the next row
+        next_pos = QPoint(0, max_row + 1)
         return next_pos
 
+    def does_widget_fit(self, pos, size):
+        # Check if the widget fits within the available space
+        for x in range(pos.x(), pos.x() + size.width()):
+            for y in range(pos.y(), pos.y() + size.height()):
+                if QPoint(x, y) in self.data_positions.values():
+                    return False
+        return True
     def get_minimal_size(self, hint: QSize):
         width = math.ceil(hint.width() / self.data_area.DOT_SPACING)
         height = math.ceil(hint.height() / self.data_area.DOT_SPACING)
