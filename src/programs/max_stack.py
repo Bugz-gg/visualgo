@@ -28,6 +28,3 @@ for i in range(100):
     p.st.push(i)
 
 max_stack(p)
-
-
-

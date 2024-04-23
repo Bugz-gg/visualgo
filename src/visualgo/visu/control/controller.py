@@ -9,12 +9,16 @@ from visualgo.visu.control.visualizer import Visualizer
 
 
 class Controller(QMainWindow):
-    def __init__(self, program, program_name):
+    def __init__(self, program, program_name, worker):
         super().__init__()
         # Convert the historic into a dict ! >:D
+        self.worker = worker
+
+        # There will be no concurrent accesses, as drawing will be done when program is waiting to receive resume order
         self.program_states = program.historic
 
         self.threadpool = QThreadPool()
+        self.threadpool.start(self.worker)
 
         # Start at state 0
         self.current_state_index = 0
@@ -57,6 +61,9 @@ class Controller(QMainWindow):
         self.timer = QTimer()
         self.timer.timeout.connect(self.step_next)
         self.timer.setInterval(500)  # 0.5 seconds
+
+        # iter once
+        self.worker.resume()
 
     # Handle the title of the window
     def set_title(self, title):
@@ -102,7 +109,7 @@ class Controller(QMainWindow):
         self.controller_layout.addWidget(self.state_label)
 
     def get_state_label_text(self):
-        return f"{self.current_state_index} / {len(self.program_states) - 1}"
+        return f"{self.current_state_index} / {len(self.program_states) - 1} (+)"
 
     def display_current_state(self):
         # Update state index
@@ -112,9 +119,13 @@ class Controller(QMainWindow):
         self.content_layout.update_data(self.program_states[self.current_state_index])
 
     def step_next(self):
-        if self.current_state_index >= len(self.program_states) - 1:
+        prog_len = len(self.program_states)
+        if self.current_state_index >= prog_len - 2:  # keep a 'small' buffer of states to display
+            self.worker.resume()
+
+        if self.current_state_index >= prog_len - 1:
             self.timer.stop()
-            self.pause_button.setText("Restart")
+            # self.pause_button.setText("Restart")  # detect when program is over :/
             return
         self.current_state_index += 1
         self.display_current_state()
