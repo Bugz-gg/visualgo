@@ -17,7 +17,7 @@ class VectorCellWidget(WidgetWithZoom):
         layout = QHBoxLayout()
 
         # Create an ArrayCellWidget for each array value and add it to the layout
-        for cell in reversed(self.cell_array):
+        for cell in self.cell_array:
             layout.addWidget(cell)
 
             # Set the layout on the ArrayWidget

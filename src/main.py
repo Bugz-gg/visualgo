@@ -55,6 +55,8 @@ p3.st2 = Stack()
 p3.st2.push(0)
 p3.st2.push(1)
 p3.x = Number(0)
+p3.y = Number(1)
+p3.z = p3.x + p3.y
 p3.st = Stack()
 p3.st.push(4)
 p3.st.push(10)

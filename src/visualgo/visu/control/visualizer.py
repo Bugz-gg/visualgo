@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 import random
 
-from PyQt5.QtCore import QSize, QPoint, Qt, QSizeF
+from PyQt5.QtCore import QSize, QPoint, Qt, QSizeF , QRect
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
 from visualgo.visu.WorldCanvas.CanvasContainer import CanvasContainer
@@ -44,42 +44,29 @@ class Visualizer(QWidget):
                 self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
 
         self.data_area.update()
-        
+    @always_try
     def get_free_pos(self, size):
         # Check if there are any existing objects
         if not self.data_positions:
             # If no objects, place the new object at (0, 0)
             return QPoint(0, 0)
 
-        # Find the maximum row and column of existing objects
-        max_row = max(pos.y() for pos in self.data_positions.values())
-        max_col = max(pos.x() for pos in self.data_positions.values())
+        # Find a position that doesn't overlap with existing widgets
+        for y in range(self.data_area.height // self.data_area.DOT_SPACING):
+            for x in range(self.data_area.width // self.data_area.DOT_SPACING):
+                pos = QPoint(x, y)
+                rect = QRect(pos, size)
 
-        # Initialize the next position to (0, 0)
-        next_pos = QPoint(0, 0)
+                if not any(QRect(self.data_positions[name], self.data_sizes[name]).intersects(rect)
+                        for name in self.data_positions
+                        if self.data_positions[name] is not None):
+                    return pos
 
-        # Iterate through each row
-        for row in range(max_row + 1):
-            # Iterate through each column
-            for col in range(max_col + 1):
-                # Check if the current position is already occupied
-                if QPoint(col, row) not in self.data_positions.values():
-                    # Check if the new widget fits in the current position
-                    if self.does_widget_fit(QPoint(col, row), size):
-                        next_pos = QPoint(col, row)
-                        return next_pos
+        # If no free position found, place the widget at the bottom-right corner
+        return QPoint(self.data_area.width // self.data_area.DOT_SPACING - size.width(),
+                    self.data_area.height // self.data_area.DOT_SPACING - size.height())
 
-        # If no suitable position found, place the widget in the next row
-        next_pos = QPoint(0, max_row + 1)
         return next_pos
-
-    def does_widget_fit(self, pos, size):
-        # Check if the widget fits within the available space
-        for x in range(pos.x(), pos.x() + size.width()):
-            for y in range(pos.y(), pos.y() + size.height()):
-                if QPoint(x, y) in self.data_positions.values():
-                    return False
-        return True
     def get_minimal_size(self, hint: QSize):
         width = math.ceil(hint.width() / self.data_area.DOT_SPACING)
         height = math.ceil(hint.height() / self.data_area.DOT_SPACING)
