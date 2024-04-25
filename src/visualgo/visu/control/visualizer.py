@@ -25,6 +25,7 @@ class Visualizer(QWidget):
         self.data_positions = {}
 
         self.layout().addWidget(self.data_area)
+    # Print the data positions useful for debugging
     def print_data_positions(self):
         print("Data Positions:")
         for name, (pos, size) in self.data_positions.items():
@@ -32,16 +33,13 @@ class Visualizer(QWidget):
     @always_try
     def update_data(self, program_state: ProgramState):
         self.data_area.clear()  # Clear previous data
-        print("Updating data------------------------------------------")
         for name, data in program_state.variables_to_display.items():
             widget = ProgramState.resolve_visual_structure(data)
             size = self.get_minimal_size(widget.sizeHint())
 
             try:
                 pos = self.data_positions[name][0]
-                # print(f"====================trying for Element: {name}, Position: ({pos.x()}, {pos.y()}), Size: ({size.width()}, {size.height()})")
                 if self.intersects_with_existing(pos, size, exclude=name):
-                    # print("are we here !!!!!!!!!")
                     # If the updated size causes an overlap, find a new position
                     pos = self.get_free_pos(size, exclude=name)
             except KeyError:
@@ -49,20 +47,13 @@ class Visualizer(QWidget):
             self.data_positions[name] = (pos, size)  # Update the size in the dictionary
 
             self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
-            # print(f"Element: {name}, Position: ({pos.x()}, {pos.y()}), Size: ({size.width()}, {size.height()})")
-        self.print_data_positions()  # Print the data positions dictionary
-        print("Data updated------------------------------------------")
         self.data_area.update()
 
     def intersects_with_existing(self, pos, size, exclude=None):
         for name, (existing_pos, existing_size) in self.data_positions.items():
             if name == exclude:
-                # print(f"skipping {name}")
                 continue
-            # print(f"checking for {name}")
             if self.rectangles_intersect(pos, size, existing_pos, existing_size):
-                print(f"current pos: {pos.x()},{pos.y()},size  {size.width()},{size.height()}")
-                print(f"Intersecting with {existing_pos.x()},{existing_pos.y()},that has a size {existing_size.width()},{existing_size.height()}")
                 return True
         return False
 
@@ -82,7 +73,6 @@ class Visualizer(QWidget):
                 row += 1            
             next_pos = QPoint(col, row)
             if not self.intersects_with_existing(next_pos, size, exclude):
-                print("returning next_pos that doesnt intersect ",next_pos)
                 return next_pos
             col += 1
 
