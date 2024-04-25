@@ -12,19 +12,7 @@ from visualgo.visu.control.programState import ProgramState
 from visualgo.data_structures.number import Number
 from visualgo.visu.utils import always_try
 
-def valueInRange(value, min_val, max_val):
-    return min_val <= value <= max_val
 
-def rectOverlap(pos1, size1, pos2, size2):
-    x1, y1 = pos1.x(), pos1.y()
-    w1, h1 = size1.width(), size1.height()
-    x2, y2 = pos2.x(), pos2.y()
-    w2, h2 = size2.width(), size2.height()
-
-    xOverlap = valueInRange(x1, x2, x2 + w2-1) or valueInRange(x2, x1, x1 + w1-1)
-    yOverlap = valueInRange(y1, y2, y2 + h2 - 1) or valueInRange(y2, y1, y1 + h1 - 1)
-
-    return xOverlap and yOverlap
 
 # Visualizer role is handle data placement inside the WorldCanvasWidget
 class Visualizer(QWidget):
@@ -51,17 +39,34 @@ class Visualizer(QWidget):
 
             try:
                 pos = self.data_positions[name][0]
+                # print(f"====================trying for Element: {name}, Position: ({pos.x()}, {pos.y()}), Size: ({size.width()}, {size.height()})")
+                if self.intersects_with_existing(pos, size, exclude=name):
+                    # print("are we here !!!!!!!!!")
+                    # If the updated size causes an overlap, find a new position
+                    pos = self.get_free_pos(size, exclude=name)
             except KeyError:
                 pos = self.get_free_pos(size)
             self.data_positions[name] = (pos, size)  # Update the size in the dictionary
 
             self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
-            print(f"Element: {name}, Position: ({pos.x()}, {pos.y()}), Size: ({size.width()}, {size.height()})")
+            # print(f"Element: {name}, Position: ({pos.x()}, {pos.y()}), Size: ({size.width()}, {size.height()})")
         self.print_data_positions()  # Print the data positions dictionary
         print("Data updated------------------------------------------")
         self.data_area.update()
 
-    def get_free_pos(self, size):
+    def intersects_with_existing(self, pos, size, exclude=None):
+        for name, (existing_pos, existing_size) in self.data_positions.items():
+            if name == exclude:
+                # print(f"skipping {name}")
+                continue
+            # print(f"checking for {name}")
+            if self.rectangles_intersect(pos, size, existing_pos, existing_size):
+                print(f"current pos: {pos.x()},{pos.y()},size  {size.width()},{size.height()}")
+                print(f"Intersecting with {existing_pos.x()},{existing_pos.y()},that has a size {existing_size.width()},{existing_size.height()}")
+                return True
+        return False
+
+    def get_free_pos(self, size, exclude=None):
         # Check if there are any existing objects
         if not self.data_positions:
             # If no objects, place the new object at (0, 0)
@@ -76,25 +81,35 @@ class Visualizer(QWidget):
                 col = 0
                 row += 1            
             next_pos = QPoint(col, row)
-            if not self.intersects_with_existing(next_pos, size):
+            if not self.intersects_with_existing(next_pos, size, exclude):
                 print("returning next_pos that doesnt intersect ",next_pos)
                 return next_pos
-            col += 1 
-            # print("adding width to col",size.width())
-            # print("col now is ",col)
+            col += 1
 
-    
-    def intersects_with_existing(self, pos, size):
-        for existing_pos, existing_size in self.data_positions.values():
-            if self.rectangles_intersect(pos, size, existing_pos, existing_size):
-                print(f"current pos: {pos.x()},{pos.y()},size  {size.width()},{size.height()}")
-                print(f"Intersecting with {existing_pos.x()},{existing_pos.y()},that has a size {existing_size.width()},{existing_size.height()}")
-                return True
-        return False
-
-    # @always_try
     def rectangles_intersect(self, pos1, size1, pos2, size2):
-        return rectOverlap(pos1, size1, pos2, size2)
+        # Extract coordinates and sizes
+        x1, y1 = pos1.x(), pos1.y()
+        w1, h1 = size1.width(), size1.height()
+        x2, y2 = pos2.x(), pos2.y()
+        w2, h2 = size2.width(), size2.height()
+
+        # Calculate the coordinates of the bottom-right points
+        r1 = (x1 + w1, y1 - h1)
+        r2 = (x2 + w2, y2 - h2)
+
+        # Check if rectangles have area 0
+        if x1 == r1[0] or y1 == r1[1] or x2 == r2[0] or y2 == r2[1]:
+            return False
+
+        # Check if one rectangle is on the left side of the other
+        if x1 >= r2[0] or x2 >= r1[0]:
+            return False
+
+        # Check if one rectangle is above the other
+        if r1[1] >= y2 or r2[1] >= y1:
+            return False
+
+        return True
 
     def get_minimal_size(self, hint: QSize):
         width = math.ceil(hint.width() / self.data_area.DOT_SPACING)
