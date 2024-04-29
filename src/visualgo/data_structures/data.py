@@ -3,10 +3,12 @@ from abc import ABC
 import traceback
 
 class Data(ABC):
+    
     def __init__(self, is_visualisable=False):
         self.__is_visualisable = is_visualisable
         self.status = Status.CREATED
-           
+
+    
     def set_status(self, status):
         self.status = status
         # print("------------ status has changed for",  self.status, "------------")
@@ -16,18 +18,20 @@ class Data(ABC):
 
     def reset_status(self):
         self.status = self.set_status(Status.NONE)
+        self.source = []
 
-    def __setattr__(self, name, value):
-        stack = traceback.extract_stack()[-2].name
-        # print("__setattr__ called on", name, value, stack) # Debug logs
-        if name == 'value' and stack != '__init__':
-            self.set_status(Status.AFFECTED)
-        super().__setattr__(name, value)
-
-
+    # this method use side effect unlike "=" operator which use reference assignment
+    # might cause issues elsewhere
+    def assign(self, obj):
+        self.set_status(Status.AFFECTED)
+        self.value = obj.value
+        
 class Status(Enum):
     NONE = 0
     CREATED = 1
     AFFECTED = 2
-    COMPARED = 3
-    READ = 4 
+    READ = 3
+    LESS_THAN = 4 # used for both < and <=
+    GREATER_THAN = 5 # used for both > and >=
+    EQUAL = 6 # used for ==
+    DIFFERENT = 7 # used for !=

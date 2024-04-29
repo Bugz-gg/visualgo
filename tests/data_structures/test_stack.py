@@ -50,12 +50,13 @@ def test_number_status_created():
     
 def test_number_affected():
     s = Stack()
-    s.value = []
+    q = Stack()
+    s.assign(q)
     assert s.get_status() == Status.AFFECTED
 
 def test_number_compared():
     s1 = Stack()
     s2 = Stack()
     s1 == s2
-    assert s1.get_status() == Status.COMPARED
+    assert s1.get_status() == Status.EQUAL
     

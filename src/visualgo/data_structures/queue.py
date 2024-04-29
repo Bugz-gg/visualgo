@@ -26,7 +26,8 @@ class Queue(Data):
         assert self.isEmpty(), "queue not empty"
     
     def __eq__(self, other):
-        super().set_status(Status.COMPARED)
+        self.set_status(Status.EQUAL)
+        other.set_status(Status.EQUAL)
         if isinstance(other, Queue):
             return self.value == other.value
         return False    
