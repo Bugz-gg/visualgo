@@ -18,7 +18,7 @@ class Number(Data):
         if isinstance(other, Number):
             other.set_status(Status.READ)
             return Number(self.value + other.value)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return Number(self.value + other)
         else:
             raise TypeError(f"Unsupported operand type for + : {type(self).__name__} and {type(other).__name__}")
@@ -31,7 +31,7 @@ class Number(Data):
         if isinstance(other, Number):
             other.set_status(Status.READ)
             return Number(other.value + self.value)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return Number(other + self.value)
         else:
             raise TypeError(f"Unsupported operand type for + : {type(other).__name__} and {type(self).__name__}")
@@ -41,7 +41,7 @@ class Number(Data):
         if isinstance(other, Number):
             other.set_status(Status.READ)
             return Number(self.value - other.value)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return Number(self.value - other)
         else:
             raise TypeError(f"Unsupported operand type for - : {type(self).__name__} and {type(other).__name__}")
@@ -54,7 +54,7 @@ class Number(Data):
         if isinstance(other, Number):
             other.set_status(Status.READ)
             return Number(other.value - self.value)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return Number(other - self.value)
         else:
             raise TypeError(f"Unsupported operand type for - : {type(other).__name__} and {type(self).__name__}")
@@ -64,7 +64,7 @@ class Number(Data):
         if isinstance(other, Number):
             other.set_status(Status.READ)
             return Number(self.value * other.value)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return Number(self.value * other)
         else:
             raise TypeError(f"Unsupported operand type for * : {type(self).__name__} and {type(other).__name__}")
@@ -77,7 +77,7 @@ class Number(Data):
         if isinstance(other, Number):
             other.set_status(Status.READ)
             return Number(other.value * self.value)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return Number(other * self.value)
         else:
             raise TypeError(f"Unsupported operand type for * : {type(other).__name__} and {type(self).__name__}")
@@ -127,6 +127,29 @@ class Number(Data):
             return Number(other % self.value)
         else:
             raise TypeError(f"Unsupported operand type for % : {type(other).__name__} and {type(self).__name__}")
+    
+    def __truediv__(self, other):
+        super().set_status(Status.READ)
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(self.value / other.value)
+        elif isinstance(other, (int, float)):
+            return Number(self.value / other)
+        else:
+            raise TypeError(f"Unsupported operand type for / : {type(self).__name__} and {type(other).__name__}")
+    
+    def __itruediv__(self, other):
+        return self.__truediv__(other)
+
+    def __rtruediv__(self, other):
+        super().set_status(Status.READ)
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(other.value / self.value)
+        elif isinstance(other, (int, float)):
+            return Number(other / self.value)
+        else:
+            raise TypeError(f"Unsupported operand type for / : {type(other).__name__} and {type(self).__name__}")
 
     def __pow__(self, other):
         self.set_status(Status.READ)

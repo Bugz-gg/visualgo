@@ -28,6 +28,14 @@ def test_number_add():
     assert y.value == 2
     z.assign(x + y)
     assert z.value == 3
+    k = 5
+    w = x + k
+    assert isinstance(w, Number)
+    assert w.value == 6
+    j = 6.5
+    w = w + j
+    assert isinstance(w, Number)
+    assert w.value == 12.5
     
 def test_number_sub():
     x = Number(1)
@@ -37,6 +45,14 @@ def test_number_sub():
     assert y.value == 2
     z.assign(x - y)
     assert z.value == -1
+    k = 5
+    w = x - k
+    assert isinstance(w, Number)
+    assert w.value == -4
+    j = 6.5
+    w = w - j
+    assert isinstance(w, Number)
+    assert w.value == -10.5
     
 def test_number_pow():
     x = Number(4)
@@ -59,7 +75,15 @@ def test_number_mul():
     assert y.value == 2
     z.assign(x*y)
     assert z.value == 8
-    
+    k = 5
+    w = x * k
+    assert isinstance(w, Number)
+    assert w.value == 20
+    j = 0.5
+    w = w * 0.5
+    assert isinstance(w, Number)
+    assert w.value == 10
+
 def test_number_iadd():
     x = Number(1)
     y = Number(1)
@@ -90,6 +114,9 @@ def test_number_radd():
     z = y + x
     assert isinstance(z, Number)
     assert z.value == 11
+    y += x
+    assert isinstance(y, Number)
+    assert y.value == 11
 
 def test_number_rsubb():
     x = Number(5)
@@ -156,6 +183,38 @@ def test_number_rmod():
     z = x % y
     assert  isinstance(z, Number)
     assert z.value == 1
+
+
+def test_number_truediv():
+    x = Number(4)
+    y = Number(2)
+    z = Number()
+    assert x.value == 4
+    assert y.value == 2
+    z.assign(x/y)
+    assert z.value == 2
+    k = 3
+    w = x / k
+    assert isinstance(w, Number)
+    assert w.value == 4/3
+    j = 0.5
+    w = y / 0.5
+    assert isinstance(w, Number)
+    assert w.value == 4
+
+def test_number_itruediv():
+    x = Number(5)
+    y = Number(2)
+    x /= y
+    assert isinstance(x, Number)
+    assert x.value == 2.5
+
+def test_number_rtruediv():
+    x = Number(4)
+    y = 13
+    z = y / x
+    assert isinstance(z, Number)
+    assert z.value == 3.25
 
 # --------------- Status tests ---------------
 
