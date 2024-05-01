@@ -46,6 +46,10 @@ def test_number_pow():
     assert y.value == 2
     z.assign(x**y)
     assert z.value == 16
+    k = 3
+    w = y**k
+    assert isinstance(w, Number)
+    assert w.value == 8
     
 def test_number_mul():
     x = Number(4)
@@ -79,6 +83,79 @@ def test_number_imult():
     x *= y
     assert isinstance(x, Number)
     assert x.value == 6
+
+def test_number_radd():
+    x = Number(5)
+    y = 6
+    z = y + x
+    assert isinstance(z, Number)
+    assert z.value == 11
+
+def test_number_rsubb():
+    x = Number(5)
+    y = 6
+    z = y - x
+    assert isinstance(z, Number)
+    assert z.value == 1
+
+def test_number_rmul():
+    x = Number(5)
+    y = 6
+    z = y * x
+    assert isinstance(z, Number)
+    assert z.value == 30
+
+def test_number_floordiv():
+    x = Number(10)
+    y = Number(3)
+    w = 2
+    z = x // y
+    k = x // w
+    assert  isinstance(z, Number)
+    assert isinstance(k, Number)
+    assert z.value == 3
+    assert k.value == 5
+
+def test_number_ifloordiv():
+    x = Number(10)
+    y = Number(3)
+    x //= y
+    assert  isinstance(x, Number)
+    assert x.value == 3
+
+def test_number_rfloordiv():
+    x = Number(3)
+    y = 10
+    z = y // x
+    assert  isinstance(z, Number)
+    assert z.value == 3
+
+def test_number_mod():
+    x = Number(10)
+    y = Number(3)
+    w = 2
+    z = x % y
+    k = x % w
+    assert isinstance(z, Number)
+    assert isinstance(k, Number)
+    assert z.value == 1
+    assert k.value == 0
+
+
+def test_number_imod():
+    x = Number(10)
+    y = Number(3)
+    x %= y
+    assert  isinstance(x, Number)
+    assert x.value == 1
+
+
+def test_number_rmod():
+    x = 10
+    y = Number(3)
+    z = x % y
+    assert  isinstance(z, Number)
+    assert z.value == 1
 
 # --------------- Status tests ---------------
 

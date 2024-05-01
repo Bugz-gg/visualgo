@@ -15,39 +15,129 @@ class Number(Data):
 
     def __add__(self, other):
         self.set_status(Status.READ)
-        other.set_status(Status.READ)
-        return Number(self.value + other.value)
-
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(self.value + other.value)
+        elif isinstance(other, int):
+            return Number(self.value + other)
+        else:
+            raise TypeError(f"Unsupported operand type for + : {type(self).__name__} and {type(other).__name__}")
+    
     def __iadd__(self, other):
-        super().set_status(Status.READ)
-        other.set_status(Status.READ)
-        return Number(self.value + other.value)
+        return self.__add__(other)
+
+    def __radd__(self, other):
+        self.set_status(Status.READ)
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(other.value + self.value)
+        elif isinstance(other, int):
+            return Number(other + self.value)
+        else:
+            raise TypeError(f"Unsupported operand type for + : {type(other).__name__} and {type(self).__name__}")
 
     def __sub__(self, other):
         super().set_status(Status.READ)
-        other.set_status(Status.READ)
-        return Number(self.value - other.value)
-
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(self.value - other.value)
+        elif isinstance(other, int):
+            return Number(self.value - other)
+        else:
+            raise TypeError(f"Unsupported operand type for - : {type(self).__name__} and {type(other).__name__}")
+        
     def __isub__(self, other):
-        super().set_status(Status.READ)
-        other.set_status(Status.READ)
-        return Number(self.value - other.value)
+        return self.__sub__(other)
 
+    def __rsub__(self, other):
+        super().set_status(Status.READ)
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(other.value - self.value)
+        elif isinstance(other, int):
+            return Number(other - self.value)
+        else:
+            raise TypeError(f"Unsupported operand type for - : {type(other).__name__} and {type(self).__name__}")
+    
     def __mul__(self, other):
         super().set_status(Status.READ)
-        other.set_status(Status.READ)
-        return Number(self.value * other.value)
-
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(self.value * other.value)
+        elif isinstance(other, int):
+            return Number(self.value * other)
+        else:
+            raise TypeError(f"Unsupported operand type for * : {type(self).__name__} and {type(other).__name__}")
+    
     def __imul__(self, other):
-        self.set_status(Status.READ)
-        other.set_status(Status.READ)
-        return Number(self.value * other.value)
+        return self.__mul__(other)
+    
+    def __rmul__(self, other):
+        super().set_status(Status.READ)
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(other.value * self.value)
+        elif isinstance(other, int):
+            return Number(other * self.value)
+        else:
+            raise TypeError(f"Unsupported operand type for * : {type(other).__name__} and {type(self).__name__}")
+    
+    def __floordiv__(self, other):
+        super().set_status(Status.READ)
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(self.value // other.value)
+        elif isinstance(other, int):
+            return Number(self.value // other)
+        else:
+            raise TypeError(f"Unsupported operand type for // : {type(self).__name__} and {type(other).__name__}")
+    
+    def __ifloordiv__(self, other):
+        return self.__floordiv__(other)
+    
+    def __rfloordiv__(self, other):
+        super().set_status(Status.READ)
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(other.value // self.value)
+        elif isinstance(other, int):
+            return Number(other // self.value)
+        else:
+            raise TypeError(f"Unsupported operand type for // : {type(other).__name__} and {type(self).__name__}")
+
+    def __mod__(self, other):
+        super().set_status(Status.READ)
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(self.value % other.value)
+        elif isinstance(other, int):
+            return Number(self.value % other)
+        else:
+            raise TypeError(f"Unsupported operand type for % : {type(self).__name__} and {type(other).__name__}")
+
+    def __imod__(self, other):
+        return self.__mod__(other)
+    
+    def __rmod__(self, other):
+        super().set_status(Status.READ)
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(other.value % self.value)
+        elif isinstance(other, int):
+            return Number(other % self.value)
+        else:
+            raise TypeError(f"Unsupported operand type for % : {type(other).__name__} and {type(self).__name__}")
 
     def __pow__(self, other):
         self.set_status(Status.READ)
-        other.set_status(Status.READ)
-        return Number(self.value**other.value)
-
+        if isinstance(other, Number):
+            other.set_status(Status.READ)
+            return Number(self.value**other.value)
+        elif isinstance(other, int):
+            return Number(self.value**other)
+        else:
+            raise TypeError(f"Unsupported operand type for ** : {type(other).__name__} and {type(self).__name__}")
+        
     def __lt__(self, other):
         if isinstance(other, Number):
             self.set_status(Status.LESS_THAN)
