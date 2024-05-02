@@ -43,3 +43,6 @@ class CellWidget(WidgetWithZoom):
 
         painter.setPen(pen)
         painter.drawText(self.rect(), Qt.AlignCenter, str(self._value))
+
+    def get_flat_data(self):
+        return [self]

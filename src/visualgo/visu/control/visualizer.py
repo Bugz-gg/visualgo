@@ -1,16 +1,41 @@
 from __future__ import annotations
 
 import math
-import random
+from math import atan2, sin, cos, pi
 
-from PyQt5.QtCore import QSize, QPoint, Qt, QSizeF
+from PyQt5.QtCore import QPoint, Qt
+from PyQt5.QtCore import QSize, QSizeF
+from PyQt5.QtGui import QPen
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
+from visualgo.data_structures.number import Number
 from visualgo.visu.WorldCanvas.CanvasContainer import CanvasContainer
 from visualgo.visu.WorldCanvas.WorldCanvasWidget import WorldCanvasWidget
 from visualgo.visu.control.programState import ProgramState
-from visualgo.data_structures.number import Number
 from visualgo.visu.utils import always_try
+
+
+def draw_arrow(painter, start, end, color=Qt.black, width=2, arrow_size=10, arrow_angle=30):
+    # Set pen properties
+    pen = QPen(color)
+    pen.setWidth(width)
+    painter.setPen(pen)
+
+    # Draw line
+    painter.drawLine(start, end)
+
+    # Draw arrowhead
+    line_angle = atan2(end.y() - start.y(), end.x() - start.x())
+    arrow_p1 = end - QPoint(
+        arrow_size * cos((line_angle + arrow_angle) * pi / 180),
+        arrow_size * sin((line_angle + arrow_angle) * pi / 180)
+    )
+    arrow_p2 = end - QPoint(
+        arrow_size * cos((line_angle - arrow_angle) * pi / 180),
+        arrow_size * sin((line_angle - arrow_angle) * pi / 180)
+    )
+    painter.drawLine(end, arrow_p1)
+    painter.drawLine(end, arrow_p2)
 
 
 # Visualizer role is handle data placement inside the WorldCanvasWidget
@@ -37,11 +62,22 @@ class Visualizer(QWidget):
                 self.data_positions[name] = pos
 
             widget = ProgramState.resolve_visual_structure(data)
+
             if isinstance(data, Number):
                 self.data_area.add_container(CanvasContainer(self, pos, QSizeF(1, 1), widget, name))
             else:
                 size = self.get_minimal_size(widget.sizeHint())
                 self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
+
+        # Collect all cell_widget
+        all_cell_widget = []
+        for container in self.data_area.containers:
+            all_cell_widget += container.inside_widget.get_flat_data()
+
+        # TODO : analyze status to figure out what is happening and draw arrows between 'active' cells
+
+        for widget in all_cell_widget:
+            print(widget.status)
 
         self.data_area.update()
         

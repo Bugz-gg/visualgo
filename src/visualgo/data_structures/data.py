@@ -25,7 +25,6 @@ class Data(ABC):
     def assign(self, obj):
         self.set_status(Status.AFFECTED)
         self.value = obj.value
-        
 class Status(Enum):
     NONE = 0
     CREATED = 1

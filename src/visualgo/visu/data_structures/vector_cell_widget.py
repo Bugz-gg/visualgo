@@ -33,3 +33,6 @@ class VectorCellWidget(WidgetWithZoom):
         self.zoom = new_zoom
         for cell in self.cell_array:
             cell.update_zoom(new_zoom)
+
+    def get_flat_data(self):
+        return self.cell_array

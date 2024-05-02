@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QWidget
 
-
 class WidgetWithZoom(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -14,3 +13,6 @@ class WidgetWithZoom(QWidget):
 
     def zoomed_float(self, value):
         return float(value * self.zoom)
+
+    def get_flat_data(self):
+        return []
