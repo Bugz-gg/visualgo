@@ -4,7 +4,7 @@ from visualgo.data_structures.number import Number
 
 # Test if number can be added to program
 def test_program_number():
-    p=Program()
+    p = Program()
     x = Number(5)
     p.x = x
     p.y = 5

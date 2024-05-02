@@ -8,7 +8,6 @@ status_to_color_dict: dict[Status, QColor] = {
     Status.NONE: default_color,
     Status.CREATED: QColor(108, 174, 117),
     Status.AFFECTED: QColor(237, 240, 218),
-    Status.COMPARED: QColor(211, 135, 171),
     Status.READ: QColor("light blue")
 }
 
