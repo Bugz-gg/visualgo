@@ -1,9 +1,9 @@
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QColor, QPen, QBrush, QFont, QPainter
+from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtGui import QColor, QPen, QBrush, QFont, QPainter, QBrush, QPen
 from PyQt5.QtWidgets import QGraphicsEllipseItem, QGraphicsTextItem, QGraphicsLineItem, QGraphicsScene, QGraphicsView
 
 from visualgo.data_structures.data import Data
-
+from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
 
 class TreeNode:
     def __init__(self, value: Data, children=None):
@@ -16,7 +16,8 @@ class TreeNode:
         self.state = value.get_status()
 
 
-class TreeWidget(QGraphicsView):
+
+class TreeWidget(QGraphicsView, WidgetWithZoom):
     def __init__(self, tree_root, parent=None):
         super().__init__(parent)
 
@@ -36,11 +37,14 @@ class TreeWidget(QGraphicsView):
         self.init_tree(tree_root, self.sceneRect().width() // 2, 50)
 
     def init_tree(self, node, x, y, level=0):
+        if node is None:
+            return
+
         # Create an ellipse item to represent the node
         node_item = QGraphicsEllipseItem(x - 20, y - 20, 40, 40)
 
         # Set the brush color of the node based on its state
-        node_item.setBrush(QBrush(node.state.color))
+        node_item.setBrush(QBrush(node.value.get_status().color))
 
         # Set a black pen for the outline of the node
         node_item.setPen(QPen(QColor("black"), 2))
@@ -82,3 +86,10 @@ class TreeWidget(QGraphicsView):
 
                 # Update the x-coordinate for the next child node
                 child_x += 100
+    def sizeHint(self):
+        return QSize(800, 600)
+
+    def update_zoom(self, new_zoom):
+        self.resetTransform()
+        self.scale(new_zoom, new_zoom)
+    
