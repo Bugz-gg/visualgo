@@ -10,6 +10,7 @@ from visualgo.visu.WorldCanvas.CanvasContainer import CanvasContainer
 from visualgo.visu.WorldCanvas.WorldCanvasWidget import WorldCanvasWidget
 from visualgo.visu.control.programState import ProgramState
 from visualgo.data_structures.number import Number
+from visualgo.data_structures.tree import Node
 from visualgo.visu.utils import always_try
 
 
@@ -34,19 +35,20 @@ class Visualizer(QWidget):
     def update_data(self, program_state: ProgramState):
         self.data_area.clear()  # Clear previous data
         for name, data in program_state.variables_to_display.items():
-            widget = ProgramState.resolve_visual_structure(data)
-            size = self.get_minimal_size(widget.sizeHint())
+            if not isinstance(data, Node): 
+                widget = ProgramState.resolve_visual_structure(data)
+                size = self.get_minimal_size(widget.sizeHint())
 
-            try:
-                pos = self.data_positions[name][0]
-                if self.intersects_with_existing(pos, size, exclude=name):
-                    # If the updated size causes an overlap, find a new position
-                    pos = self.get_free_pos(size, exclude=name)
-            except KeyError:
-                pos = self.get_free_pos(size)
-            self.data_positions[name] = (pos, size)  # Update the size in the dictionary
+                try:
+                    pos = self.data_positions[name][0]
+                    if self.intersects_with_existing(pos, size, exclude=name):
+                        # If the updated size causes an overlap, find a new position
+                        pos = self.get_free_pos(size, exclude=name)
+                except KeyError:
+                    pos = self.get_free_pos(size)
+                self.data_positions[name] = (pos, size)  # Update the size in the dictionary
 
-            self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
+                self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
         self.data_area.update()
 
     def intersects_with_existing(self, pos, size, exclude=None):

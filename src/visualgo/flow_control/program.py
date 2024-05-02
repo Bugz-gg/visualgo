@@ -32,6 +32,10 @@ class Program:
             self.__dict__[__name] = __value
         elif isinstance(__value, Node):
             self.__dict__[__name] = __value
+        elif isinstance(__value, Array):
+            self.__dict__[__name] = __value
+        elif isinstance(__value, Queue):
+            self.__dict__[__name] = __value
         else:
             raise AttributeError("Unknown attribute")
         if not __name == "historic" or __name == "log" or __name == "__dict__":

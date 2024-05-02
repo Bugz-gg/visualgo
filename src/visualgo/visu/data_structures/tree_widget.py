@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QGraphicsEllipseItem, QGraphicsTextItem, QGraphicsLi
 
 from visualgo.data_structures.data import Data
 from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
+from visualgo.visu.data_structures.data_states import status_to_color
 
 class TreeNode:
     def __init__(self, value: Data, children=None):
@@ -14,6 +15,8 @@ class TreeNode:
         self.children = children or []
 
         self.state = value.get_status()
+        # print("Node state : ")
+        # print(self.state)
 
 
 
@@ -44,7 +47,7 @@ class TreeWidget(QGraphicsView, WidgetWithZoom):
         node_item = QGraphicsEllipseItem(x - 20, y - 20, 40, 40)
 
         # Set the brush color of the node based on its state
-        node_item.setBrush(QBrush(node.value.get_status().color))
+        node_item.setBrush(QBrush(status_to_color(node.value.status)))
 
         # Set a black pen for the outline of the node
         node_item.setPen(QPen(QColor("black"), 2))
@@ -53,7 +56,7 @@ class TreeWidget(QGraphicsView, WidgetWithZoom):
         self.scene().addItem(node_item)
 
         # Create a text item to display the node value
-        text_item = QGraphicsTextItem(str(node.value))
+        text_item = QGraphicsTextItem(str(node.value.value))
         text_item.setFont(QFont("Arial", 12))
 
         # Set the text item as a child of the node item

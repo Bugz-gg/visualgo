@@ -8,7 +8,7 @@ from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
 from visualgo.visu.data_structures.cell_widget import CellWidget
 from visualgo.visu.data_structures.vector_cell_widget import VectorCellWidget
 from visualgo.visu.data_structures.stack_cell_widget import StackCellWidget
-from visualgo.visu.data_structures.tree_widget import TreeWidget
+from visualgo.visu.data_structures.tree_widget import TreeWidget, TreeNode
 
 class ProgramState:
     def __init__(self, variables_to_display: dict[str, Data]):
