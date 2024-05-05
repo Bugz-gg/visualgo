@@ -37,6 +37,10 @@ class Program:
 
     @ property
     def log(self):
+        """
+        This property is called everytime an attribute of the program is accessed. It creates a snapshot of
+        the program state and add it to the *historic* attribute.
+        """
         attr = super().__getattribute__("__dict__")
         state = {}
         for attr_name in attr:
@@ -57,6 +61,9 @@ class Program:
         super().__getattribute__("log")
         return super().__getattribute__(__name)
 
+    """
+    Static method to visualize specified data structures through the algorithm run
+    """
     @staticmethod
     def visualize(historic, program_name="visualisation"):
         app = QApplication(sys.argv)
