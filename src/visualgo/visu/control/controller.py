@@ -5,6 +5,7 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QMainWindow, QHBoxLayout, QWidget, QPushButton, \
     QVBoxLayout, QLabel
 
+from visualgo.visu.control.programState import ProgramState
 from visualgo.visu.control.visualizer import Visualizer
 
 
@@ -16,6 +17,7 @@ class Controller(QMainWindow):
 
         # There will be no concurrent accesses, as drawing will be done when program is waiting to receive resume order
         self.program_states = program.historic
+        self.program_states.insert(0, ProgramState({}))
 
         self.threadpool = QThreadPool()
         self.threadpool.start(self.worker)
@@ -63,7 +65,7 @@ class Controller(QMainWindow):
         self.timer.setInterval(500)  # 0.5 seconds
 
         # iter once
-        self.worker.resume()
+        # self.step_next()
 
     # Handle the title of the window
     def set_title(self, title):

@@ -23,7 +23,7 @@ p.st.push(-15)
 p.st.push(100)
 p.st.push(7)
 p.st.push(19)
-for i in range(100):
+for i in range(10):
     print("addinf a", i, "to the stack")
     p.st.push(i)
 
