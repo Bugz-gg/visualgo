@@ -1,10 +1,15 @@
 from visualgo.data_structures.data import Data,Status
 
+
 class Queue(Data):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, is_visible=True):
+        super().__init__(is_visible)
         self.value = []
-    
+
+    def reset_status(self):
+        for data in self.value:
+            data.reset_status()
+
     def remove(self):
         super().set_status(Status.READ)
         assert not self.isEmpty(), "queue is empty"

@@ -45,9 +45,9 @@ class Program:
             if attr_name != "historic" and "historic" in attr:
                 if isinstance(attr[attr_name], Data):
                     x = deepcopy(attr[attr_name])
-                    x.frozen = True
                     state[attr_name] = x
                     attr[attr_name].reset_status()
+                    print(f"reseting {attr_name} !")
         if len(list(filter(lambda x: x[1].status != Status.NONE, state.items()))) == 0:
             pass
         elif "historic" in attr:

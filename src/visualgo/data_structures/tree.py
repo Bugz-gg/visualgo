@@ -1,5 +1,6 @@
-from visualgo.data_structures.data import Data,Status
+from visualgo.data_structures.data import Data, Status
 from visualgo.data_structures.number import Number
+
 
 class Node(Data):
     def __init__(self, value, children = []):
@@ -87,14 +88,17 @@ class Node(Data):
         if isinstance(value, int):
             self.value = Number(value)
         elif isinstance(value, Number):
-           self.value = value
+            self.value = value
+
 
 class Tree(Data):
-    def __init__(self, root = None):
-        if root == None or isinstance(root, Node):
+    def __init__(self, is_visible=True, root=None):
+        super().__init__(is_visible)
+        if root is None or isinstance(root, Node):
             self.root = root
         else:
             raise TypeError
+
     def set_root(self, root):
         if isinstance(root, Node):
             self.root = root

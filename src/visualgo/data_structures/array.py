@@ -1,10 +1,10 @@
-from visualgo.data_structures.data import Data,Status
+from visualgo.data_structures.data import Data, Status
 from visualgo.data_structures.number import Number
 
+
 class Array(Data):
-    
-    def __init__(self, is_visualisable):
-        self.is_visualisable = is_visualisable
+    def __init__(self, is_visible):
+        super().__init__(is_visible)
         self.data = []
     
     def __setitem__(self, index, value):
@@ -16,5 +16,8 @@ class Array(Data):
             self.data[index].status = Status.AFFECTED
         else:
             raise ValueError("Cannot assign given type to array cell")
-    
+
+    def reset_status(self):
+        for data in self.data:
+            data.reset_status()
 

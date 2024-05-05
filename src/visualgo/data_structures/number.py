@@ -3,8 +3,8 @@ from visualgo.data_structures.data import Data, Status
 
 class Number(Data):
 
-    def __init__(self, value=0):
-        super().__init__()
+    def __init__(self, value=0, is_visible=True):
+        super().__init__(is_visible)
         self.value = value
 
     def __str__(self):

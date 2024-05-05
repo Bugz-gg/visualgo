@@ -1,11 +1,16 @@
-from visualgo.data_structures.data import Data,Status
+from visualgo.data_structures.data import Data, Status
 from visualgo.data_structures.number import Number
 
+
 class Stack(Data):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, is_visible=True):
+        super().__init__(is_visible)
         self.value = []
-    
+
+    def reset_status(self):
+        for data in self.value:
+            data.reset_status()
+
     def __str__(self):
         return ", ".join(str(val) for val in self.__dict__['value']) + f" {self.status}"
     
