@@ -61,13 +61,17 @@ class Node(Data):
         self.remove_children(len(self.children) - 1)
     
     def set_children(self, child, index):
-        if index < 0 or index >= len(self.children):
+        if index < 0:
             raise IndexError
-        
+
+        if index >= len(self.children):
+            # Extend the children list if the index is out of range
+            self.children.extend([None] * (index - len(self.children) + 1))
+
         if isinstance(child, int):
             self.children[index] = Node(Number(child))
         elif isinstance(child, Number):
-           self.children[index] = Node(child)
+            self.children[index] = Node(child)
         elif isinstance(child, Node):
             self.children[index] = child
         else:
@@ -77,6 +81,8 @@ class Node(Data):
         self.set_children(child, 0)
     
     def set_right_children(self, child):
+        if not self.children:
+            self.children.append(None)
         self.set_children(child, len(self.children) - 1)
 
     def get_value(self):

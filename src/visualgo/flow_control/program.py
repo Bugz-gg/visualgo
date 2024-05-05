@@ -8,13 +8,15 @@ from PyQt5.QtCore import QThreadPool, QRunnable, pyqtSlot, pyqtSignal, QWaitCond
 from PyQt5.QtWidgets import QApplication
 
 from visualgo.data_structures.data import Data, Status
-from visualgo.data_structures.number import Number
 from visualgo.data_structures.stack import Stack
 from visualgo.visu.control.controller import Controller
 from visualgo.visu.control.programState import ProgramState
 import threading
-
 from visualgo.visu.utils import always_try
+from ..data_structures.number import Number
+from ..data_structures.array import Array
+from ..data_structures.queue import Queue
+from ..data_structures.tree import Tree, Node
 
 
 class Program:
@@ -32,12 +34,21 @@ class Program:
             self.__dict__[__name] = __value
         elif isinstance(__value, Stack):
             self.__dict__[__name] = __value
+        elif isinstance(__value, Tree):
+            self.__dict__[__name] = __value
+        elif isinstance(__value, Node):
+            self.__dict__[__name] = __value
+        elif isinstance(__value, Array):
+            self.__dict__[__name] = __value
+        elif isinstance(__value, Queue):
+            self.__dict__[__name] = __value
         else:
             raise AttributeError("Unknown attribute")
         if not __name == "historic" or __name == "log" or __name == "__dict__":
             self.log()
 
     @always_try
+    @property
     def log(self):
         attr = super().__getattribute__("__dict__")
         state = {}
@@ -56,6 +67,7 @@ class Program:
             # Send signal to controller telling historic has grown and wait for signal to continue working
             worker = self.__dict__["worker"]
             worker.wait()
+
 
     def __getattribute__(self, __name: str) -> Any:
         if __name == "historic" or __name == "log" or __name == "__dict__":
