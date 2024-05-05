@@ -17,7 +17,7 @@ class Controller(QMainWindow):
 
         # There will be no concurrent accesses, as drawing will be done when program is waiting to receive resume order
         self.program_states = program.historic
-        self.program_states.insert(0, ProgramState({}))
+        self.program_states.insert(0, ProgramState({}))  # Add an empty start step
 
         self.threadpool = QThreadPool()
         self.threadpool.start(self.worker)

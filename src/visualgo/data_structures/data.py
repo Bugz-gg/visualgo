@@ -17,7 +17,7 @@ class Data(ABC):
         return self.status
 
     def reset_status(self):
-        self.status = self.set_status(Status.NONE)
+        self.set_status(Status.NONE)
         self.source = []
 
     # this method use side effect unlike "=" operator which use reference assignment
