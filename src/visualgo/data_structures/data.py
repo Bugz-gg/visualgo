@@ -1,16 +1,12 @@
 from enum import Enum
 from abc import ABC
-import traceback
-
-# TODO: change status range from public to private.
-# Prefere using status' interface instead of "status" attribute
 
 
 class Data(ABC):
-    def __init__(self, is_visualisable=False):
-        self._is_visualisable = is_visualisable
+    
+    def __init__(self, is_visible=True):
+        self.__is_visible = is_visible
         self.status = Status.CREATED
-        self.frozen = False
 
     def set_status(self, status):
         self.status = status
@@ -19,26 +15,28 @@ class Data(ABC):
     def get_status(self):
         return self.status
 
+    def get_flat_data(self):
+        return [self]
+
     def reset_status(self):
-        self.status = Status.NONE
+        for data in self.get_flat_data():
+            data.set_status(Status.NONE)
 
-    def __getattribute__(self, name: str):
-        # print("__getattribute__ called on", name) # Debug logs
-        if name == 'value' and self.status != Status.COMPARED:
-            self.set_status(Status.READ)
-        return super().__getattribute__(name)
-
-    def __setattr__(self, name, value):
-        # stack = traceback.extract_stack()[-2].name
-        # print("__setattr__ called on", name, value, stack) # Debug logs
-        if name == 'value' and name == 'status':
-            self.set_status(Status.AFFECTED)
-        super().__setattr__(name, value)
+    # this method use side effect unlike "=" operator which use reference assignment
+    # might cause issues elsewhere
+    def assign(self, obj):
+        self.set_status(Status.AFFECTED)
+        self.value = obj.value
 
 
 class Status(Enum):
     NONE = 0
     CREATED = 1
     AFFECTED = 2
-    COMPARED = 3
-    READ = 4  # not used for now
+    READ = 3
+    LESS_THAN = 4  # used for both < and <=
+    GREATER_THAN = 5  # used for both > and >=
+    EQUAL = 6  # used for ==
+    DIFFERENT = 7  # used for !=
+    LOOKED_INSIDE = 9  # Used for containers
+    REMOVED_INSIDE = 10  # Used to allow for new state update when a deletion occur

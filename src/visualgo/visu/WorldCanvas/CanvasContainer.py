@@ -16,7 +16,7 @@ class CanvasContainer(WidgetWithZoom):
 
     def __init__(self, parent: QWidget, start: QPoint, size: QSizeF, inside_widget: WidgetWithZoom, container_name: str):
         super().__init__(parent)
-        self.start: QPoint = start
+        self.start: QPoint = start if start else QPoint(0, 0)  # Ensure self.start is a valid QPoint
         self.canvas_size: QSizeF = size
 
         self.setObjectName("containerWidget")  # Used to set a name for styling
@@ -36,6 +36,7 @@ class CanvasContainer(WidgetWithZoom):
         layout.setStretch(1, 1)  # Give the majority of space to the widget
 
         self.segment_size = WorldCanvasWidget.DOT_SPACING
+
 
     def get_font_size(self, name_length):
 
