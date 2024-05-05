@@ -10,7 +10,7 @@ class Queue(Data):
         return [self] + self.value
 
     def remove(self):
-        super().set_status(Status.LOOKED_INSIDE)
+        super().set_status(Status.REMOVED_INSIDE)
         assert not self.isEmpty(), "queue is empty"
         return self.value.pop(self.size() - 1)
     
