@@ -69,7 +69,6 @@ class Program:
     def __getattribute__(self, __name: str) -> Any:
         if __name == "historic" or __name == "log" or __name == "__dict__":
             return super().__getattribute__(__name)
-        print(f"Getting attr {__name}")
         self.log()
         return super().__getattribute__(__name)
 
