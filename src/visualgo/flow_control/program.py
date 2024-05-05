@@ -24,12 +24,15 @@ class Program:
         self.__dict__["worker"] = worker
 
     def __setattr__(self, __name: str, __value: Any) -> None:
-        print(f"Setting attr {__name} with value {__value}")
+        self.log()  # In some case we need to log before adding the value, this is because of previously added things to
+        # containers that were not registered
         if isinstance(__value, list) and __name == 'historic':
             self.__dict__[__name] = __value
         elif isinstance(__value, int):
             self.__dict__[__name] = Number(__value)
         elif isinstance(__value, Number):
+            if __name in self.__dict__:
+                __value.set_status(Status.AFFECTED)
             self.__dict__[__name] = __value
         elif isinstance(__value, Stack):
             self.__dict__[__name] = __value
@@ -37,7 +40,6 @@ class Program:
             raise AttributeError("Unknown attribute")
         if not __name == "historic" or __name == "log" or __name == "__dict__":
             self.log()
-            print("Logging :D")
 
     @always_try
     def log(self):
