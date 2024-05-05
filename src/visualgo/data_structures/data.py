@@ -39,3 +39,4 @@ class Status(Enum):
     EQUAL = 6  # used for ==
     DIFFERENT = 7  # used for !=
     LOOKED_INSIDE = 9  # Used for containers
+    REMOVED_INSIDE = 10  # Used to allow for new state update when a deletion occur

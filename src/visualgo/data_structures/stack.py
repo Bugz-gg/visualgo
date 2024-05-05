@@ -14,7 +14,7 @@ class Stack(Data):
         return ", ".join(str(val) for val in self.__dict__['value']) + f" {self.status}"
     
     def pop(self):
-        super().set_status(Status.LOOKED_INSIDE)
+        super().set_status(Status.REMOVED_INSIDE)
         assert not self.isEmpty(), "stack is empty"
         return self.value.pop(0)
     

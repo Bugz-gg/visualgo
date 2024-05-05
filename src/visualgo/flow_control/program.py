@@ -26,12 +26,15 @@ class Program:
         self.__dict__["worker"] = worker
 
     def __setattr__(self, __name: str, __value: Any) -> None:
-        print(f"Setting attr {__name} with value {__value}")
+        self.log()  # In some case we need to log before adding the value, this is because of previously added things to
+        # containers that were not registered
         if isinstance(__value, list) and __name == 'historic':
             self.__dict__[__name] = __value
         elif isinstance(__value, int):
             self.__dict__[__name] = Number(__value)
         elif isinstance(__value, Number):
+            if __name in self.__dict__:
+                __value.set_status(Status.AFFECTED)
             self.__dict__[__name] = __value
         elif isinstance(__value, Stack):
             self.__dict__[__name] = __value
@@ -47,7 +50,6 @@ class Program:
             raise AttributeError("Unknown attribute")
         if not __name == "historic" or __name == "log" or __name == "__dict__":
             self.log()
-            print("Logging :D")
 
     @always_try
     def log(self):
@@ -78,15 +80,19 @@ class Program:
     def __getattribute__(self, __name: str) -> Any:
         if __name == "historic" or __name == "log" or __name == "__dict__":
             return super().__getattribute__(__name)
-        print(f"Getting attr {__name}")
         self.log()
         return super().__getattribute__(__name)
 
-    @staticmethod   
+    # Call at the end to ensure that everything is logged
+    def end(self):
+        self.log()
+
+    @staticmethod
     def wrap_code_in_function(file_path):
         if os.path.exists(file_path):
             with open(file_path, 'r') as file:
                 code = file.read()
+                code += "\np.end()\n"
 
             class Worker(QRunnable):
                 def __init__(self):
