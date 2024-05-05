@@ -29,6 +29,8 @@ class Array(Data):
             self.value[-1].status = Status.AFFECTED
         else:
             raise ValueError("Cannot append given type to array")
+    def get_flat_data(self):
+        return [self] + self.data
 
     def isEmpty(self):
         return self.size() == 0

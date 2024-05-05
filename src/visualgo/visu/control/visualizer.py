@@ -79,7 +79,6 @@ class Visualizer(QWidget):
 
         # TODO : analyze status to figure out what is happening and draw arrows between 'active' cells
 
-
         interesting = list(filter(lambda w: w.status != Status.NONE, all_cell_widget))
         print(*[w.status for w in interesting])
         self.data_area.update()

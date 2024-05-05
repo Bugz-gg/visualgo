@@ -15,8 +15,12 @@ class Data(ABC):
     def get_status(self):
         return self.status
 
+    def get_flat_data(self):
+        return [self]
+
     def reset_status(self):
-        self.set_status(Status.NONE)
+        for data in self.get_flat_data():
+            data.set_status(Status.NONE)
 
     # this method use side effect unlike "=" operator which use reference assignment
     # might cause issues elsewhere
@@ -34,3 +38,4 @@ class Status(Enum):
     GREATER_THAN = 5  # used for both > and >=
     EQUAL = 6  # used for ==
     DIFFERENT = 7  # used for !=
+    LOOKED_INSIDE = 9  # Used for containers
