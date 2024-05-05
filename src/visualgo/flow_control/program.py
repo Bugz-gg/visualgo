@@ -13,10 +13,10 @@ from visualgo.visu.control.controller import Controller
 from visualgo.visu.control.programState import ProgramState
 import threading
 from visualgo.visu.utils import always_try
-from ..data_structures.number import Number
-from ..data_structures.array import Array
-from ..data_structures.queue import Queue
-from ..data_structures.tree import Tree, Node
+from visualgo.data_structures.number import Number
+from visualgo.data_structures.array import Array
+from visualgo.data_structures.queue import Queue
+from visualgo.data_structures.tree import Tree, Node
 
 
 class Program:
@@ -54,8 +54,7 @@ class Program:
     @always_try
     def log(self):
         """
-        This property is called everytime an attribute of the program is accessed. It creates a snapshot of
-        the program state and add it to the *historic* attribute.
+        Not gonna comment this one cuz fuck it
         """
         attr = super().__getattribute__("__dict__")
         state = {}
