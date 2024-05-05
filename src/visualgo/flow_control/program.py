@@ -24,6 +24,7 @@ class Program:
         self.__dict__["worker"] = worker
 
     def __setattr__(self, __name: str, __value: Any) -> None:
+        print(f"Setting attr {__name} with value {__value}")
         if isinstance(__value, list) and __name == 'historic':
             self.__dict__[__name] = __value
         elif isinstance(__value, int):
@@ -36,6 +37,7 @@ class Program:
             raise AttributeError("Unknown attribute")
         if not __name == "historic" or __name == "log" or __name == "__dict__":
             self.log()
+            print("Logging :D")
 
     @always_try
     def log(self):
@@ -47,8 +49,13 @@ class Program:
                     x = deepcopy(attr[attr_name])
                     state[attr_name] = x
                     attr[attr_name].reset_status()
-                    print(f"reseting {attr_name} !")
-        if len(list(filter(lambda x: x[1].status != Status.NONE, state.items()))) == 0:
+        all_data = []
+        for data in state.values():
+            all_data += data.get_flat_data()
+        if len(list(filter(lambda d: d.status != Status.NONE
+                                 and d.status != Status.READ
+                                 and d.status != Status.LOOKED_INSIDE,
+                           all_data))) == 0:
             pass
         elif "historic" in attr:
             p_state = ProgramState(state)
@@ -60,6 +67,7 @@ class Program:
     def __getattribute__(self, __name: str) -> Any:
         if __name == "historic" or __name == "log" or __name == "__dict__":
             return super().__getattribute__(__name)
+        print(f"Getting attr {__name}")
         self.log()
         return super().__getattribute__(__name)
 

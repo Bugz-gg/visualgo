@@ -12,6 +12,7 @@ class VectorCellWidget(WidgetWithZoom):
         super().__init__()
         self.cell_array = [CellWidget(value) for value in array.value]
         self.setObjectName("vectorWidget")  # Set object name for styling
+        self.status = array.status
 
         # Create a horizontal layout for the ArrayWidget
         layout = QHBoxLayout()
@@ -35,4 +36,4 @@ class VectorCellWidget(WidgetWithZoom):
             cell.update_zoom(new_zoom)
 
     def get_flat_data(self):
-        return self.cell_array
+        return self.cell_array + [self]

@@ -8,6 +8,7 @@ from PyQt5.QtCore import QSize, QSizeF
 from PyQt5.QtGui import QPen
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
+from visualgo.data_structures.data import Status
 from visualgo.data_structures.number import Number
 from visualgo.visu.WorldCanvas.CanvasContainer import CanvasContainer
 from visualgo.visu.WorldCanvas.WorldCanvasWidget import WorldCanvasWidget
@@ -76,8 +77,8 @@ class Visualizer(QWidget):
 
         # TODO : analyze status to figure out what is happening and draw arrows between 'active' cells
 
-        for widget in all_cell_widget:
-            print(widget.status)
+        interesting = list(filter(lambda w: w.status != Status.NONE, all_cell_widget))
+        print(*[w.status for w in interesting])
 
         self.data_area.update()
         

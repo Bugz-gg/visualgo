@@ -7,20 +7,19 @@ class Stack(Data):
         super().__init__(is_visible)
         self.value = []
 
-    def reset_status(self):
-        for data in self.value:
-            data.reset_status()
+    def get_flat_data(self):
+        return [self] + self.value
 
     def __str__(self):
         return ", ".join(str(val) for val in self.__dict__['value']) + f" {self.status}"
     
     def pop(self):
-        super().set_status(Status.READ)
+        super().set_status(Status.LOOKED_INSIDE)
         assert not self.isEmpty(), "stack is empty"
         return self.value.pop(0)
     
     def push(self, value):
-        super().set_status(Status.READ)
+        super().set_status(Status.LOOKED_INSIDE)
         if isinstance(value, int):
             self.value.insert(0, Number(value))
         else:

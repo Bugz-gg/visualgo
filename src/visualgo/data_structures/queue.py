@@ -6,17 +6,16 @@ class Queue(Data):
         super().__init__(is_visible)
         self.value = []
 
-    def reset_status(self):
-        for data in self.value:
-            data.reset_status()
+    def get_flat_data(self):
+        return [self] + self.value
 
     def remove(self):
-        super().set_status(Status.READ)
+        super().set_status(Status.LOOKED_INSIDE)
         assert not self.isEmpty(), "queue is empty"
         return self.value.pop(self.size() - 1)
     
     def add(self, value):
-        super().set_status(Status.READ)
+        super().set_status(Status.LOOKED_INSIDE)
         self.value.insert(0, value) 
         assert not self.isEmpty(), "operation failed, queue is empty"
         

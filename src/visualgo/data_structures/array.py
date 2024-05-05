@@ -17,7 +17,6 @@ class Array(Data):
         else:
             raise ValueError("Cannot assign given type to array cell")
 
-    def reset_status(self):
-        for data in self.data:
-            data.reset_status()
+    def get_flat_data(self):
+        return [self] + self.data
 
