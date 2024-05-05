@@ -53,6 +53,10 @@ class Program:
 
     @always_try
     def log(self):
+        """
+        This property is called everytime an attribute of the program is accessed. It creates a snapshot of
+        the program state and add it to the *historic* attribute.
+        """
         attr = super().__getattribute__("__dict__")
         state = {}
         for attr_name in attr:
@@ -83,6 +87,32 @@ class Program:
         self.log()
         return super().__getattribute__(__name)
 
+    @staticmethod
+    def visualize(historic, program_name="visualization"):
+        """
+        Static method to visualize specified data structures through the algorithm run.
+
+        :param historic: Array of *program states* to be visualized.
+        :param program_name: String of the name of the visualization window ("visualization" by default).
+        """
+        app = QApplication(sys.argv)
+        # load QSS file
+        with open("visualgo/visu/style.qss", "r") as f:
+            app.setStyleSheet(f.read())
+
+        window = Controller(program_name, historic)
+        window.show()
+        sys.exit(app.exec())
+
+    def async_print_histo(self):
+        def async_print_histo():
+            while 1:
+                print(self.historic, len(self.historic))
+                time.sleep(1)
+        thread = threading.Thread(target=async_print_histo)
+        thread.daemon = True
+        thread.start()
+        
     # Call at the end to ensure that everything is logged
     def end(self):
         self.log()
