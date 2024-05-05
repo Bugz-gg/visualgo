@@ -61,11 +61,14 @@ class Program:
         super().__getattribute__("log")
         return super().__getattribute__(__name)
 
-    """
-    Static method to visualize specified data structures through the algorithm run
-    """
     @staticmethod
-    def visualize(historic, program_name="visualisation"):
+    def visualize(historic, program_name="visualization"):
+        """
+        Static method to visualize specified data structures through the algorithm run.
+
+        :param historic: Array of *program states* to be visualized.
+        :param program_name: String of the name of the visualization window ("visualization" by default).
+        """
         app = QApplication(sys.argv)
         # load QSS file
         with open("visualgo/visu/style.qss", "r") as f:
