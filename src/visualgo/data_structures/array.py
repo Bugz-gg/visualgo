@@ -3,9 +3,9 @@ from visualgo.data_structures.number import Number
 
 
 class Array(Data):
-    def __init__(self, is_visible):
+    def __init__(self, is_visible=True):
         super().__init__(is_visible)
-        self.data = []
+        self.value = []
     
     def __setitem__(self, index, value):
         if isinstance(value, Number):
@@ -18,15 +18,15 @@ class Array(Data):
             raise ValueError("Cannot assign given type to array cell")
 
     def reset_status(self):
-        for data in self.data:
-            data.reset_status()
+        for value in self.value:
+            value.reset_status()
     def append(self, value):
         if isinstance(value, Number):
-            self.data.append(Number(value.value))
-            self.data[-1].status = Status.AFFECTED
+            self.value.append(Number(value.value))
+            self.value[-1].status = Status.AFFECTED
         elif isinstance(value, int) or isinstance(value, float):
-            self.data.append(Number(value))
-            self.data[-1].status = Status.AFFECTED
+            self.value.append(Number(value))
+            self.value[-1].status = Status.AFFECTED
         else:
             raise ValueError("Cannot append given type to array")
 

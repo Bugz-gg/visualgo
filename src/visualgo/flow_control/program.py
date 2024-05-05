@@ -48,7 +48,6 @@ class Program:
             self.log()
 
     @always_try
-    @property
     def log(self):
         attr = super().__getattribute__("__dict__")
         state = {}
@@ -75,7 +74,7 @@ class Program:
         self.log()
         return super().__getattribute__(__name)
 
-    @staticmethod
+    @staticmethod   
     def wrap_code_in_function(file_path):
         if os.path.exists(file_path):
             with open(file_path, 'r') as file:
