@@ -72,11 +72,16 @@ class Program:
         self.log()
         return super().__getattribute__(__name)
 
+    # Call at the end to ensure that everything is logged
+    def end(self):
+        self.log()
+
     @staticmethod
     def wrap_code_in_function(file_path):
         if os.path.exists(file_path):
             with open(file_path, 'r') as file:
                 code = file.read()
+                code += "\np.end()\n"
 
             class Worker(QRunnable):
                 def __init__(self):
