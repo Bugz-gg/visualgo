@@ -81,6 +81,9 @@ sudo apt-get install python3-sphinx
 ```
 
 
+`make html` can then be run to build the documentation in `./build/`. 
+
+
 ### Usage
 
 Activate the virtual environment whenever you want to use the project:
