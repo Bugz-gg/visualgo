@@ -12,6 +12,9 @@ Visualgo's documentation
 
    modules
    
+   user
+
+   dev
 
 
 Indices and tables

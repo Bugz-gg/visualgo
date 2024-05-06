@@ -9,7 +9,3 @@ visualgo
    getting_started
 
    How_to_use
-   
-   data_structures
-
-   flow_control
