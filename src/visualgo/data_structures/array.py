@@ -22,6 +22,11 @@ class Array(Data):
             value.reset_status()
 
     def append(self, value):
+        """
+        Adds a value at the end of the array.
+
+        :param value: The value to add at the end of the array.
+        """
         if isinstance(value, Number):
             self.value.append(Number(value.value))
             self.value[-1].status = Status.AFFECTED
@@ -35,9 +40,19 @@ class Array(Data):
         return [self] + self.data
 
     def isEmpty(self):
+        """
+        Checks if the array is empty.
+
+        :return: A boolean, True if the array is empty, False otherwise.
+        """
         return self.size() == 0
 
     def size(self):
+        """
+        Returns the number of elements in the array.
+
+        :return: The number of elements in the array.
+        """
         return len(self.value)
 
     def __eq__(self, other):
