@@ -2,17 +2,17 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QWidget, QHBoxLayout
 
 from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
+from visualgo.visu.data_structures.VisualWidget import VisualWidget
 from visualgo.visu.data_structures.cell_widget import CellWidget
 
 
-class VectorCellWidget(WidgetWithZoom):
+class VectorCellWidget(VisualWidget):
     ELEMENT_MARGIN = 10
 
     def __init__(self, array):
-        super().__init__()
+        super().__init__(array.status)
         self.cell_array = [CellWidget(value) for value in array.value]
         self.setObjectName("vectorWidget")  # Set object name for styling
-        self.status = array.status
 
         # Create a horizontal layout for the ArrayWidget
         layout = QHBoxLayout()
