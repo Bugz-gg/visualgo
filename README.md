@@ -72,6 +72,18 @@ Run various tests with the following commands:
     mypy
     ```
 
+### Documentation
+
+In order to build the documentation, install the required package and modules with :
+```bash
+pip install -r ./requirements_dev.txt
+sudo apt-get install python3-sphinx
+```
+
+
+`make html` can then be run to build the documentation in `./build/`. 
+
+
 ### Usage
 
 Activate the virtual environment whenever you want to use the project:
