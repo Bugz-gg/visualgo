@@ -2,14 +2,15 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
 from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
+from visualgo.visu.data_structures.VisualWidget import VisualWidget
 from visualgo.visu.data_structures.cell_widget import CellWidget
 
 
-class StackCellWidget(WidgetWithZoom):
+class StackCellWidget(VisualWidget):
     ELEMENT_MARGIN = 10
 
     def __init__(self, stack):
-        super().__init__()
+        super().__init__(stack.status)
         self.cell_array = [CellWidget(value) for value in stack.value]
         self.setObjectName("stackWidget")  # Set object name for styling
 
@@ -32,3 +33,6 @@ class StackCellWidget(WidgetWithZoom):
         self.zoom = new_zoom
         for cell in self.cell_array:
             cell.update_zoom(new_zoom)
+
+    def get_flat_data(self):
+        return [self] + self.cell_array
