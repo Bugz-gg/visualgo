@@ -20,6 +20,7 @@ class Array(Data):
     def reset_status(self):
         for value in self.value:
             value.reset_status()
+        super().reset_status()
 
     def append(self, value):
         """
@@ -37,7 +38,7 @@ class Array(Data):
             raise ValueError("Cannot append given type to array")
 
     def get_flat_data(self):
-        return [self] + self.data
+        return [self] + self.value
 
     def isEmpty(self):
         """
@@ -61,3 +62,17 @@ class Array(Data):
         if isinstance(other, Array):
             return self.value == other.value
         return False
+
+    def get(self, index):
+        """
+        Returns the value at the given index in the array
+
+        Args:
+            index: the index of the value to fetch
+
+        Returns: the value at the given index in the array
+        """
+        if isinstance(index, Number):
+            index = index.value
+
+        return self.value[index].value

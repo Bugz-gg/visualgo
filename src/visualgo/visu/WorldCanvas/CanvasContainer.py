@@ -37,7 +37,6 @@ class CanvasContainer(WidgetWithZoom):
 
         self.segment_size = WorldCanvasWidget.DOT_SPACING
 
-
     def get_font_size(self, name_length):
 
         # with a base font size of 30, about 7 chars fit in 30 px

@@ -31,7 +31,10 @@ class Program:
         if isinstance(__value, list) and __name == 'historic':
             self.__dict__[__name] = __value
         elif isinstance(__value, int):
-            self.__dict__[__name] = Number(__value)
+            n = Number(__value)
+            if __name in self.__dict__:
+                n.status = Status.AFFECTED
+            self.__dict__[__name] = n
         elif isinstance(__value, Number):
             if __name in self.__dict__:
                 __value.set_status(Status.AFFECTED)
@@ -61,9 +64,8 @@ class Program:
         for attr_name in attr:
             if attr_name != "historic" and "historic" in attr:
                 if isinstance(attr[attr_name], Data):
-                    x = deepcopy(attr[attr_name])
-                    state[attr_name] = x
-                    attr[attr_name].reset_status()
+                    state[attr_name] = deepcopy(attr[attr_name])
+
         all_data = []
         for data in state.values():
             all_data += data.get_flat_data()
@@ -73,18 +75,25 @@ class Program:
                            all_data))) == 0:
             pass
         elif "historic" in attr:
+            for attr_name in attr:
+                if isinstance(attr[attr_name], Data):
+                    attr[attr_name].reset_status()
             p_state = ProgramState(state)
             super().__getattribute__("historic").append(p_state)
             # Send signal to controller telling historic has grown and wait for signal to continue working
             worker = self.__dict__["worker"]
             worker.wait()
 
-
     def __getattribute__(self, __name: str) -> Any:
         if __name == "historic" or __name == "log" or __name == "__dict__":
             return super().__getattribute__(__name)
+        result = super().__getattribute__(__name)
+        if isinstance(result, Number):
+            result.status = Status.READ
+        else:
+            result.status = Status.LOOKED_INSIDE
         self.log()
-        return super().__getattribute__(__name)
+        return result
 
     @staticmethod
     def visualize(historic, program_name="visualization"):

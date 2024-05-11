@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 from math import atan2, sin, cos, pi
 
-from PyQt5.QtCore import QPoint, Qt
+from PyQt5.QtCore import QPoint, Qt, QPropertyAnimation, QEasingCurve, QRect
 from PyQt5.QtCore import QSize, QSizeF
 from PyQt5.QtGui import QPen
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
@@ -14,32 +14,8 @@ from visualgo.data_structures.tree import Node
 from visualgo.visu.WorldCanvas.CanvasContainer import CanvasContainer
 from visualgo.visu.WorldCanvas.WorldCanvasWidget import WorldCanvasWidget
 from visualgo.visu.control.programState import ProgramState
+from visualgo.visu.data_structures import VisualWidget
 from visualgo.visu.utils import always_try
-
-
-def draw_arrow(painter, start, end, color=Qt.black, width=2, arrow_size=10, arrow_angle=30):
-    # Set pen properties
-    pen = QPen(color)
-    pen.setWidth(width)
-    painter.setPen(pen)
-
-    # Draw line
-    painter.drawLine(start, end)
-
-    # Draw arrowhead
-    line_angle = atan2(end.y() - start.y(), end.x() - start.x())
-    arrow_p1 = end - QPoint(
-        arrow_size * cos((line_angle + arrow_angle) * pi / 180),
-        arrow_size * sin((line_angle + arrow_angle) * pi / 180)
-    )
-    arrow_p2 = end - QPoint(
-        arrow_size * cos((line_angle - arrow_angle) * pi / 180),
-        arrow_size * sin((line_angle - arrow_angle) * pi / 180)
-    )
-    painter.drawLine(end, arrow_p1)
-    painter.drawLine(end, arrow_p2)
-
-
 
 
 # Visualizer role is handle data placement inside the WorldCanvasWidget
@@ -53,11 +29,12 @@ class Visualizer(QWidget):
         self.data_positions = {}
 
         self.layout().addWidget(self.data_area)
+
     @always_try
     def update_data(self, program_state: ProgramState):
         self.data_area.clear()  # Clear previous data
         for name, data in program_state.variables_to_display.items():
-            if not isinstance(data, Node): 
+            if not isinstance(data, Node):
                 widget = ProgramState.resolve_visual_structure(data)
                 size = self.get_minimal_size(widget.sizeHint())
 
@@ -72,15 +49,6 @@ class Visualizer(QWidget):
 
                 self.data_area.add_container(CanvasContainer(self, pos, size, widget, name))
 
-        # Collect all cell_widget
-        all_cell_widget = []
-        for container in self.data_area.containers:
-            all_cell_widget += container.inside_widget.get_flat_data()
-
-        # TODO : analyze status to figure out what is happening and draw arrows between 'active' cells
-
-        interesting = list(filter(lambda w: w.status != Status.NONE, all_cell_widget))
-        print(*[w.status for w in interesting])
         self.data_area.update()
 
     def intersects_with_existing(self, pos, size, exclude=None):
@@ -104,7 +72,7 @@ class Visualizer(QWidget):
         while True:
             if col >= threshold:
                 col = 0
-                row += 1            
+                row += 1
             next_pos = QPoint(col, row)
             if not self.intersects_with_existing(next_pos, size, exclude):
                 return next_pos
@@ -139,5 +107,3 @@ class Visualizer(QWidget):
         width = math.ceil(hint.width() / self.data_area.DOT_SPACING)
         height = math.ceil(hint.height() / self.data_area.DOT_SPACING)
         return QSize(max(width, 1), max(1, height))
-
-
