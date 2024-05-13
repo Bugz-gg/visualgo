@@ -90,8 +90,6 @@ class Program:
         result = super().__getattribute__(__name)
         if isinstance(result, Number):
             result.status = Status.READ
-        else:
-            result.status = Status.LOOKED_INSIDE
         self.log()
         return result
 
@@ -161,3 +159,5 @@ class Program:
 
             controller.show()
             sys.exit(app.exec())
+        else:
+            print("no file")
