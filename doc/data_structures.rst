@@ -51,3 +51,19 @@ the stack is the last one to be removed. It is implemented by the `Stack` class.
    :members:
    :undoc-members:
    :show-inheritance:
+
+Tree
+----
+A tree is a data structure composed of a node and children. The node as a specific value while children are trees (or None). Trees are implmented by the `Tree` class.
+
+.. autoclass:: data_structures.tree.Tree
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Visualgo's tree implementation used a class named `Node`:
+
+.. autoclass:: data_structures.tree.Node
+   :members:
+   :undoc-members:
+   :show-inheritance:
