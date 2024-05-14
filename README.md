@@ -86,7 +86,7 @@ Run various tests with the following commands:
 
 ### Documentation
 
-In order to build the documentation, install the required package and modules with :
+In order to build the documentation, install the required packages and modules with :
 ```bash
 pip install -r ./requirements_dev.txt
 sudo apt-get install python3-sphinx
