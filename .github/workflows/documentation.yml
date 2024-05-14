@@ -15,10 +15,11 @@ jobs:
         run: |
           pip install sphinx sphinx_rtd_theme myst_parser
       - name: Sphinx build
+        if: ${{ github.ref == 'refs/heads/demo_lundi' }}
         run: |
           sphinx-build doc _build
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-demo_lundi@v3
+        uses: peaceiris/actions-gh-pages@v3
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
           publish_branch: demo_lundi
