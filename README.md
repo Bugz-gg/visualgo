@@ -10,6 +10,8 @@
   ╚═══╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ 
 ```
 
+## Documentation 
+This is a documentation of how to use and also how to extend (at your own risks) the project https://bugz-gg.github.io/visualgo/.
 
 ## Project Overview
 
@@ -111,3 +113,7 @@ deactivate
 ```
 
 This setup ensures a clean and isolated environment for running and testing the project.
+
+## CeCILL Free Software License
+
+The CeCILL Free Software License is a legal document that outlines the terms and conditions for using, modifying, and distributing software. It ensures users' access to the source code, granting them extended rights typical of free software. The license is compliant with French law, providing protection to both users and authors. Users are encouraged to read and understand the terms before using the software. Redistribution is allowed under certain conditions, and users must acknowledge the original authors. The license also addresses liability, warranties, and dispute resolution. Click on [Licence](LICENSE) to have more details or on the website for english speakers [CeCILL Website](http://www.cecill.info/index.en.html).
