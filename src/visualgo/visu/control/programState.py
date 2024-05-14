@@ -6,9 +6,10 @@ from visualgo.data_structures.stack import Stack
 from visualgo.data_structures.tree import Tree, Node
 from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
 from visualgo.visu.data_structures.cell_widget import CellWidget
-from visualgo.visu.data_structures.vector_cell_widget import VectorCellWidget
 from visualgo.visu.data_structures.stack_cell_widget import StackCellWidget
-from visualgo.visu.data_structures.tree_widget import TreeWidget, TreeNode
+from visualgo.visu.data_structures.tree_widget import TreeWidget
+from visualgo.visu.data_structures.vector_cell_widget import VectorCellWidget
+
 
 class ProgramState:
     def __init__(self, variables_to_display: dict[str, Data]):
@@ -23,6 +24,18 @@ class ProgramState:
 
     @staticmethod
     def resolve_visual_structure(value: Data) -> WidgetWithZoom:
+        """
+
+        This method resolve the visual widget that should be used by an object child of Data.
+
+        Adding a new data structure should imply adding a case below for it to be converted as a VisualWidget.
+
+        Args:
+            value: An object inheriting Data.
+
+        Returns: An associated VisualWidget.
+
+        """
         if isinstance(value, Number):
             return CellWidget(value)
         if isinstance(value, Array):
