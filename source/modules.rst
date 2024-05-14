@@ -2,7 +2,7 @@ visualgo
 ========
 
 .. toctree::
-   :maxdepth: 6
+   :maxdepth: 2
    
    visualgo_md
 
