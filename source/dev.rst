@@ -1,4 +1,4 @@
-Visualgo's developer guide
+Visualgo developer guide
 ==========================
 
 
