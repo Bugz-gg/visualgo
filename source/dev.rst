@@ -6,5 +6,5 @@ Visualgo's developer guide
    :maxdepth: 2
 
    flow_control
-
    data_structures
+   extending_visualgo

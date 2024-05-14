@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.abspath("../src/visualgo/"))
 
 project = 'Visualgo'
-copyright = '2024, Alexandre Tabouret'
+copyright = '2024, Alexandre Tabouret & Youpi'
 author = 'Alexandre Tabouret'
 release = '0.0.1'
 

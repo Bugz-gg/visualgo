@@ -4,7 +4,7 @@ In this section, we are going to take a look at Visualgo module and study a simp
 
 ## Installation
 
-First, we are invitinig you to follow the **Getting started** guide in order to install Visualgo module on your device. You will then be able to freely import it in any *.py* file.
+First, we are inviting you to follow the **Getting started** guide in order to install Visualgo module on your device. You will then be able to freely import it in any *.py* file.
 
 
 ## How does it work ?
