@@ -113,3 +113,16 @@ class Tree(Data):
         
     def get_root(self):
         return self.root
+    def get_flat_data(self):
+        flat_data = [self]
+        self._traverse_tree(self.root, flat_data)
+        return flat_data
+
+    def _traverse_tree(self, node, flat_data):
+        if node is None:
+            return
+
+        flat_data.append(node)
+
+        for child in node.children:
+            self._traverse_tree(child, flat_data)
