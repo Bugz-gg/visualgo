@@ -13,8 +13,7 @@ jobs:
       - uses: actions/setup-python@v3
       - name: Install dependencies
         run: |
-          pip install -r ./requirements_dev.txt
-          apt-get install python3-sphinx
+          pip install sphinx sphinx_rtd_theme myst_parser
       - name: Sphinx build
         run: |
           make html
