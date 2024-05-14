@@ -4,14 +4,14 @@ from PyQt5.QtWidgets import QWidget, QHBoxLayout
 from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
 from visualgo.visu.data_structures.VisualWidget import VisualWidget
 from visualgo.visu.data_structures.cell_widget import CellWidget
-
+from visualgo.data_structures.tree import Node
 
 class VectorCellWidget(VisualWidget):
     ELEMENT_MARGIN = 10
 
     def __init__(self, array):
         super().__init__(array.status)
-        self.cell_array = [CellWidget(value) for value in array.value]
+        self.cell_array = [CellWidget(value.get_value()) if isinstance(value, Node) else CellWidget(value) for value in array.value]
         self.setObjectName("vectorWidget")  # Set object name for styling
 
         # Create a horizontal layout for the ArrayWidget
