@@ -1,17 +1,22 @@
 from visualgo.data_structures.data import Data,Status
 
+
 class Queue(Data):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, is_visible=True):
+        super().__init__(is_visible)
         self.value = []
-    
+
+    def get_flat_data(self):
+        return [self] + self.value
+
     def remove(self):
         """
         Removes the first element of the queue. Assert that the queue is not empty.
 
         :return: The first element of the queue.
         """
-        super().set_status(Status.READ)
+
+        super().set_status(Status.REMOVED_INSIDE)
         assert not self.isEmpty(), "queue is empty"
         return self.value.pop(self.size() - 1)
     
@@ -22,7 +27,7 @@ class Queue(Data):
         :param value: Value to add at the end of the queue.
         :return:
         """
-        super().set_status(Status.READ)
+        super().set_status(Status.LOOKED_INSIDE)
         self.value.insert(0, value) 
         assert not self.isEmpty(), "operation failed, queue is empty"
         

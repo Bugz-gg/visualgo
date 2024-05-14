@@ -1,19 +1,17 @@
-from PyQt5.QtCore import Qt, QMargins, QSize
+from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QPainter
 
-from visualgo.data_structures.data import Status
 from visualgo.data_structures.number import Number
-from visualgo.visu.WorldCanvas.WidgetWithZoom import WidgetWithZoom
+from visualgo.visu.data_structures.VisualWidget import VisualWidget
 from visualgo.visu.data_structures.data_states import status_to_color
 from visualgo.visu.utils import always_try
 
 
-class CellWidget(WidgetWithZoom):
+class CellWidget(VisualWidget):
     DEFAULT_CELL_SIZE = 30
 
     def __init__(self, value: Number):
-        super().__init__()
-        self.status: Status = value.status
+        super().__init__(value.status)
         self._value = value.__dict__["value"]
 
     def sizeHint(self):
@@ -43,3 +41,6 @@ class CellWidget(WidgetWithZoom):
 
         painter.setPen(pen)
         painter.drawText(self.rect(), Qt.AlignCenter, str(self._value))
+
+    def get_flat_data(self):
+        return [self]

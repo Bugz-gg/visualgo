@@ -1,5 +1,16 @@
 # PFA 11A - VisuAlgo
 
+
+```golang
+██╗   ██╗██╗███████╗██╗   ██╗ █████╗ ██╗      ██████╗  ██████╗ 
+██║   ██║██║██╔════╝██║   ██║██╔══██╗██║     ██╔════╝ ██╔═══██╗
+██║   ██║██║███████╗██║   ██║███████║██║     ██║  ███╗██║   ██║
+╚██╗ ██╔╝██║╚════██║██║   ██║██╔══██║██║     ██║   ██║██║   ██║
+ ╚████╔╝ ██║███████║╚██████╔╝██║  ██║███████╗╚██████╔╝╚██████╔╝
+  ╚═══╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ 
+```
+
+
 ## Project Overview
 
 This is the repository for PFA 11A - VisuAlgo, a Python project that visualizes algorithms. The project structure and setup instructions are outlined below.
@@ -12,8 +23,9 @@ Write your code in ```src/visualgo/``` and your tst in ```tests/```.
 project-root/
 ├── src/
 │   └── visualgo/
-│       ├── main.py
-│       ├── py.typed
+│       ├── data_structure/
+│       ├── flow_control/
+│       ├── visu/
 │
 ├── tests/
 │   └── test_main.py
@@ -71,6 +83,18 @@ Run various tests with the following commands:
     ```bash
     mypy
     ```
+
+### Documentation
+
+In order to build the documentation, install the required package and modules with :
+```bash
+pip install -r ./requirements_dev.txt
+sudo apt-get install python3-sphinx
+```
+
+
+`make html` can then be run to build the documentation in `./build/`. 
+
 
 ### Usage
 

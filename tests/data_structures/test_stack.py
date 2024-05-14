@@ -54,6 +54,7 @@ def test_number_affected():
     s.assign(q)
     assert s.get_status() == Status.AFFECTED
 
+
 def test_number_compared():
     s1 = Stack()
     s2 = Stack()
