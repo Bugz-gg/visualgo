@@ -6,6 +6,5 @@ visualgo
    
    visualgo_md
 
-   getting_started
 
    How_to_use
