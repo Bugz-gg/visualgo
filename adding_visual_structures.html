@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Adding visual structure &#8212; Visualgo 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Linking data structures to visual structures" href="linking_data_structure_to_visual_structure.html" />
+    <link rel="prev" title="Adding data structures" href="adding_data_structure.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="adding-visual-structure">
+<h1>Adding visual structure<a class="headerlink" href="#adding-visual-structure" title="Link to this heading">¶</a></h1>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading">¶</a></h2>
+<section id="get-flat-data">
+<h3>get_flat_data()<a class="headerlink" href="#get-flat-data" title="Link to this heading">¶</a></h3>
+<p>Any new visual structure should implement the abstract class <code class="docutils literal notranslate"><span class="pre">VisualWidget</span></code>.</p>
+<p>You must correctly implement the <code class="docutils literal notranslate"><span class="pre">get_flat_data()</span></code> method that return a list of <strong>all</strong> the instances of <code class="docutils literal notranslate"><span class="pre">VisualWidget</span></code> contained
+within your new class.</p>
+<p>If your class contain a singular value, it should be something along :</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>If your class is container of some sort, you should return the instance of the container as well as the
+instances of the contained attributes</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_of_contained_values</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="other-features">
+<h2>Other features<a class="headerlink" href="#other-features" title="Link to this heading">¶</a></h2>
+<p>There are two very useful features that you should be aware of :</p>
+<section id="size-hint">
+<h3>size_hint()<a class="headerlink" href="#size-hint" title="Link to this heading">¶</a></h3>
+<p>This method allow you to specify to the visualizer the size that your structure needs. It returns a QSize of pyQt5.</p>
+</section>
+<section id="zoom">
+<h3>zoom<a class="headerlink" href="#zoom" title="Link to this heading">¶</a></h3>
+<p>Handling zoom is essential in order for your structure to react well with user interactions.
+Refer to the <code class="docutils literal notranslate"><span class="pre">WidgetWithZoom</span></code> class to get more details.</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Visualgo</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules.html">visualgo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">Visualgo user guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="dev.html">Visualgo developer guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="flow_control.html">Flow control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html">Data Structures</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="extending_visualgo.html">Extending Visualgo</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="dev.html">Visualgo developer guide</a><ul>
+  <li><a href="extending_visualgo.html">Extending Visualgo</a><ul>
+      <li>Previous: <a href="adding_data_structure.html" title="previous chapter">Adding data structures</a></li>
+      <li>Next: <a href="linking_data_structure_to_visual_structure.html" title="next chapter">Linking data structures to visual structures</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Alexandre Tabouret & Youpi.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/adding_visual_structures.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

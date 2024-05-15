@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Program class &#8212; Visualgo 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data Structures" href="data_structures.html" />
+    <link rel="prev" title="Flow control" href="flow_control.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="program-class">
+<h1><code class="docutils literal notranslate"><span class="pre">Program</span></code> class<a class="headerlink" href="#program-class" title="Link to this heading">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Program</span></code> class has by default two attributes :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">historic</span></code>: an array used to store every step of the program,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">worker</span></code>:</p></li>
+</ul>
+<section id="saving-variables">
+<h2>Saving variables<a class="headerlink" href="#saving-variables" title="Link to this heading">¶</a></h2>
+<p>An important method of the <code class="docutils literal notranslate"><span class="pre">Program</span></code> class is <code class="docutils literal notranslate"><span class="pre">log</span></code>. Everytime it is called, all variables of the program except the two previously mentionned are saved inside historic.
+Everytime something within the program happens, <code class="docutils literal notranslate"><span class="pre">log</span></code> is called to keep track of every changement.</p>
+</section>
+<section id="adding-and-modifying-variables">
+<h2>Adding and modifying variables<a class="headerlink" href="#adding-and-modifying-variables" title="Link to this heading">¶</a></h2>
+<p>When a user wants to keep track of a variable, he has to declare as an attibute of an instance of <code class="docutils literal notranslate"><span class="pre">Program</span></code>. For instance, the following code show how
+to declare and add the variable <code class="docutils literal notranslate"><span class="pre">x</span></code> of value <code class="docutils literal notranslate"><span class="pre">5</span></code> to a <code class="docutils literal notranslate"><span class="pre">Program</span></code> named <code class="docutils literal notranslate"><span class="pre">p</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>In Python, new attributes can be freely created by simply affecting a value to it. When Python tries to the set a value of an attribute, it checks if the attribute exists.
+If it does, the value is simply changed, otherwise the attribute is created and its value set. This is done implicitly done with the <code class="docutils literal notranslate"><span class="pre">__setattr__</span></code> method. Here, the method is
+overrided in order to do additionnal operations:</p>
+<ul class="simple">
+<li><p>Everytime <code class="docutils literal notranslate"><span class="pre">__setattr__</span></code> is called, the <code class="docutils literal notranslate"><span class="pre">log</span></code> method is also called in order to take into account the new state of the whole program.</p></li>
+<li><p>The type of the value is checked in order to apply needed transformations (such as <code class="docutils literal notranslate"><span class="pre">int</span></code> or <code class="docutils literal notranslate"><span class="pre">float</span></code> into <code class="docutils literal notranslate"><span class="pre">Number</span></code>) and to raise en error if the type is not supported.</p></li>
+</ul>
+</section>
+<section id="accesing-a-value">
+<h2>Accesing a value<a class="headerlink" href="#accesing-a-value" title="Link to this heading">¶</a></h2>
+<p>Any attribute can easely be accessed via the usual way:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+<p>But behind the scene, the <code class="docutils literal notranslate"><span class="pre">__getattr__</span></code> method is called. This method also save the state of the program by calling <code class="docutils literal notranslate"><span class="pre">log</span></code>.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Visualgo</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules.html">visualgo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">Visualgo user guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="dev.html">Visualgo developer guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="flow_control.html">Flow control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_structures.html">Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extending_visualgo.html">Extending Visualgo</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="dev.html">Visualgo developer guide</a><ul>
+  <li><a href="flow_control.html">Flow control</a><ul>
+      <li>Previous: <a href="flow_control.html" title="previous chapter">Flow control</a></li>
+      <li>Next: <a href="data_structures.html" title="next chapter">Data Structures</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Alexandre Tabouret & Youpi.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/program_md.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

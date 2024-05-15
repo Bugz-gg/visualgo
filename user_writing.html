@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Writing programs &#8212; Visualgo 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=d45e8c67"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using the graphic interface" href="user_visu.html" />
+    <link rel="prev" title="Visualgo user guide" href="user.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="writing-programs">
+<h1>Writing programs<a class="headerlink" href="#writing-programs" title="Link to this heading">¶</a></h1>
+<p>The first thing to do is to create a python file (<em>.py</em> file). Let’s say we have a file named “<em>my_program.py</em>”.</p>
+<p>In that file we have to import the Visualgo library:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">Visualgo</span> <span class="k">as</span> <span class="nn">v</span>
+</pre></div>
+</div>
+<p>Now modules from the library can be freely used. Then, a instance of the class <strong>Program</strong> can be created. To do so, use the constructor from the <em>flow_control</em> module:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">flow_control</span><span class="o">.</span><span class="n">program</span><span class="o">.</span><span class="n">Program</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now we have a variable <code class="docutils literal notranslate"><span class="pre">p</span></code> which is going to be used to store variable that we want to visualize.</p>
+<section id="manipulate-data-structures">
+<h2>Manipulate data structures<a class="headerlink" href="#manipulate-data-structures" title="Link to this heading">¶</a></h2>
+<p>In order to have more information about variables, Visualgo brings its own implementation of usual data structures such as arrays and trees.
+They be found in the <em>data_structures</em> module.</p>
+<p>The following subsections are dedicated to data structures currently supported by Visualgo</p>
+<section id="number">
+<h3>Number<a class="headerlink" href="#number" title="Link to this heading">¶</a></h3>
+<p>Numbers act as regular numbers (can be either an <code class="docutils literal notranslate"><span class="pre">int</span></code> or a <code class="docutils literal notranslate"><span class="pre">float</span></code>). They can be created with a any real value:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">datastructures</span><span class="o">.</span><span class="n">number</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># The value of the Number &quot;a&quot; is 5</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">datastructures</span><span class="o">.</span><span class="n">number</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="o">-</span><span class="mf">17.6</span><span class="p">)</span> <span class="c1"># The value of the Number &quot;b&quot; is -17.6</span>
+</pre></div>
+</div>
+<p>The Number class supports usual operator such ass addition and substraction:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">)</span> <span class="c1"># type of &quot;c&quot; is Number</span>
+</pre></div>
+</div>
+<p>All following data structures contains only Numbers. Pythons’s <code class="docutils literal notranslate"><span class="pre">int</span></code> and <code class="docutils literal notranslate"><span class="pre">float</span></code> are automatically transformed into Numbers when added to those data structures.</p>
+</section>
+<section id="array">
+<h3>Array<a class="headerlink" href="#array" title="Link to this heading">¶</a></h3>
+<p>Arrays act the same as Python’s arrays. They are created from Python’s array as such:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">datastructures</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">Array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The Array class has methods such as <code class="docutils literal notranslate"><span class="pre">append</span></code> to add elements or <code class="docutils literal notranslate"><span class="pre">isEmpty</span></code> to check is the array is empty or not. Please check the rest of the documentation
+for a more detailed explanation of Array’s methods.</p>
+</section>
+<section id="stack">
+<h3>Stack<a class="headerlink" href="#stack" title="Link to this heading">¶</a></h3>
+<p>The Stack class implements stacks. An empty stack is created by calling the corresponding constructor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">datastructures</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">Stack</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Elements can then be added onto the stack with the <code class="docutils literal notranslate"><span class="pre">push</span></code> method and removed with the <code class="docutils literal notranslate"><span class="pre">pop</span></code> method. Please check the rest of the documentation
+for a more detailed explanation of Stack’s methods.</p>
+</section>
+<section id="queue">
+<h3>Queue<a class="headerlink" href="#queue" title="Link to this heading">¶</a></h3>
+<p>The Queue class implements queues. An empty queue is created by calling the corresponding constructor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">datastructures</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Elements can then be added at the beginning the queue with the <code class="docutils literal notranslate"><span class="pre">add</span></code> method and removed from the end with the <code class="docutils literal notranslate"><span class="pre">remove</span></code> method. Please check the rest of the documentation
+for a more detailed explanation of Queue’s methods.</p>
+</section>
+<section id="tree">
+<h3>Tree<a class="headerlink" href="#tree" title="Link to this heading">¶</a></h3>
+<p>The Tree class allows you to created your own trees. An empty tree is created by calling the corresponding constructor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">datastructures</span><span class="o">.</span><span class="n">tree</span><span class="o">.</span><span class="n">Tree</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Children can be added, remove and more with the corresponding methods.Please check the rest of the documentation
+for a more detailed explanation of Tree’s methods.</p>
+</section>
+<section id="and-what-about-the-program-class">
+<h3>And what about the Program class ?<a class="headerlink" href="#and-what-about-the-program-class" title="Link to this heading">¶</a></h3>
+<p>Well, all previous data structures can be added as attribute to a Program like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">l</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">datastructures</span><span class="o">.</span><span class="n">array</span><span class="o">.</span><span class="n">Array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>All variables that as to be visualized have to be added to the the instance of the Program class. If at some point of the program there is no more need to visualize a specific variable, its vizualisation can be disable by changing its <code class="docutils literal notranslate"><span class="pre">is_visible</span></code> attribute to <code class="docutils literal notranslate"><span class="pre">False</span></code> (all data structures from Visualgo library possess such attribute).</p>
+<p>## The first program (and the first visualization)</p>
+<p>Let’s write a function that determine that maximum value of an Array. Here is the code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">list_max</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">L</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">():</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">L</span><span class="o">.</span><span class="n">size</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">m</span> <span class="o">&lt;</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">m</span> <span class="o">=</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">m</span>
+</pre></div>
+</div>
+<p>Now the function can be called on an Array variable:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span> <span class="c1"># The Python array is automatically converted into a Visualgo&#39;s Array by &quot;p&quot;</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">list_max</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now there are two ways to display the algorithm running :</p>
+<ol class="arabic simple">
+<li><p>Using the <code class="docutils literal notranslate"><span class="pre">visualize</span></code> method from the Program class by simply adding <code class="docutils literal notranslate"><span class="pre">p.visualize()</span></code> at the end of the previous code.</p></li>
+<li><p>Creating a new filed (let’s say “<em>lauch.py</em>”) in which Visualgo is imported and the static method <code class="docutils literal notranslate"><span class="pre">wrap_code_to_function</span></code> is called with <code class="docutils literal notranslate"><span class="pre">&quot;./my_program.py&quot;</span></code> as an argument.</p></li>
+</ol>
+<p>The second option is better because it runs the graphic interface and the code of “<em>my_program.py</em>” in seperated thread. The is useful to still get a display even is the program displayed never end (infinite loop of whatever).</p>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Visualgo</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="modules.html">visualgo</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="user.html">Visualgo user guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Writing programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_visu.html">Using the graphic interface</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dev.html">Visualgo developer guide</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="user.html">Visualgo user guide</a><ul>
+      <li>Previous: <a href="user.html" title="previous chapter">Visualgo user guide</a></li>
+      <li>Next: <a href="user_visu.html" title="next chapter">Using the graphic interface</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Alexandre Tabouret & Youpi.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/user_writing.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
