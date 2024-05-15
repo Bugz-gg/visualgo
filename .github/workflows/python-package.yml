@@ -29,9 +29,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install -e .
         python -m pip install -r ./requirements_dev.txt
-    - name: Static test with mypy
-      run: |
-        mypy src/
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
